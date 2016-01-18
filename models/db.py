@@ -1,22 +1,5 @@
 db = DAL("sqlite://storage.sqlite")
 
-db.define_table('department',
-    Field('name', unique=True),
-    Field('short_name'))
-
-db.define_table('course',
-    Field('dept_id', 'reference department'),
-    Field('course_num', unique=True),
-    Field('name'))
-
-db.define_table('class',
-    Field('course_id', 'reference course'),
-    Field('description'),
-    Field('term'),
-    Field('difficulty', 'double'),
-    Field('textbook_ids', 'reference textbook'),
-    Field('professor_id', 'reference professor'))
-
 db.define_table('professor',
     Field('name'),
     Field('image', 'upload'),
@@ -26,6 +9,29 @@ db.define_table('student',
     Field('first_name'),
     Field('last_name'))
 
+db.define_table('department',
+    Field('name', unique=True),
+    Field('short_name'))
+
+db.define_table('course',
+    Field('dept_id', 'reference department'),
+    Field('course_num', unique=True),
+    Field('name'),
+    Field('description'))
+
+db.define_table('textbook',
+    Field('title'),
+    Field('author'),
+    Field('publication_year', 'integer'),
+    Field('isbn'))
+
+db.define_table('clas', # 'class' is a python reserved word
+    Field('course_id', 'reference course'),
+    Field('professor_id', 'reference professor'),
+    Field('term'),
+    Field('difficulty', 'double'),
+    Field('textbook_ids', 'list:reference textbook'))
+
 db.define_table('class_review',
     Field('student_id', 'reference student'),
     Field('text', 'text'),
@@ -33,7 +39,7 @@ db.define_table('class_review',
     Field('rating', 'double'))
 
 db.define_table('post',
-    Field('class_id', 'reference class'),
+    Field('class_id', 'reference clas'),
     Field('student_id', 'reference student'),
     Field('title'),
     Field('body', 'text'),
@@ -63,9 +69,9 @@ db.define_table('user',
 db.user.email.requires = IS_EMAIL()
 
 db.define_table('student_grade',
-    Field('grade', 'intger'),
+    Field('grade', 'integer'),
     Field('student_id', 'reference student'),
-    Field('class_id', 'reference class'))
+    Field('class_id', 'reference clas'))
 
 db.define_table('professor_review',
     Field('professor_id', 'reference professor'),
@@ -84,9 +90,3 @@ db.define_table('note',
     Field('professor_id', 'reference professor'),
     Field('note_type'),
     Field('datetime', 'datetime'))
-
-db.define_table('textbook',
-    Field('title'),
-    Field('author'),
-    Field('publication_year', 'integer'),
-    Field('isbn'))
