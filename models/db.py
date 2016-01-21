@@ -28,13 +28,8 @@ db.define_table('ucscClass', # 'class' is a python reserved word
     Field('professor_id', 'reference professor')
 )
 
-db.define_table('student',
-    Field('first_name', 'string'),
-    Field('last_name', 'string')
-)
-
 db.define_table('classReview',
-    Field('student_id', 'reference student'),
+    Field('user_id', 'reference user'),
     Field('content', 'text', update=True),
     Field('term'),
     Field('rating', 'double')
@@ -42,40 +37,34 @@ db.define_table('classReview',
 
 db.define_table('post',
     Field('ucscClass_id', 'reference ucscClass'),
-    Field('student_id', 'reference student'),
+    Field('user_id', 'reference user'),
     Field('title', 'string'),
     Field('body', 'text'),
-    Field('datetime', 'datetime')
-)
-
-db.define_table('salePost',
-    Field('student_id', 'reference student'),
-    Field('title', 'string'),
-    Field('body', 'text'),
-    Field('price', 'integer'),
-    Field('image', 'upload'),
+    Field('price', 'integer') # price is in cents (eg 4000 -> $40)
+    Field('image', 'upload')
     Field('datetime', 'datetime')
 )
 
 db.define_table('comment',
-    Field('student_id', 'reference student'),
+    Field('user_id', 'reference user'),
     Field('post_id', 'reference post'),
     Field('body', 'text'),
     Field('datetime', 'datetime')
 )
 
 db.define_table('user',
-    Field('student_id', 'reference student'),
+    Field('user_id', 'reference user'),
+    Field('username', 'string', unique=True),
     Field('image', 'upload', update=True),
     Field('email'),
     Field('password', 'string', length=10),
     Field('year'),
-    Field('is_admin','boolean')
+    Field('is_admin','boolean', default=False)
 )
 db.user.email.requires = IS_EMAIL()
 
 db.define_table('studentGrade',
-    Field('student_id', 'reference student'),
+    Field('user_id', 'reference user'),
     Field('grade', 'integer'),
     Field('ucscClass_id', 'reference ucscClass')
 )
