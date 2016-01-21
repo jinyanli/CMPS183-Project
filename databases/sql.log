@@ -187,3 +187,276 @@ CREATE TABLE note(
     datetime TIMESTAMP
 );
 success!
+timestamp: 2016-01-17T22:18:56.534658
+CREATE TABLE professor(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name CHAR(512),
+    image CHAR(512),
+    saltiness DOUBLE
+);
+timestamp: 2016-01-17T22:19:34.577632
+CREATE TABLE professor(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name CHAR(512),
+    image CHAR(512),
+    saltiness DOUBLE
+);
+timestamp: 2016-01-17T22:20:01.282071
+CREATE TABLE professor(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name CHAR(512),
+    image CHAR(512),
+    saltiness DOUBLE
+);
+timestamp: 2016-01-17T22:21:12.029117
+CREATE TABLE professor(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name CHAR(512),
+    image CHAR(512),
+    saltiness DOUBLE
+);
+timestamp: 2016-01-17T22:22:04.062708
+CREATE TABLE professor(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name CHAR(512),
+    image CHAR(512),
+    saltiness DOUBLE
+);
+timestamp: 2016-01-17T22:23:12.044110
+CREATE TABLE professor(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name CHAR(512),
+    image CHAR(512),
+    saltiness DOUBLE
+);
+timestamp: 2016-01-17T22:24:12.031821
+CREATE TABLE professor(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name CHAR(512),
+    image CHAR(512),
+    saltiness DOUBLE
+);
+timestamp: 2016-01-17T22:25:12.087303
+CREATE TABLE professor(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name CHAR(512),
+    image CHAR(512),
+    saltiness DOUBLE
+);
+timestamp: 2016-01-17T22:26:12.145085
+CREATE TABLE professor(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name CHAR(512),
+    image CHAR(512),
+    saltiness DOUBLE
+);
+timestamp: 2016-01-17T22:27:00.591638
+CREATE TABLE professor(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name CHAR(512),
+    image CHAR(512),
+    saltiness DOUBLE
+);
+timestamp: 2016-01-17T22:28:12.153605
+CREATE TABLE professor(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name CHAR(512),
+    image CHAR(512),
+    saltiness DOUBLE
+);
+timestamp: 2016-01-17T22:29:12.215382
+CREATE TABLE professor(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name CHAR(512),
+    image CHAR(512),
+    saltiness DOUBLE
+);
+timestamp: 2016-01-17T22:30:12.278427
+CREATE TABLE professor(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name CHAR(512),
+    image CHAR(512),
+    saltiness DOUBLE
+);
+timestamp: 2016-01-17T22:31:01.381449
+CREATE TABLE professor(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name CHAR(512),
+    image CHAR(512),
+    saltiness DOUBLE
+);
+timestamp: 2016-01-17T22:32:12.204822
+CREATE TABLE professor(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name CHAR(512),
+    image CHAR(512),
+    saltiness DOUBLE
+);
+timestamp: 2016-01-17T22:32:57.020669
+CREATE TABLE professor(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name CHAR(512),
+    image CHAR(512),
+    saltiness DOUBLE
+);
+timestamp: 2016-01-17T22:33:57.027225
+CREATE TABLE professor(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name CHAR(512),
+    image CHAR(512),
+    saltiness DOUBLE
+);
+timestamp: 2016-01-17T23:30:51.180324
+CREATE TABLE professor(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name CHAR(512),
+    image CHAR(512),
+    saltiness DOUBLE
+);
+timestamp: 2016-01-17T23:31:23.808719
+CREATE TABLE professor(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name CHAR(512),
+    image CHAR(512),
+    saltiness DOUBLE
+);
+timestamp: 2016-01-17T23:31:53.078854
+CREATE TABLE professor(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name CHAR(512),
+    image CHAR(512),
+    saltiness DOUBLE
+);
+timestamp: 2016-01-17T23:32:14.927979
+CREATE TABLE professor(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name CHAR(512),
+    image CHAR(512),
+    saltiness DOUBLE
+);
+timestamp: 2016-01-17T23:32:17.725724
+CREATE TABLE professor(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name CHAR(512),
+    image CHAR(512),
+    saltiness DOUBLE
+);
+timestamp: 2016-01-17T23:33:02.757474
+CREATE TABLE professor(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name CHAR(512),
+    image CHAR(512),
+    saltiness DOUBLE
+);
+timestamp: 2016-01-18T00:56:04.560712
+CREATE TABLE professor(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name CHAR(512),
+    image CHAR(512),
+    saltiness DOUBLE
+);
+timestamp: 2016-01-18T00:56:38.823242
+CREATE TABLE professor(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name CHAR(512),
+    image CHAR(512),
+    saltiness DOUBLE
+);
+timestamp: 2016-01-18T01:01:19.923953
+CREATE TABLE professor(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name CHAR(512),
+    image CHAR(512),
+    saltiness DOUBLE
+);
+timestamp: 2016-01-18T01:02:19.920693
+CREATE TABLE professor(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name CHAR(512),
+    image CHAR(512),
+    saltiness DOUBLE
+);
+timestamp: 2016-01-18T01:02:27.353474
+CREATE TABLE professor(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name CHAR(512),
+    image CHAR(512),
+    saltiness DOUBLE
+);
+timestamp: 2016-01-18T01:03:27.330547
+CREATE TABLE professor(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name CHAR(512),
+    image CHAR(512),
+    saltiness DOUBLE
+);
+timestamp: 2016-01-18T01:04:27.332422
+CREATE TABLE professor(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name CHAR(512),
+    image CHAR(512),
+    saltiness DOUBLE
+);
+timestamp: 2016-01-18T01:05:27.746788
+CREATE TABLE professor(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name CHAR(512),
+    image CHAR(512),
+    saltiness DOUBLE
+);
+timestamp: 2016-01-18T01:06:27.970786
+CREATE TABLE professor(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name CHAR(512),
+    image CHAR(512),
+    saltiness DOUBLE
+);
+timestamp: 2016-01-18T01:07:42.634368
+CREATE TABLE professor(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name CHAR(512),
+    image CHAR(512),
+    saltiness DOUBLE
+);
+timestamp: 2016-01-18T01:08:31.322381
+CREATE TABLE professor(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name CHAR(512),
+    image CHAR(512),
+    saltiness DOUBLE
+);
+timestamp: 2016-01-18T01:09:28.485403
+CREATE TABLE professor(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name CHAR(512),
+    image CHAR(512),
+    saltiness DOUBLE
+);
+timestamp: 2016-01-18T01:10:42.644795
+CREATE TABLE professor(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name CHAR(512),
+    image CHAR(512),
+    saltiness DOUBLE
+);
+timestamp: 2016-01-18T01:11:34.921104
+CREATE TABLE professor(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name CHAR(512),
+    image CHAR(512),
+    saltiness DOUBLE
+);
+timestamp: 2016-01-18T01:12:29.180261
+CREATE TABLE professor(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name CHAR(512),
+    image CHAR(512),
+    saltiness DOUBLE
+);
+timestamp: 2016-01-18T01:13:27.656558
+CREATE TABLE department(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    department_id CHAR(512),
+    name CHAR(512) UNIQUE,
+    short_name CHAR(512) UNIQUE
+);
