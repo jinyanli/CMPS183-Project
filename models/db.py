@@ -97,20 +97,20 @@ db.define_table('department',
    )
 
 db.define_table('course',
-   Field('course_id', readable=False),
+   Field('course_id', writable=False, readable=False),
    Field('department_id', 'reference department', writable=False, readable=False),
    Field('course_num','integer',unique=True),
    Field('name', 'string', unique=True),
    Field('description', 'text'))
 
 db.define_table('professor',
-   Field('professor_id', readable=False),
+   Field('professor_id', writable=False, readable=False),
    Field('name','string',unique=True, default=None),
    Field('image', 'upload', update=True, authorize=True),
    Field('saltiness', 'double'))
 
 db.define_table('UCSCclass', # 'class' is a python reserved word
-   Field('UCSCclass_id', readable=False),
+   Field('UCSCclass_id', writable=False, readable=False),
    Field('course_id', 'reference course', writable=False, readable=False),
    Field('description', 'text'),
    Field('term'),
@@ -119,19 +119,19 @@ db.define_table('UCSCclass', # 'class' is a python reserved word
    Field('professor_id', 'reference professor'))
 
 db.define_table('student',
-   Field('student_id', readable=False),
+   Field('student_id', writable=False, readable=False),
    Field('first_name', 'string'),
    Field('last_name', 'string'))
 
 db.define_table('classReview',
-   Field('classReview_id', readable=False),
+   Field('classReview_id', writable=False, readable=False),
    Field('student_id', 'reference student', writable=False, readable=False),
    Field('content','text',update=True),
    Field('term'),
    Field('rating', 'double'))
 
 db.define_table('post',
-   Field('post_id', readable=False),
+   Field('post_id', writable=False, readable=False),
    Field('UCSCclass_id', 'reference UCSCclass', writable=False, readable=False),
    Field('student_id', 'reference student', writable=False, readable=False),
    Field('title','string'),
@@ -139,7 +139,7 @@ db.define_table('post',
    Field('datetime', 'datetime'))
 
 db.define_table('salePost',
-   Field('salePost_id', readable=False),
+   Field('salePost_id', writable=False, readable=False),
    Field('student_id', 'reference student', writable=False, readable=False),
    Field('title','string'),
    Field('body','text'),
@@ -148,7 +148,7 @@ db.define_table('salePost',
    Field('datetime', 'datetime'))
 
 db.define_table('comment',
-   Field('comment_id', readable=False),
+   Field('comment_id', writable=False, readable=False),
    Field('student_id', 'reference student', writable=False, readable=False),
    Field('post_id', 'reference post', writable=False, readable=False),
    Field('body','text'),
@@ -156,7 +156,7 @@ db.define_table('comment',
 
 
 db.define_table('user',
-   Field('user_id', readable=False),
+   Field('user_id', writable=False, readable=False),
    Field('student_id', 'reference student', writable=False, readable=False),
    Field('image', 'upload', update=True),
    Field('email'),
@@ -166,13 +166,13 @@ db.define_table('user',
 db.user.email.requires = IS_EMAIL()
 
 db.define_table('studentGrade',
-   Field('studentGrade_id', readable=False),
+   Field('studentGrade_id', writable=False, readable=False),
    Field('student_id', 'reference student', writable=False, readable=False),
    Field('grade', 'double'),
    Field('UCSCclass_id', 'reference UCSCclass', writable=False, readable=False))
 
 db.define_table('professorReview',
-   Field('professorReview_id', readable=False),
+   Field('professorReview_id', writable=False, readable=False),
    Field('professor_id', 'reference professor', writable=False, readable=False),
    Field('user_id', 'reference user', writable=False, readable=False),
    Field('course_id','reference course', writable=False, readable=False),
@@ -182,7 +182,7 @@ db.define_table('professorReview',
    Field('datetime','datetime'))
 
 db.define_table('note',
-   Field('note_id', readable=False),
+   Field('note_id', writable=False, readable=False),
    Field('title','string'),
    Field('file','upload'),
    Field('user_id', 'reference user', writable=False, readable=False),
@@ -192,7 +192,7 @@ db.define_table('note',
    Field('datetime','datetime'))
 
 db.define_table('textbook',
-   Field('textbook_id', readable=False),
+   Field('textbook_id', writable=False, readable=False),
    Field('title','string',ondelete='CASCADE'),
    Field('author','list:string'),
    Field('publication_year','integer'),
