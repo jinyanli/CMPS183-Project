@@ -12,7 +12,7 @@ def index():
 
     response.flash = T("Slug Hero")
     message='Welcome Slug Hero'
-    return dict(message=T('Welcome Slug Hero'))
+    return dict(message=T('Welcome to Slug Hero'))
 
 
 
