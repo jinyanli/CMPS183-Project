@@ -49,6 +49,21 @@ def courseEdit():
     form = crud.update(db.course,course,next='showCourse')
     return locals()
 
+def showProfessor():
+    profs = db().select(db.professor.ALL, orderby=db.professor.first_name)
+    return locals()
+
+@auth.requires_login()
+def professorCreate():
+    #dept = db.department(request.args(0,cast=int)) or redirect(URL('index'))
+    #db.course.department_id.default = dept.id
+    form = SQLFORM(db.professor)
+    if form.process().accepted:
+        response.flash = 'Professor added'
+        redirect(URL('showProfessor'))
+    #info = db(db.course.course_id==dept.id).select()
+    return locals()
+
 def user():
     """
     exposes:

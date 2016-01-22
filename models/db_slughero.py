@@ -12,7 +12,7 @@ db.define_table('course',
 db.define_table('professor',
     Field('first_name','string', default=None,requires=(IS_SLUG(),IS_NOT_EMPTY())),
     Field('last_name','string', default=None,requires=(IS_SLUG(),IS_NOT_EMPTY())),
-    Field('image', 'upload', update=True, authorize=True),
+    Field('image', 'upload'),
     Field('department_id', 'reference department',readable=False,writable=False),
     Field('saltiness', 'double'))
 
