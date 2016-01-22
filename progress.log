@@ -31,3 +31,16 @@
 [2016-01-21 19:25:59] EDIT SlugHero/models/db_slughero.py: 0
 [2016-01-21 19:26:09] EDIT SlugHero/models/db_slughero.py: 0
 [2016-01-21 19:27:29] EDIT SlugHero/models/db_slughero.py: 0
+[2016-01-21 19:28:59] EDIT SlugHero/controllers/default.py: -6
+[2016-01-21 19:30:18] EDIT SlugHero/views/default/index.html: -46
+[2016-01-21 19:30:40] EDIT SlugHero/views/default/index.html: 0
+[2016-01-21 19:30:52] EDIT SlugHero/views/default/index.html: -1
+[2016-01-21 19:31:40] EDIT SlugHero/controllers/default.py: 0
+[2016-01-21 19:32:20] EDIT SlugHero/views/default/index.html: 1
+[2016-01-21 19:32:49] EDIT SlugHero/views/default/index.html: 0
+[2016-01-21 19:32:59] EDIT SlugHero/views/default/index.html: 0
+[2016-01-21 19:33:28] EDIT SlugHero/controllers/default.py: 2
+[2016-01-21 19:35:30] EDIT SlugHero/controllers/default.py: -1
+[2016-01-21 19:35:36] EDIT SlugHero/views/default/index.html: 0
+[2016-01-21 19:36:01] EDIT SlugHero/views/default/index.html: -1
+[2016-01-21 19:36:16] EDIT SlugHero/views/default/index.html: 0
