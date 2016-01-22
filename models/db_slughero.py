@@ -1,10 +1,7 @@
-# -*- coding: utf-8 -*-
-"""
 db.define_table('department',
-    Field('name', 'string', requires=(IS_SLUG(),IS_NOT_EMPTY(),IS_NOT_IN_DB(db,'department.name'))),
-    Field('short_name','string', requires=(IS_SLUG(),IS_NOT_EMPTY(),IS_NOT_IN_DB(db,'department.short_name'))))
-
-
+    Field('name', 'string'),
+    Field('short_name','string'))
+"""
 db.define_table('course',
     Field('department_id', 'reference department',readable=False,writable=False),
     Field('course_num', 'string'),
@@ -16,7 +13,7 @@ db.define_table('professor',
     Field('image', 'upload', update=True, authorize=True),
     Field('saltiness', 'double'),
     #auth.signature?
-)
+               )
 
 db.define_table('ucscClass', # 'class' is a python reserved word
     Field('course_id', 'reference course',readable=False,writable=False),
@@ -26,8 +23,7 @@ db.define_table('ucscClass', # 'class' is a python reserved word
     Field('textbook_ids', 'list:reference textbook'),
     Field('professor_id', 'reference professor',readable=False,writable=False),
     Field('user_id', 'reference db.auth_user'),
-    Field('datetime', 'datetime')
-)
+    Field('datetime', 'datetime'))
 
 db.define_table('classReview',
     Field('user_id', 'reference  db.auth_user'),
@@ -50,13 +46,15 @@ db.define_table('comment',
     Field('post_id', 'reference post',readable=False,writable=False),
     Field('body', 'text'),
     Field('datetime', 'datetime'))
-
 gradeRange=['A+','A','A-','B+','B','B-','C+','C','C-','D','F']
+
+
 db.define_table('studentGrade',
     Field('user_id', 'reference db.auth_user'),
     Field('grade', 'integer'),
     Field('ucscClass_id', 'reference ucscClass'))
 db.studentGrade.grade.requires = IS_IN_SET(grade_range)
+
 
 db.define_table('professorReview',
     Field('professor_id', 'reference professor',readable=False,writable=False),
