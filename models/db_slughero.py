@@ -10,11 +10,11 @@ db.define_table('course',
     Field('description', 'text'))
 
 db.define_table('professor',
-    Field('name','string', unique=True, default=None,requires=(IS_SLUG(),IS_NOT_EMPTY())),
+    Field('first_name','string', default=None,requires=(IS_SLUG(),IS_NOT_EMPTY())),
+    Field('last_name','string', default=None,requires=(IS_SLUG(),IS_NOT_EMPTY())),
     Field('image', 'upload', update=True, authorize=True),
-    Field('saltiness', 'double'),
-    Field('user_id', 'reference auth_user',readable=False,writable=False),
-    Field('datetime', 'datetime'))
+    Field('department_id', 'reference department',readable=False,writable=False),
+    Field('saltiness', 'double'))
 
 db.define_table('ucscClass', # 'class' is a python reserved word
     Field('course_id', 'reference course',readable=False,writable=False),
