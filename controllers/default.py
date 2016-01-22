@@ -29,9 +29,20 @@ def departmentEdit():
     return locals()
 
 def showCourse():
-    #depts = db().select(db.department.name,db.department.short_name, orderby=db.department.name)
+    dept = db.department(request.args(0)) or redirect(URL('showDepartment'))
+    courses = db(db.course.department_id==dept.id).select(orderby=db.course.name,limitby=(0,25))
     return locals()
 
+def courseCreate():
+    db.course.department_id.default = request.args(0)
+    redirect='showCourse/'+request.args(0)
+    form = crud.create(db.course,next=redirect)
+    return locals()
+
+def courseEdit():
+    course = db.course(request.args(0)) or redirect(URL('showCourse'))
+    form = crud.update(db.course,course,next='showCourse')
+    return locals()
 
 def user():
     """
