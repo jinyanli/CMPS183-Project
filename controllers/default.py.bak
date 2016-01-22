@@ -28,8 +28,6 @@ def addCourse():
     if form.process().accepted:
         response.flash = 'Course added'
         redirect(URL('show', args=dept.id))
-    info = db(db.course.course_id==dept.id).select()
-    return dict(dept=dept, info=info, form=form)
 
 def showClass():
     ucscClass = db.course(request.args(0, cast=int)) or redirect(URL('index'))

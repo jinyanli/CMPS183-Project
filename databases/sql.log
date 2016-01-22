@@ -1,4 +1,4 @@
-timestamp: 2016-01-15T16:32:29.545888
+timestamp: 2016-01-11T16:09:21.193059
 CREATE TABLE auth_user(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     first_name CHAR(128),
@@ -10,21 +10,21 @@ CREATE TABLE auth_user(
     registration_id CHAR(512)
 );
 success!
-timestamp: 2016-01-15T16:32:29.547724
+timestamp: 2016-01-11T16:09:21.194905
 CREATE TABLE auth_group(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     role CHAR(512),
     description TEXT
 );
 success!
-timestamp: 2016-01-15T16:32:29.549299
+timestamp: 2016-01-11T16:09:21.196404
 CREATE TABLE auth_membership(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     user_id INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  ,
     group_id INTEGER REFERENCES auth_group (id) ON DELETE CASCADE  
 );
 success!
-timestamp: 2016-01-15T16:32:29.551287
+timestamp: 2016-01-11T16:09:21.198128
 CREATE TABLE auth_permission(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     group_id INTEGER REFERENCES auth_group (id) ON DELETE CASCADE  ,
@@ -33,7 +33,7 @@ CREATE TABLE auth_permission(
     record_id INTEGER
 );
 success!
-timestamp: 2016-01-15T16:32:29.553568
+timestamp: 2016-01-11T16:09:21.199571
 CREATE TABLE auth_event(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     time_stamp TIMESTAMP,
@@ -43,7 +43,7 @@ CREATE TABLE auth_event(
     description TEXT
 );
 success!
-timestamp: 2016-01-15T16:32:29.555192
+timestamp: 2016-01-11T16:09:21.201012
 CREATE TABLE auth_cas(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     user_id INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  ,
@@ -53,119 +53,121 @@ CREATE TABLE auth_cas(
     renew CHAR(1)
 );
 success!
-timestamp: 2016-01-17T20:40:48.059776
+timestamp: 2016-01-19T12:04:46.109000
 CREATE TABLE department(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
+    department_id CHAR(512),
     name CHAR(512) UNIQUE,
-    short_name CHAR(512)
+    short_name CHAR(512) UNIQUE
 );
 success!
-timestamp: 2016-01-17T20:40:48.061598
+timestamp: 2016-01-19T12:04:46.466000
 CREATE TABLE course(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    dept_id INTEGER REFERENCES department (id) ON DELETE CASCADE  ,
-    course_num CHAR(512) UNIQUE,
-    name CHAR(512)
+    course_id CHAR(512),
+    department_id INTEGER REFERENCES department (id) ON DELETE CASCADE  ,
+    course_num INTEGER UNIQUE,
+    name CHAR(512) UNIQUE,
+    description TEXT
 );
 success!
-timestamp: 2016-01-17T20:45:14.746825
+timestamp: 2016-01-19T12:04:46.626000
 CREATE TABLE professor(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name CHAR(512),
+    professor_id CHAR(512),
+    name CHAR(512) UNIQUE,
     image CHAR(512),
     saltiness DOUBLE
 );
 success!
-timestamp: 2016-01-17T20:45:14.749736
+timestamp: 2016-01-19T12:04:46.826000
+CREATE TABLE UCSCclass(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    UCSCclass_id CHAR(512),
+    course_id INTEGER REFERENCES course (id) ON DELETE CASCADE  ,
+    description TEXT,
+    term CHAR(512),
+    difficulty DOUBLE,
+    textbook_id TEXT UNIQUE,
+    professor_id INTEGER REFERENCES professor (id) ON DELETE CASCADE  
+);
+success!
+timestamp: 2016-01-19T12:04:47.042000
 CREATE TABLE student(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
+    student_id CHAR(512),
     first_name CHAR(512),
     last_name CHAR(512)
 );
 success!
-timestamp: 2016-01-17T20:45:14.753220
-CREATE TABLE textbook(
+timestamp: 2016-01-19T12:04:47.286000
+CREATE TABLE classReview(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    title CHAR(512),
-    author CHAR(512),
-    publication_year INTEGER,
-    isbn CHAR(512)
-);
-success!
-timestamp: 2016-01-17T21:07:12.158141
-ALTER TABLE course ADD description CHAR(512);
-success!
-timestamp: 2016-01-17T21:11:02.490050
-CREATE TABLE clas(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    course_id INTEGER REFERENCES course (id) ON DELETE CASCADE  ,
-    professor_id INTEGER REFERENCES professor (id) ON DELETE CASCADE  ,
-    term CHAR(512),
-    difficulty DOUBLE,
-    textbook_ids TEXT
-);
-success!
-timestamp: 2016-01-17T21:11:02.492474
-CREATE TABLE class_review(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    classReview_id CHAR(512),
     student_id INTEGER REFERENCES student (id) ON DELETE CASCADE  ,
-    text TEXT,
+    content TEXT,
     term CHAR(512),
     rating DOUBLE
 );
 success!
-timestamp: 2016-01-17T21:11:02.494446
+timestamp: 2016-01-19T12:04:47.591000
 CREATE TABLE post(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    class_id INTEGER REFERENCES clas (id) ON DELETE CASCADE  ,
+    post_id CHAR(512),
+    UCSCclass_id INTEGER REFERENCES UCSCclass (id) ON DELETE CASCADE  ,
     student_id INTEGER REFERENCES student (id) ON DELETE CASCADE  ,
     title CHAR(512),
     body TEXT,
     datetime TIMESTAMP
 );
 success!
-timestamp: 2016-01-17T21:11:02.496407
-CREATE TABLE sale_post(
+timestamp: 2016-01-19T12:04:47.787000
+CREATE TABLE salePost(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
+    salePost_id CHAR(512),
     student_id INTEGER REFERENCES student (id) ON DELETE CASCADE  ,
     title CHAR(512),
     body TEXT,
-    price INTEGER,
+    price DOUBLE,
     image CHAR(512),
     datetime TIMESTAMP
 );
 success!
-timestamp: 2016-01-17T21:11:02.498024
+timestamp: 2016-01-19T12:04:48.004000
 CREATE TABLE comment(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
+    comment_id CHAR(512),
     student_id INTEGER REFERENCES student (id) ON DELETE CASCADE  ,
     post_id INTEGER REFERENCES post (id) ON DELETE CASCADE  ,
     body TEXT,
     datetime TIMESTAMP
 );
 success!
-timestamp: 2016-01-17T21:11:02.499689
+timestamp: 2016-01-19T12:04:48.230000
 CREATE TABLE user(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id CHAR(512),
     student_id INTEGER REFERENCES student (id) ON DELETE CASCADE  ,
     image CHAR(512),
     email CHAR(512),
-    password CHAR(512),
+    password CHAR(10),
     year CHAR(512),
     is_admin CHAR(1)
 );
 success!
-timestamp: 2016-01-17T21:11:02.501438
-CREATE TABLE student_grade(
+timestamp: 2016-01-19T12:04:48.390000
+CREATE TABLE studentGrade(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    grade INTEGER,
+    studentGrade_id CHAR(512),
     student_id INTEGER REFERENCES student (id) ON DELETE CASCADE  ,
-    class_id INTEGER REFERENCES clas (id) ON DELETE CASCADE  
+    grade DOUBLE,
+    UCSCclass_id INTEGER REFERENCES UCSCclass (id) ON DELETE CASCADE  
 );
 success!
-timestamp: 2016-01-17T21:11:02.503788
-CREATE TABLE professor_review(
+timestamp: 2016-01-19T12:04:48.602000
+CREATE TABLE professorReview(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
+    professorReview_id CHAR(512),
     professor_id INTEGER REFERENCES professor (id) ON DELETE CASCADE  ,
     user_id INTEGER REFERENCES user (id) ON DELETE CASCADE  ,
     course_id INTEGER REFERENCES course (id) ON DELETE CASCADE  ,
@@ -175,291 +177,1166 @@ CREATE TABLE professor_review(
     datetime TIMESTAMP
 );
 success!
-timestamp: 2016-01-17T21:11:02.505577
+timestamp: 2016-01-19T12:04:48.779000
 CREATE TABLE note(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
+    note_id CHAR(512),
     title CHAR(512),
     file CHAR(512),
     user_id INTEGER REFERENCES user (id) ON DELETE CASCADE  ,
     course_id INTEGER REFERENCES course (id) ON DELETE CASCADE  ,
     professor_id INTEGER REFERENCES professor (id) ON DELETE CASCADE  ,
-    note_type CHAR(512),
+    notetype CHAR(512),
     datetime TIMESTAMP
 );
 success!
-timestamp: 2016-01-17T22:18:56.534658
-CREATE TABLE professor(
+timestamp: 2016-01-19T12:04:48.967000
+CREATE TABLE textbook(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name CHAR(512),
-    image CHAR(512),
-    saltiness DOUBLE
+    textbook_id CHAR(512),
+    title CHAR(512),
+    author TEXT,
+    publication_year INTEGER,
+    isbn INTEGER UNIQUE
 );
-timestamp: 2016-01-17T22:19:34.577632
-CREATE TABLE professor(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name CHAR(512),
-    image CHAR(512),
-    saltiness DOUBLE
-);
-timestamp: 2016-01-17T22:20:01.282071
-CREATE TABLE professor(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name CHAR(512),
-    image CHAR(512),
-    saltiness DOUBLE
-);
-timestamp: 2016-01-17T22:21:12.029117
-CREATE TABLE professor(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name CHAR(512),
-    image CHAR(512),
-    saltiness DOUBLE
-);
-timestamp: 2016-01-17T22:22:04.062708
-CREATE TABLE professor(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name CHAR(512),
-    image CHAR(512),
-    saltiness DOUBLE
-);
-timestamp: 2016-01-17T22:23:12.044110
-CREATE TABLE professor(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name CHAR(512),
-    image CHAR(512),
-    saltiness DOUBLE
-);
-timestamp: 2016-01-17T22:24:12.031821
-CREATE TABLE professor(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name CHAR(512),
-    image CHAR(512),
-    saltiness DOUBLE
-);
-timestamp: 2016-01-17T22:25:12.087303
-CREATE TABLE professor(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name CHAR(512),
-    image CHAR(512),
-    saltiness DOUBLE
-);
-timestamp: 2016-01-17T22:26:12.145085
-CREATE TABLE professor(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name CHAR(512),
-    image CHAR(512),
-    saltiness DOUBLE
-);
-timestamp: 2016-01-17T22:27:00.591638
-CREATE TABLE professor(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name CHAR(512),
-    image CHAR(512),
-    saltiness DOUBLE
-);
-timestamp: 2016-01-17T22:28:12.153605
-CREATE TABLE professor(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name CHAR(512),
-    image CHAR(512),
-    saltiness DOUBLE
-);
-timestamp: 2016-01-17T22:29:12.215382
-CREATE TABLE professor(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name CHAR(512),
-    image CHAR(512),
-    saltiness DOUBLE
-);
-timestamp: 2016-01-17T22:30:12.278427
-CREATE TABLE professor(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name CHAR(512),
-    image CHAR(512),
-    saltiness DOUBLE
-);
-timestamp: 2016-01-17T22:31:01.381449
-CREATE TABLE professor(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name CHAR(512),
-    image CHAR(512),
-    saltiness DOUBLE
-);
-timestamp: 2016-01-17T22:32:12.204822
-CREATE TABLE professor(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name CHAR(512),
-    image CHAR(512),
-    saltiness DOUBLE
-);
-timestamp: 2016-01-17T22:32:57.020669
-CREATE TABLE professor(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name CHAR(512),
-    image CHAR(512),
-    saltiness DOUBLE
-);
-timestamp: 2016-01-17T22:33:57.027225
-CREATE TABLE professor(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name CHAR(512),
-    image CHAR(512),
-    saltiness DOUBLE
-);
-timestamp: 2016-01-17T23:30:51.180324
-CREATE TABLE professor(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name CHAR(512),
-    image CHAR(512),
-    saltiness DOUBLE
-);
-timestamp: 2016-01-17T23:31:23.808719
-CREATE TABLE professor(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name CHAR(512),
-    image CHAR(512),
-    saltiness DOUBLE
-);
-timestamp: 2016-01-17T23:31:53.078854
-CREATE TABLE professor(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name CHAR(512),
-    image CHAR(512),
-    saltiness DOUBLE
-);
-timestamp: 2016-01-17T23:32:14.927979
-CREATE TABLE professor(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name CHAR(512),
-    image CHAR(512),
-    saltiness DOUBLE
-);
-timestamp: 2016-01-17T23:32:17.725724
-CREATE TABLE professor(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name CHAR(512),
-    image CHAR(512),
-    saltiness DOUBLE
-);
-timestamp: 2016-01-17T23:33:02.757474
-CREATE TABLE professor(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name CHAR(512),
-    image CHAR(512),
-    saltiness DOUBLE
-);
-timestamp: 2016-01-18T00:56:04.560712
-CREATE TABLE professor(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name CHAR(512),
-    image CHAR(512),
-    saltiness DOUBLE
-);
-timestamp: 2016-01-18T00:56:38.823242
-CREATE TABLE professor(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name CHAR(512),
-    image CHAR(512),
-    saltiness DOUBLE
-);
-timestamp: 2016-01-18T01:01:19.923953
-CREATE TABLE professor(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name CHAR(512),
-    image CHAR(512),
-    saltiness DOUBLE
-);
-timestamp: 2016-01-18T01:02:19.920693
-CREATE TABLE professor(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name CHAR(512),
-    image CHAR(512),
-    saltiness DOUBLE
-);
-timestamp: 2016-01-18T01:02:27.353474
-CREATE TABLE professor(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name CHAR(512),
-    image CHAR(512),
-    saltiness DOUBLE
-);
-timestamp: 2016-01-18T01:03:27.330547
-CREATE TABLE professor(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name CHAR(512),
-    image CHAR(512),
-    saltiness DOUBLE
-);
-timestamp: 2016-01-18T01:04:27.332422
-CREATE TABLE professor(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name CHAR(512),
-    image CHAR(512),
-    saltiness DOUBLE
-);
-timestamp: 2016-01-18T01:05:27.746788
-CREATE TABLE professor(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name CHAR(512),
-    image CHAR(512),
-    saltiness DOUBLE
-);
-timestamp: 2016-01-18T01:06:27.970786
-CREATE TABLE professor(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name CHAR(512),
-    image CHAR(512),
-    saltiness DOUBLE
-);
-timestamp: 2016-01-18T01:07:42.634368
-CREATE TABLE professor(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name CHAR(512),
-    image CHAR(512),
-    saltiness DOUBLE
-);
-timestamp: 2016-01-18T01:08:31.322381
-CREATE TABLE professor(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name CHAR(512),
-    image CHAR(512),
-    saltiness DOUBLE
-);
-timestamp: 2016-01-18T01:09:28.485403
-CREATE TABLE professor(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name CHAR(512),
-    image CHAR(512),
-    saltiness DOUBLE
-);
-timestamp: 2016-01-18T01:10:42.644795
-CREATE TABLE professor(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name CHAR(512),
-    image CHAR(512),
-    saltiness DOUBLE
-);
-timestamp: 2016-01-18T01:11:34.921104
-CREATE TABLE professor(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name CHAR(512),
-    image CHAR(512),
-    saltiness DOUBLE
-);
-timestamp: 2016-01-18T01:12:29.180261
-CREATE TABLE professor(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name CHAR(512),
-    image CHAR(512),
-    saltiness DOUBLE
-);
-timestamp: 2016-01-18T01:13:27.656558
-CREATE TABLE department(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    department_id CHAR(512),
-    name CHAR(512) UNIQUE,
-    short_name CHAR(512) UNIQUE
-);
+<<<<<<< HEAD
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+=======
 timestamp: 2016-01-21T04:04:22.701000
 CREATE TABLE department(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -900,3 +1777,4 @@ CREATE TABLE department(
     name CHAR(512),
     short_name CHAR(512)
 );
+>>>>>>> refs/remotes/origin/master

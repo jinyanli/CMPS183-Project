@@ -1,0 +1,17 @@
+# -*- coding: utf-8 -*-
+# try something like
+
+response.menu = [['Register Department', Flase, URL('register_dept')]]
+
+def register_dept():
+    #create an insert form from the table
+    form = SQLFORM(db.department).process()
+
+    #if form correct, perform the insert
+    if form.accepted:
+        response.flash = 'new record inserted'
+
+    #and get a list of all persons
+    records = SQLTABLE(db.select(db.department.ALL), headers='fieldnames:capitalize')
+
+    return dict(form=form, records=records)
