@@ -60,3 +60,110 @@ CREATE TABLE department(
     short_name CHAR(512)
 );
 success!
+timestamp: 2016-01-21T19:00:32.112000
+CREATE TABLE course(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    department_id INTEGER REFERENCES department (id) ON DELETE CASCADE  ,
+    course_num CHAR(512),
+    name CHAR(512) UNIQUE,
+    description TEXT
+);
+success!
+timestamp: 2016-01-21T19:00:50.450000
+CREATE TABLE professor(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name CHAR(512) UNIQUE,
+    image CHAR(512),
+    saltiness DOUBLE,
+    is_active CHAR(1),
+    created_on TIMESTAMP,
+    created_by INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  ,
+    modified_on TIMESTAMP,
+    modified_by INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  
+);
+success!
+timestamp: 2016-01-21T19:04:38.476000
+CREATE TABLE ucscClass(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    course_id INTEGER REFERENCES course (id) ON DELETE CASCADE  ,
+    description TEXT,
+    term CHAR(512),
+    difficulty DOUBLE,
+    textbook_ids TEXT,
+    professor_id INTEGER REFERENCES professor (id) ON DELETE CASCADE  ,
+    user_id INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  ,
+    datetime TIMESTAMP
+);
+success!
+timestamp: 2016-01-21T19:06:06.745000
+CREATE TABLE classReview(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  ,
+    body TEXT,
+    term CHAR(512),
+    rating DOUBLE,
+    datetime TIMESTAMP
+);
+success!
+timestamp: 2016-01-21T19:06:30.697000
+CREATE TABLE post(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    ucscClass_id INTEGER REFERENCES ucscClass (id) ON DELETE CASCADE  ,
+    user_id INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  ,
+    title CHAR(512) NOT NULL,
+    body TEXT NOT NULL,
+    price INTEGER,
+    image CHAR(512),
+    datetime TIMESTAMP
+);
+success!
+timestamp: 2016-01-21T19:07:04.058000
+CREATE TABLE comm(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  ,
+    post_id INTEGER REFERENCES post (id) ON DELETE CASCADE  ,
+    body TEXT,
+    datetime TIMESTAMP
+);
+success!
+timestamp: 2016-01-21T19:08:04.125000
+CREATE TABLE studentGrade(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  ,
+    grade INTEGER,
+    ucscClass_id INTEGER REFERENCES ucscClass (id) ON DELETE CASCADE  
+);
+success!
+timestamp: 2016-01-21T19:08:58.402000
+CREATE TABLE professorReview(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    professor_id INTEGER REFERENCES professor (id) ON DELETE CASCADE  ,
+    user_id INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  ,
+    course_id INTEGER REFERENCES course (id) ON DELETE CASCADE  ,
+    term CHAR(512),
+    review TEXT,
+    rating DOUBLE,
+    datetime TIMESTAMP
+);
+success!
+timestamp: 2016-01-21T19:10:57.415000
+CREATE TABLE note(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    title CHAR(512),
+    notefile CHAR(512),
+    user_id INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  ,
+    course_id INTEGER REFERENCES course (id) ON DELETE CASCADE  ,
+    professor_id INTEGER REFERENCES professor (id) ON DELETE CASCADE  ,
+    notetype CHAR(512),
+    datetime TIMESTAMP
+);
+success!
+timestamp: 2016-01-21T19:11:11.944000
+CREATE TABLE textbook(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    title CHAR(512),
+    author TEXT,
+    publication_year INTEGER,
+    isbn INTEGER UNIQUE
+);
+success!
