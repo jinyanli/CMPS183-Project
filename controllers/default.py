@@ -14,7 +14,12 @@ def index():
     message='Welcome Slug Hero'
     return dict(message=T('Welcome to Slug Hero'))
 
-
+def showDepartment():
+    depts = db().select(db.department.ALL, orderby=db.department.name)
+    return locals()
+def showCourse():
+    #depts = db().select(db.department.name,db.department.short_name, orderby=db.department.name)
+    return locals()
 
 def user():
     """

@@ -5,7 +5,7 @@
 ## Customize your APP title, subtitle and menus here
 #########################################################################
 
-response.logo = A(B('web',SPAN(2),'py'),XML('&trade;&nbsp;'),
+response.logo = A(B('Slug Hero'),XML('&trade;&nbsp;'),
                   _class="navbar-brand",_href="http://www.web2py.com/",
                   _id="web2py-logo")
 response.title = request.application.replace('_',' ').title()
@@ -25,26 +25,28 @@ response.google_analytics_id = None
 #########################################################################
 
 response.menu = [
-    (T('Home'), False, URL('default', 'index'), [])
+    (T('Home'), False, URL('default', 'index'), []),
+    (T('Department'), False, URL('SlugHero', 'default', 'showDepartment')),
+    (T('Professor'), False, URL('SlugHero', 'default', 'showProfessor')),
+    (T('Textbook Exchange'), False, URL('SlugHero', 'default', 'textbookExchange')),
+    (T('Forum'), False, URL('SlugHero', 'default', 'generalForum'))
 ]
 
-DEVELOPMENT_MENU = True
+#DEVEOPMENT_MENU = True
 
 #########################################################################
 ## provide shortcuts for development. remove in production
 #########################################################################
-
+"""
 def _():
     # shortcuts
     app = request.application
     ctr = request.controller
     # useful links to internal and external resources
     response.menu += [
-        (T('Department'), False, URL('admin', 'default', 'showsDepartment')),
-        (T('Professor'), False, URL('admin', 'default', 'showProfessor')),
-        (T('Textbook Exchange'), False, URL('admin', 'default', 'textbookExchange')),
-        (T('Forum'), False, URL('admin', 'default', 'generalForum'))
+
         ]
 if DEVELOPMENT_MENU: _()
 
 if "auth" in locals(): auth.wikimenu()
+"""
