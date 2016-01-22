@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 db.define_table('department',
     Field('name', 'string'),
     Field('short_name','string'))
