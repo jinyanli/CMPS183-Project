@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 [2016-01-19 12:03:36] START
 [2016-01-19 12:03:36] CREATE database.py: 0
 [2016-01-19 12:04:04] EDIT SlugHero/models/database.py: 94
@@ -150,3 +151,51 @@
 [2016-01-21 16:10:13] EDIT SlugHero/controllers/default.py: 0
 [2016-01-21 16:12:26] EDIT SlugHero/controllers/default.py: 2
 [2016-01-21 16:31:01] EDIT SlugHero/models/db.py: 0
+=======
+[2016-01-15 16:22:23] START
+[2016-01-21 03:59:18] EDIT SlugHero/models/db.py: 1
+[2016-01-21 04:03:18] EDIT SlugHero/models/db.py: 4
+[2016-01-21 04:03:28] EDIT SlugHero/models/db.py: 0
+[2016-01-21 04:03:45] EDIT SlugHero/models/db.py: -1
+[2016-01-21 04:04:00] EDIT SlugHero/models/db.py: -2
+[2016-01-21 04:04:07] EDIT SlugHero/models/db.py: 2
+[2016-01-21 04:04:38] EDIT SlugHero/models/db.py: -1
+[2016-01-21 04:04:50] EDIT SlugHero/models/db.py: 0
+[2016-01-21 04:06:42] EDIT SlugHero/models/db.py: 2
+[2016-01-21 04:10:41] CREATE db.py: 0
+[2016-01-21 04:10:57] EDIT SlugHero/models/db.py: 29
+[2016-01-21 04:19:43] EDIT SlugHero/models/db_slughero.py: 4
+[2016-01-21 04:19:50] EDIT SlugHero/models/db_slughero.py: 0
+[2016-01-21 04:19:55] EDIT SlugHero/models/db_slughero.py: 0
+[2016-01-21 04:22:07] EDIT SlugHero/models/db_slughero.py: 2
+[2016-01-21 04:23:25] EDIT SlugHero/models/db_slughero.py: 0
+[2016-01-21 04:24:36] EDIT SlugHero/models/db_slughero.py: 0
+[2016-01-21 04:26:14] EDIT SlugHero/models/db_slughero.py: -19
+[2016-01-21 04:26:24] EDIT SlugHero/models/db_slughero.py: 1
+[2016-01-21 04:27:00] EDIT SlugHero/models/db_slughero.py: -1
+[2016-01-21 04:27:54] EDIT SlugHero/models/db_slughero.py: -1
+[2016-01-21 04:28:17] EDIT SlugHero/models/db_slughero.py: 0
+[2016-01-21 04:29:16] EDIT SlugHero/models/db_slughero.py: 0
+[2016-01-21 04:30:36] EDIT SlugHero/models/db_slughero.py: -4
+[2016-01-21 04:32:54] EDIT SlugHero/models/db_slughero.py: 2
+[2016-01-21 04:35:20] EDIT SlugHero/models/db_slughero.py: 1
+[2016-01-21 04:35:57] EDIT SlugHero/models/db_slughero.py: 1
+[2016-01-21 04:36:08] EDIT SlugHero/models/db_slughero.py: 0
+[2016-01-21 04:36:52] EDIT SlugHero/models/db_slughero.py: -1
+[2016-01-21 04:41:34] EDIT SlugHero/models/db_slughero.py: -3
+[2016-01-21 04:42:42] EDIT SlugHero/models/db_slughero.py: 1
+[2016-01-21 04:43:10] EDIT SlugHero/models/db_slughero.py: 1
+[2016-01-21 04:43:16] EDIT SlugHero/models/db_slughero.py: 0
+[2016-01-21 04:43:20] EDIT SlugHero/models/db_slughero.py: 0
+[2016-01-21 04:43:36] EDIT SlugHero/models/db_slughero.py: 1
+[2016-01-21 04:43:46] EDIT SlugHero/models/db_slughero.py: 0
+[2016-01-21 04:43:51] EDIT SlugHero/models/db_slughero.py: 0
+[2016-01-21 04:43:56] EDIT SlugHero/models/db_slughero.py: 0
+[2016-01-21 04:44:01] EDIT SlugHero/models/db_slughero.py: 0
+[2016-01-21 04:44:07] EDIT SlugHero/models/db_slughero.py: 0
+[2016-01-21 04:44:11] EDIT SlugHero/models/db_slughero.py: 0
+[2016-01-21 04:44:18] EDIT SlugHero/models/db_slughero.py: 0
+[2016-01-21 04:44:21] EDIT SlugHero/models/db_slughero.py: -2
+[2016-01-21 04:44:22] EDIT SlugHero/models/db_slughero.py: 0
+[2016-01-21 04:46:11] EDIT SlugHero/models/db_slughero.py: 2
+>>>>>>> refs/remotes/origin/master
