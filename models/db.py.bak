@@ -115,7 +115,7 @@ db.define_table('UCSCclass', # 'class' is a python reserved word
    Field('description', 'text'),
    Field('term'),
    Field('difficulty','double'),
-   Field('textbook_id', 'list:reference textbook'),
+   Field('textbook_id', 'list:reference textbook', unique=True),
    Field('professor_id', 'reference professor'))
 
 db.define_table('student',

@@ -1,0 +1,3 @@
+{{extend 'layout.html'}}
+<h1>This is the database_query/register_dept.html template</h1>
+{{=BEAUTIFY(response._vars)}}
