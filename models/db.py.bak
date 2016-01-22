@@ -88,8 +88,6 @@ auth.settings.reset_password_requires_verification = True
 ## >>> for row in rows: print row.id, row.myfield
 #########################################################################
 
-<<<<<<< HEAD
-=======
 # -*- coding: utf-8 -*-
 db = DAL("sqlite://storage.sqlite")
 
@@ -117,7 +115,7 @@ db.define_table('UCSCclass', # 'class' is a python reserved word
    Field('description', 'text'),
    Field('term'),
    Field('difficulty','double'),
-   Field('textbook_id', 'list:reference textbook'),
+   Field('textbook_id', 'list:reference textbook', unique=True),
    Field('professor_id', 'reference professor'))
 
 db.define_table('student',
@@ -201,6 +199,5 @@ db.define_table('textbook',
    Field('isbn', 'integer',unique=True))
 
 
->>>>>>> parent of 12c0ab3... edited views to exclude readable on forms for now
 ## after defining tables, uncomment below to enable auditing
-# auth.enable_record_versioning(db)
+auth.enable_record_versioning(db)
