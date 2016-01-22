@@ -7,9 +7,10 @@
 ## - user is required for authentication and authorization
 ## - download is for downloading files uploaded in the db (does streaming)
 #########################################################################
+from gluon.tools import Crud
+crud = Crud(db)
 
 def index():
-
     response.flash = T("Slug Hero")
     message='Welcome Slug Hero'
     return dict(message=T('Welcome to Slug Hero'))
@@ -17,9 +18,20 @@ def index():
 def showDepartment():
     depts = db().select(db.department.ALL, orderby=db.department.name)
     return locals()
+
+def departmentCreate():
+    form = crud.create(db.department,next='showDepartment')
+    return locals()
+
+def departmentEdit():
+    department = db.department(request.args(0)) or redirect(URL('showDepartment'))
+    form = crud.update(db.department,department,next='showDepartment')
+    return locals()
+
 def showCourse():
     #depts = db().select(db.department.name,db.department.short_name, orderby=db.department.name)
     return locals()
+
 
 def user():
     """
