@@ -198,3 +198,4 @@
 [2016-01-21 16:10:13] EDIT SlugHero/controllers/default.py: 0
 [2016-01-21 16:12:26] EDIT SlugHero/controllers/default.py: 2
 >>>>>>> parent of 12c0ab3... edited views to exclude readable on forms for now
+[2016-01-21 18:51:49] EDIT SlugHero/models/db.py: -96
