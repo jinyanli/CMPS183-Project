@@ -7,13 +7,13 @@ p4
 I512
 sS'unique'
 p5
-I00
+I01
 sS'sortable'
 p6
 I3
 sS'sql'
 p7
-S'CHAR(512)'
+S'CHAR(512) UNIQUE'
 p8
 sS'notnull'
 p9
@@ -22,22 +22,22 @@ sS'type'
 p10
 S'string'
 p11
-ssS'description'
+ssS'department_id'
 p12
 (dp13
 g4
-I32768
+I512
 sg5
 I00
 sg6
-I5
+I2
 sg7
-S'TEXT'
+S'INTEGER REFERENCES department (id) ON DELETE CASCADE  '
 p14
 sg9
 I00
 sg10
-S'text'
+S'reference department'
 p15
 ssS'id'
 p16
@@ -54,10 +54,11 @@ p18
 sg9
 I00
 sg10
-g16
-ssS'name'
+S'id'
 p19
-(dp20
+ssS'name'
+p20
+(dp21
 g4
 I512
 sg5
@@ -66,26 +67,26 @@ sg6
 I4
 sg7
 S'CHAR(512) UNIQUE'
-p21
+p22
 sg9
 I00
 sg10
 g11
-ssS'department_id'
-p22
-(dp23
+ssS'description'
+p23
+(dp24
 g4
-I512
+I32768
 sg5
 I00
 sg6
-I2
+I5
 sg7
-S'INTEGER REFERENCES department (id) ON DELETE CASCADE  '
-p24
+S'TEXT'
+p25
 sg9
 I00
 sg10
-S'reference department'
-p25
+S'text'
+p26
 ss.
