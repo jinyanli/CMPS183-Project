@@ -1,0 +1,16 @@
+{{extend 'layout.html'}}
+<h2>List of Classes of Course {{=course.name}}</h2>
+
+<table>
+  {{for aClass in classes:}}
+  {{className=course.name+' '+'aClass.quarter'+' '+aClass.year_}}
+  <tr>
+    <td>{{=A(className,_href=URL('classPage',args=ucscClass.id))}}</td>
+    <td>{{=A('edit',_href=URL('editClass',args=ucscClass.id))}}</td>
+  </tr>
+  {{pass}}
+  <tr>
+    <td>{{=A('add a class',_href=URL('createClass',args=course.id))}}</td>
+    <td></td>
+  </tr>
+</table>

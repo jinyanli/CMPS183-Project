@@ -5,7 +5,7 @@ db.define_table('department',
 
 db.define_table('course',
     Field('department_id', 'reference department',readable=False,writable=False),
-    Field('course_num', 'string', unique=True,requires=(IS_SLUG(),IS_NOT_EMPTY())),
+    Field('course_num', 'string', requires=(IS_SLUG(),IS_NOT_EMPTY())),
     Field('name', 'string', unique=True,requires=(IS_SLUG(),IS_NOT_EMPTY())),
     Field('description', 'text'))
 
@@ -16,10 +16,13 @@ db.define_table('professor',
     Field('department_id', 'reference department',readable=False,writable=False),
     Field('saltiness', 'double'))
 
+quarter=['fall','winter','spring','summer']
 db.define_table('ucscClass', # 'class' is a python reserved word
     Field('course_id', 'reference course',readable=False,writable=False),
-    Field('description', 'text'),
-    Field('term'),
+    Field('syllabus', 'text'),
+    Field('quarter','string',requires=IS_IN_SET(quarter)),
+    Field('year_','integer',requires = IS_FLOAT_IN_RANGE(2000,2100)),
+    Field('term','string'),
     Field('difficulty', 'double'),
     Field('textbook_ids', 'list:reference textbook'),
     Field('professor_id', 'reference professor',readable=False,writable=False),
@@ -28,6 +31,7 @@ db.define_table('ucscClass', # 'class' is a python reserved word
 
 db.define_table('classReview',
     Field('user_id', 'reference  auth_user',readable=False,writable=False),
+    Field('ucscClass_id', 'reference  ucscClass',readable=False,writable=False),
     Field('body', 'text', update=True),
     Field('term'),
     Field('rating', 'double'),
@@ -52,7 +56,7 @@ db.define_table('comm',
 
 db.define_table('studentGrade',
     Field('user_id', 'reference auth_user',readable=False,writable=False),
-    Field('grade', 'integer'),
+    Field('grade', 'list:string'),
     Field('ucscClass_id', 'reference ucscClass',readable=False,writable=False))
 
 gradeRange=['A+','A','A-','B+','B','B-','C+','C','C-','D','F']
