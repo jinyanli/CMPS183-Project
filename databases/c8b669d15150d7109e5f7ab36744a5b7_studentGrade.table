@@ -13,16 +13,16 @@ p6
 I3
 sS'sql'
 p7
-S'INTEGER'
+S'TEXT'
 p8
 sS'notnull'
 p9
 I00
 sS'type'
 p10
-S'integer'
+S'list:string'
 p11
-ssS'ucscClass_id'
+ssS'ucscclass_id'
 p12
 (dp13
 g4
@@ -71,5 +71,6 @@ p22
 sg9
 I00
 sg10
-g20
+S'id'
+p23
 ss.
