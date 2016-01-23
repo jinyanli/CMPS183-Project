@@ -9,6 +9,6 @@
 
 <ul>
     {{for uclass in info:}}
-    <p>{{=uclass.term}} {{=uclass.description}}</p>
+    <p>{{=uclass.quarter}} {{=uclass.year}} {{=uclass.description}}</p>
     {{pass}}
 </ul>

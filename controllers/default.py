@@ -39,8 +39,13 @@ def showClass():
 def addClass():
     ucscClass = db.course(request.args(0, cast=int)) or redirect(URL('index'))
     db.UCSCclass.course_id.default = ucscClass.id
-    form = SQLFORM(db.UCSCclass)
+    fields = ['description', 'quarter', 'year', 'difficulty', 'name', 'saltiness']
+    labels = {'name':'Professor Name'}
+    form = SQLFORM.factory(db.UCSCclass, db.professor, fields=fields, labels=labels)
     if form.process().accepted:
+        id = db.professor.insert(**db.professor._filter_fields(form.vars))
+        form.vars.professor_id=id
+        id = db.UCSCclass.insert(**db.UCSCclass._filter_fields(form.vars))
         response.flash = 'Class added'
         redirect(URL('showClass', args=ucscClass.id))
     info = db(db.UCSCclass.course_id==ucscClass.id).select()

@@ -106,17 +106,18 @@ db.define_table('course',
 db.define_table('professor',
    Field('professor_id', writable=False, readable=False),
    Field('name','string',unique=True, default=None),
-   Field('image', 'upload', update=True, authorize=True),
+   #Field('image', 'upload', update=True, authorize=True),
    Field('saltiness', 'double'))
 
 db.define_table('UCSCclass', # 'class' is a python reserved word
    Field('UCSCclass_id', writable=False, readable=False),
    Field('course_id', 'reference course', writable=False, readable=False),
    Field('description', 'text'),
-   Field('term'),
+   Field('quarter', requires=IS_IN_SET(['Fall', 'Winter', 'Spring', 'Summer'])),
+   Field('year', requires=IS_INT_IN_RANGE(2000, 2050)),
    Field('difficulty','double'),
-   Field('textbook_id', 'list:reference textbook'),
-   Field('professor_id', 'reference professor'))
+   Field('textbook_id', 'list:reference textbook', writable=False, readable=False),
+   Field('professor_id', 'reference professor', writable=False, readable=False))
 
 db.define_table('student',
    Field('student_id', writable=False, readable=False),
