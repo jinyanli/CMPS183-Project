@@ -1,4 +1,4 @@
-errors/
+errors/*
 sessions/
-sessions/sql.log
-progress.log
+sessions/*.log
+*.log
