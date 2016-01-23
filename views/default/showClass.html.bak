@@ -1,0 +1,14 @@
+{{extend 'layout.html'}}
+{{classShort = db.department[ucscClass.department_id]}}
+{{=A('Back To Courses', _href=URL('show', args=ucscClass.department_id))}}
+<h1>{{=classShort.short_name}} {{=ucscClass.course_num}}: {{=ucscClass.name}}</h1>
+
+<div style="text-align:center">
+    {{=A('Add a class', _href=URL('addClass', args=ucscClass.id))}}
+</div>
+
+<ul>
+    {{for uclass in info:}}
+    <p>{{=uclass.quarter}} {{=uclass.year}} {{=uclass.description}}</p>
+    {{pass}}
+</ul>
