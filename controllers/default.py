@@ -89,11 +89,6 @@ def professorCreate():
     #info = db(db.course.course_id==dept.id).select()
     return locals()
 
-@auth.requires_membership('managers')
-def manage():
-    grid = SQLFORM.grid(db.department)
-    return locals()
-
 def user():
     """
     exposes:
