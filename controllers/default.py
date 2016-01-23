@@ -56,7 +56,7 @@ def showCourse():
 
 def showClass():
     course = db.course(request.args(0)) or redirect(URL('showCourse',args=request.args(0)))
-    classes = db(db.ucscClass.course_id==course.id).select(orderby=db.ucscClass.year_,limitby=(0,100))
+    classes = db(db.ucscClass.course_id==course.id).select(orderby=db.ucscClass.yr,limitby=(0,100))
     return locals()
 
 def createClass():

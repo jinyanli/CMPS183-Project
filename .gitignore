@@ -1,4 +1,7 @@
 errors/*
+
 sessions/
+
 sessions/*.log
+
 *.log
