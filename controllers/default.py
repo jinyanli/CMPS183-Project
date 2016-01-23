@@ -33,7 +33,7 @@ def departmentEdit():
 
 def showCourse():
     dept = db.department(request.args(0)) or redirect(URL('showDepartment'))
-    courses = db(db.course.department_id==dept.id).select(orderby=db.course.name,limitby=(0,100))
+    courses = db(db.course.department_id==dept.id).select(orderby=db.course.name,limitby=(0,25))
     return locals()
 
 @auth.requires_login()
@@ -47,31 +47,6 @@ def courseCreate():
 def courseEdit():
     course = db.course(request.args(0)) or redirect(URL('showCourse'))
     form = crud.update(db.course,course,next='showCourse')
-    return locals()
-
-def showCourse():
-    dept = db.department(request.args(0)) or redirect(URL('showDepartment'))
-    courses = db(db.course.department_id==dept.id).select(orderby=db.course.name,limitby=(0,100))
-    return locals()
-
-def showClass():
-    course = db.course(request.args(0)) or redirect(URL('showCourse',args=request.args(0)))
-    classes = db(db.ucscClass.course_id==course.id).select(orderby=db.ucscClass.year_,limitby=(0,100))
-    return locals()
-
-def createClass():
-    db.ucscClass.course_id.default = request.args(0)
-    dept_id=db(db.course.id==db.ucscClass.course_id).select(db.course.department_id)
-    db.professor.department_id.default = dept_id
-    form=SQLFORM.factory(db.ucscClass,db.professor)
-    if form.process().accepted:
-        response.flash = 'class added'
-        redirect(URL('showClass', request.args(0)))
-    return locals()
-
-def editClass():
-    course = db.course(request.args(0)) or redirect(URL('showClass',args=request.args(0)))
-    classes = db(db.ucscClass.course_id==course.id).select(orderby=db.ucscClass.year_,limitby=(0,100))
     return locals()
 
 def showProfessor():
@@ -90,10 +65,14 @@ def professorCreate():
     return locals()
 
 @auth.requires_membership('managers')
-def manage():
+def manageDepartemnt():
     grid = SQLFORM.grid(db.department)
     return locals()
 
+@auth.requires_membership('managers')
+def manageCourse():
+    grid = SQLFORM.grid(db.course)
+    return locals()
 def user():
     """
     exposes:
