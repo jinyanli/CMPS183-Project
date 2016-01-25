@@ -1,0 +1,3 @@
+{{extend 'layout.html'}}
+<h1>This is the default/showProfessor.html template</h1>
+{{=profs}}

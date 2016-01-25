@@ -89,7 +89,7 @@ def professorCreate():
     #info = db(db.course.course_id==dept.id).select()
     return locals()
 
-def addProfessor():
+def addProfess():
     crud.messages.submit_button = 'Submit'
     crud.settings.keepvalues = True
     crud.settings.label_separator = ' :'
