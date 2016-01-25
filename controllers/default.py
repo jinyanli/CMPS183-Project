@@ -79,15 +79,15 @@ def showProfessor():
     return locals()
 
 @auth.requires_login()
-def professorCreate():
+#def professorCreate():
     #dept = db.department(request.args(0,cast=int)) or redirect(URL('index'))
     #db.course.department_id.default = dept.id
-    form = SQLFORM(db.professor)
-    if form.process().accepted:
-        response.flash = 'Professor added'
-        redirect(URL('showProfessor'))
+#    form = SQLFORM(db.professor)
+#    if form.process().accepted:
+#        response.flash = 'Professor added'
+#        redirect(URL('showProfessor'))
     #info = db(db.course.course_id==dept.id).select()
-    return locals()
+#    return locals()
 
 def addProfessor():
     crud.messages.submit_button = 'Submit'
@@ -95,6 +95,12 @@ def addProfessor():
     crud.settings.label_separator = ' :'
     crud.settings.formstyle = 'ul'
     form = crud.create(db.professor)
+    return locals()
+
+def professorCreate():
+    db.professor.department_id.default = request.args(0)
+    redirect='showprofessor/'+request.args(0)
+    form = crud.create(db.professor,next=redirect)
     return locals()
 
 def user():
