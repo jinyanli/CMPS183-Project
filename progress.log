@@ -137,3 +137,6 @@
 [2016-01-25 22:47:54] EDIT SlugHero/views/default/showCourse.html: 0
 [2016-01-25 22:48:41] EDIT SlugHero/views/default/showCourse.html: 0
 [2016-01-25 22:49:49] EDIT SlugHero/views/default/showCourse.html: 2
+[2016-01-25 22:58:21] EDIT SlugHero/views/default/showProfessor.html: -3
+[2016-01-25 23:20:20] EDIT SlugHero/controllers/default.py: 2
+[2016-01-25 23:22:25] EDIT SlugHero/controllers/default.py: -17
