@@ -1,0 +1,16 @@
+{{extend 'layout.html'}}
+<div style="text-align:center">
+<h1>{{=db.course[uclass.course_id].name}}: {{=uclass.quarter}} {{=uclass.year}}</h1>
+</div>
+
+{{if uclass.professor_id == None:}}
+    {{=A('Add a Professor', _href=URL('addProf', args=uclass.id))}}
+{{else:}}
+    Professor: {{=A(db.professor[uclass.professor_id].name, _href=URL('showProf', args=uclass.professor_id))}}
+{{pass}}
+
+<h1>Class Reviews</h1>
+{{for r in classReview:}}
+Rating: {{=r.rating}} {{=r.content}}
+<br>
+{{pass}}
