@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 db.define_table('department',
-    Field('name', 'string',unique=True,requires=(IS_SLUG(),IS_NOT_EMPTY(),IS_NOT_IN_DB(db,'department.name'))),
-    Field('short_name','string',unique=True,requires=(IS_SLUG(),IS_NOT_EMPTY(),IS_NOT_IN_DB(db,'department.short_name'))))
+    Field('name', 'string',unique=True,requires=(IS_SLUG(),IS_NOT_EMPTY())),
+    Field('short_name','string',unique=True,requires=(IS_SLUG(),IS_NOT_EMPTY())),
+    format = '%(name)s')
 
 db.define_table('course',
     Field('department_id', 'reference department',readable=False,writable=False),
@@ -13,8 +14,9 @@ db.define_table('professor',
     Field('first_name','string', default=None,requires=(IS_SLUG(),IS_NOT_EMPTY())),
     Field('last_name','string', default=None,requires=(IS_SLUG(),IS_NOT_EMPTY())),
     Field('image', 'upload'),
-    Field('department_id', 'reference department',readable=False,writable=False),
+    Field('department_id', 'reference department'),
     Field('saltiness', 'double'))
+db.professor.department_id.requires = IS_IN_DB(db, db.department.id, '%(name)s')
 
 quarter=['fall','winter','spring','summer']
 db.define_table('ucscClass', # 'class' is a python reserved word
