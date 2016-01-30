@@ -14,9 +14,8 @@ db.define_table('professor',
     Field('first_name','string', default=None,requires=(IS_SLUG(),IS_NOT_EMPTY())),
     Field('last_name','string', default=None,requires=(IS_SLUG(),IS_NOT_EMPTY())),
     Field('image', 'upload'),
-    Field('department_id', 'reference department'),
+    Field('department_id', 'reference department',readable=False,writable=False),
     Field('saltiness', 'double'))
-db.professor.department_id.requires = IS_IN_DB(db, db.department.id, '%(name)s')
 
 quarter=['fall','winter','spring','summer']
 db.define_table('ucscClass', # 'class' is a python reserved word

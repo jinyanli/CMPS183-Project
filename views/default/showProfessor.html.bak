@@ -1,0 +1,8 @@
+{{extend 'layout.html'}}
+<h1>Show Professor</h1>
+
+{{=profs}}
+
+<p>
+{{=A('Add Professor', _class="btn btn-primary", _href=URL('default', 'addProfessor'))}}
+</p>
