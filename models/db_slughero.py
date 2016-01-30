@@ -23,7 +23,7 @@ db.define_table('ucscClass', # 'class' is a python reserved word
     Field('course_id', 'reference course', readable=False, writable=False),
     Field('syllabus', 'text'),
     Field('quarter', 'string', requires=IS_IN_SET(quarter)),
-    Field('yr', ' integer', requires = IS_FLOAT_IN_RANGE(2000, 2100)),#year is a key word in SQL
+    Field('yr', 'integer', requires=IS_IN_SET(range(2000, 2101))), # year is a keyword in SQL
     Field('term', 'string'),
     Field('difficulty', 'double'),
     Field('textbook_ids', 'list:reference textbook'),
