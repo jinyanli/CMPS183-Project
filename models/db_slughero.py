@@ -87,7 +87,7 @@ db.define_table('professorReview',
     Field('rating', 'double'),
     Field('datetime', 'datetime'))
 db.professorReview.rating.requires = IS_FLOAT_IN_RANGE(0, 5)
-#db.professorReview.course_id.requires = IS_IN_DB(db(db.course.department_id==db.professorReview.department_id).select(db.course.id), db.course.id)
+
 
 db.define_table('note',
     Field('title', 'string'),
