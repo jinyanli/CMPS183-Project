@@ -95,7 +95,6 @@ def professorReview():
     if auth.user:
        db.profReview.user_id.default = auth.user.id
        db.profReview.professor_id.default = prof.id
-       #db.profReview.datetime.defualt = request.now
        #fields = ['description', 'quarter', 'year', 'difficulty']
 
        deptname=db.department(prof.department_id).short_name
