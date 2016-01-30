@@ -7,6 +7,7 @@
 ## - user is required for authentication and authorization
 ## - download is for downloading files uploaded in the db (does streaming)
 #########################################################################
+import string
 from gluon.tools import Crud
 crud = Crud(db)
 
@@ -50,6 +51,7 @@ def courseEdit():
 
 def showCourse():
     dept = db.department(request.args(0)) or redirect(URL('showDepartment'))
+    dept.name = deslugify(dept.name)
     courses = db(db.course.department_id==dept.id).select(orderby=db.course.name,limitby=(0,100))
     return locals()
 
@@ -98,7 +100,7 @@ def addProfessor():
 
 def professorCreate():
     db.professor.department_id.default = request.args(0)
-    redirect='showprofessor/'+request.args(0)
+    redirect = "showprofessor/%s" % request.args(0)
     crud.messages.submit_button = 'Add Professor'
     crud.settings.label_separator = ' :'
     form = crud.create(db.professor)
@@ -124,3 +126,11 @@ def call():
 
 def user():
     return dict(form=auth())
+
+
+def deslugify(_slug):
+    """
+    Convert a SLUG back into standard format.
+    e.g. "electrical-engineering" => "Electrical Engineering"
+    """
+    return string.capwords(_slug.replace('-', ' '))
