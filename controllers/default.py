@@ -122,3 +122,6 @@ def call():
     supports xml, json, xmlrpc, jsonrpc, amfrpc, rss, csv
     """
     return service()
+
+def user():
+    return dict(form=auth())
