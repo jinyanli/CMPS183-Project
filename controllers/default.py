@@ -77,6 +77,9 @@ def editClass():
 def showProfessor():
     profs = db().select(db.professor.ALL, orderby=db.professor.first_name)
     return locals()
+def professorReview():
+
+    return locals()
 
 @auth.requires_login()
 #def professorCreate():
