@@ -35,13 +35,8 @@ def departmentEdit():
     return locals()
 
 def showCourse():
-<<<<<<< HEAD
-    dept = db.department(request.args(0)) or redirect(URL('showDepartment'))
-    courses = db(db.course.department_id==dept.id).select(orderby=db.course.name,limitby=(0,25))
-=======
     dept = db.department(request.args(0,cast=int)) or redirect(URL('showDepartment'))
     courses = db(db.course.department_id==dept.id).select(orderby=db.course.name,limitby=(0,100))
->>>>>>> master
     return locals()
 
 @auth.requires_login()
@@ -57,8 +52,6 @@ def courseEdit():
     form = crud.update(db.course,course,next='showCourse')
     return locals()
 
-<<<<<<< HEAD
-=======
 def showCourse():
     dept = db.department(request.args(0)) or redirect(URL('showDepartment'))
     dept.name = deslugify(dept.name)
@@ -85,7 +78,6 @@ def editClass():
     classes = db(db.ucscClass.course_id==course.id).select(orderby=db.ucscClass.year_,limitby=(0,100))
     return locals()
 
->>>>>>> master
 def showProfessor():
     profs = db().select(db.professor.ALL, orderby=db.professor.first_name)
     return locals()
@@ -138,34 +130,6 @@ def addProfessor():
     form = crud.create(db.professor, next='showProfessor')
     return locals()
 
-<<<<<<< HEAD
-@auth.requires_membership('managers')
-def manageDepartemnt():
-    grid = SQLFORM.grid(db.department)
-    return locals()
-
-@auth.requires_membership('managers')
-def manageCourse():
-    grid = SQLFORM.grid(db.course)
-    return locals()
-def user():
-    """
-    exposes:
-    http://..../[app]/default/user/login
-    http://..../[app]/default/user/logout
-    http://..../[app]/default/user/register
-    http://..../[app]/default/user/profile
-    http://..../[app]/default/user/retrieve_password
-    http://..../[app]/default/user/change_password
-    http://..../[app]/default/user/bulk_register
-    use @auth.requires_login()
-        @auth.requires_membership('group name')
-        @auth.requires_permission('read','table name',record_id)
-    to decorate functions that need access control
-    also notice there is http://..../[app]/appadmin/manage/auth to allow administrator to manage users
-    """
-    return dict(form=auth())
-=======
 def professorCreate():
     db.professor.department_id.default = request.args(0,cast=int)
     redirect = "showprofessor/%s" % request.args(0,cast=int)
@@ -177,7 +141,6 @@ def professorCreate():
 def showPost():
     posts = db().select(db.postt.ALL, orderby=db.postt.datetime)
     return locals()
->>>>>>> master
 
 @auth.requires_login()
 def postCreate():
