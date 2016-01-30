@@ -1,4 +1,12 @@
 # -*- coding: utf-8 -*-
+
+def deslugify(_slug):
+    """
+    Convert a SLUG back into standard format.
+    e.g. "electrical-engineering" => "Electrical Engineering"
+    """
+    return string.capwords(_slug.replace('-', ' '))
+
 db.define_table('department',
     Field('name', 'string', unique=True, requires=(IS_SLUG(), IS_NOT_EMPTY())),
     Field('short_name', 'string', unique=True, requires=(IS_SLUG(), IS_NOT_EMPTY())),
@@ -8,7 +16,9 @@ db.define_table('course',
     Field('department_id', 'reference department', readable=False, writable=False),
     Field('course_num', 'string', requires=(IS_SLUG(), IS_NOT_EMPTY())),
     Field('name', 'string', unique=True, requires=(IS_SLUG(), IS_NOT_EMPTY())),
-    Field('description', 'text'))
+    Field('description', 'text'),
+    format = lambda this: deslugify(db.department(this.department_id).name)+ ' '+this.course_num
+    )
 
 db.define_table('professor',
     Field('first_name', 'string', default=None, requires=(IS_SLUG(), IS_NOT_EMPTY())),
@@ -35,7 +45,8 @@ db.define_table('classReview',
     Field('user_id', 'reference  auth_user', readable=False, writable=False),
     Field('ucscClass_id', 'reference  ucscClass', readable=False, writable=False),
     Field('body', 'text', update=True),
-    Field('term'),
+    Field('quarter', requires=IS_IN_SET(['Fall', 'Winter', 'Spring', 'Summer'])),
+    Field('yr', requires=IS_INT_IN_RANGE(2000, 2051)),
     Field('rating', 'double'),
     Field('datetime', 'datetime'))
 
@@ -68,12 +79,15 @@ db.studentGrade.grade.requires = IS_IN_SET(gradeRange)
 db.define_table('professorReview',
     Field('professor_id', 'reference professor', readable=False, writable=False),
     Field('user_id', 'reference auth_user', readable=False, writable=False),
-    Field('course_id', 'reference course', readable=False, writable=False),
-    Field('term'),
+    Field('department_id', 'reference department',readable=False, writable=False),
+    Field('course_id', 'reference course'),
+    Field('quarter', requires=IS_IN_SET(['Fall', 'Winter', 'Spring', 'Summer'])),
+    Field('yr', requires=IS_INT_IN_RANGE(2000, 2051)),#year
     Field('review', 'text', update=True),
     Field('rating', 'double'),
     Field('datetime', 'datetime'))
 db.professorReview.rating.requires = IS_FLOAT_IN_RANGE(0, 5)
+#db.professorReview.course_id.requires = IS_IN_DB(db(db.course.department_id==db.professorReview.department_id).select(db.course.id), db.course.id)
 
 db.define_table('note',
     Field('title', 'string'),

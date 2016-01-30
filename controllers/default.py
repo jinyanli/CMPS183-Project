@@ -91,8 +91,16 @@ def professorReview():
     prof= db.professor(request.args(0,cast=int)) or redirect(URL('showProfessor'))
     dept=deslugify(db.department(prof.department_id).name)
     db.professorReview.professor_id.default = prof.id
+    db.professorReview.user_id.defualt=auth.user.id
+    db.professorReview.department_id.defualt=prof.department_id
     message=TAG("<b>Log In To Post A Review</b>")
+    #fields = ['description', 'quarter', 'year', 'difficulty']
+    query=db(db.course.department_id==prof.department_id).select(db.course.id)
+    deptname=db.department(prof.department_id).short_name
+    rep=deptname.upper()+' '+'%(course_num)s'
+    db.professorReview.course_id.requires = IS_IN_DB(db(db.course.department_id==prof.department_id), db.course.id,rep,zero=T('choose one'))
     form = SQLFORM(db.professorReview).process() if auth.user else message
+
     return locals()
 
 @auth.requires_login()
