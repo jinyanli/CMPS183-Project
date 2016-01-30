@@ -3,7 +3,7 @@
   {{for dept in depts:}}
   <tr>
     <td>{{=A(dept.name,_href=URL('showCourse',args=dept.id))}}&nbsp;&nbsp;</td>
-    <td>{{=dept.short_name}}&nbsp;&nbsp;</td>
+    <td>{{=dept.short_name.upper()}}&nbsp;&nbsp;</td>
     <td>{{=A('edit',_href=URL('departmentEdit',args=dept.id))}}</td>
   </tr>
   {{pass}}
