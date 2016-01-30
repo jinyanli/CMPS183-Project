@@ -3,14 +3,16 @@
 
 <table>
   {{for course in courses:}}
-   {{courseName=dept.short_name+course.course_num}}
+    {{courseName=dept.short_name+course.course_num}}
   <tr>
-    <td>{{=A(courseName,_href=URL('showClass',args=course.id))}}</td>
-    <td>{{=A('  edit',_href=URL('courseEdit',args=course.id))}}</td>
+    <td>{{=A(courseName, _href=URL('showClass', args=course.id))}}</td>
+    <td>{{=A('  edit', _href=URL('courseEdit', args=course.id))}}</td>
   </tr>
   {{pass}}
   <tr>
-    <td>{{=A('add course',_href=URL('courseCreate',args=dept.id))}}</td>
-    <td>{{=A('add professor', _class="btn btn-success", _href=URL('professorCreate',args=dept.id))}}</td>
+    <td>{{=A('add course', _class="btn btn-success", _href=URL('courseCreate', args=dept.id))}}</td>
+  </tr>
+  <tr>
+    <td>{{=A('add professor', _class="btn btn-success", _href=URL('professorCreate', args=dept.id))}}</td>
   </tr>
 </table>

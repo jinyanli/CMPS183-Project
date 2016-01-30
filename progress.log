@@ -144,3 +144,4 @@
 [2016-01-29 14:12:47] EDIT SlugHero/models/db_slughero.py: 0
 [2016-01-29 14:14:07] EDIT SlugHero/models/db_slughero.py: 1
 [2016-01-29 16:02:24] EDIT SlugHero/controllers/default.py: 2
+[2016-01-29 19:03:12] EDIT SlugHero/views/default/showCourse.html: 0

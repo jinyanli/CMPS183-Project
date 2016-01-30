@@ -5,7 +5,7 @@
   {{for course in courses:}}
     {{courseName=dept.short_name+course.course_num}}
   <tr>
-    <td>{{=A(courseName, _href=URL('showClass', args=course.id))}}</td>
+    <td>{{=A(courseName.upper(), _href=URL('showClass', args=course.id))}}</td>
     <td>{{=A('  edit', _href=URL('courseEdit', args=course.id))}}</td>
   </tr>
   {{pass}}
