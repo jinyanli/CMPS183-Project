@@ -17,6 +17,9 @@ def index():
 
 def showDepartment():
     depts = db().select(db.department.ALL, orderby=db.department.name)
+    for dept in depts:
+        dept.name=deslugify(dept.name)
+
     return locals()
 
 @auth.requires_login()
