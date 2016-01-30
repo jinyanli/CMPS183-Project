@@ -22,7 +22,7 @@ sS'type'
 p10
 S'double'
 p11
-ssS'yr'
+ssS'quarter'
 p12
 (dp13
 g4
@@ -30,7 +30,7 @@ I512
 sg5
 I00
 sg6
-I6
+I5
 sg7
 S'CHAR(512)'
 p14
@@ -124,7 +124,7 @@ I00
 sg10
 S'reference course'
 p35
-ssS'quarter'
+ssS'yr'
 p36
 (dp37
 g4
@@ -132,7 +132,7 @@ I512
 sg5
 I00
 sg6
-I5
+I6
 sg7
 S'CHAR(512)'
 p38
@@ -162,20 +162,20 @@ p43
 (dp44
 S'sortable'
 p45
-I9
+L9L
 sS'sql'
 p46
 S'TIMESTAMP'
 p47
 sS'length'
 p48
-I512
+L512L
 sS'notnull'
 p49
-I00
+L0L
 sS'unique'
 p50
-I00
+L0L
 sS'type'
 p51
 S'datetime'

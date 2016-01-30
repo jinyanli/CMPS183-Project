@@ -75,7 +75,7 @@ db.define_table('studentGrade',
 gradeRange=['A+', 'A', 'A-', 'B+', 'B', 'B-', 'C+', 'C', 'C-', 'D', 'F', 'P', 'NP']
 db.studentGrade.grade.requires = IS_IN_SET(gradeRange)
 
-#new table for pro
+#new table for professor
 db.define_table('profReview',
      Field('professor_id', 'reference professor', readable=False, writable=False),
      Field('user_id', 'reference auth_user', readable=False, writable=False),

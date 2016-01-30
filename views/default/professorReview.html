@@ -2,9 +2,9 @@
 {{name="%s %s" % (prof.first_name, prof.last_name)}}
 <table>
    <tr>
-     <th rowspan="3">
+     <td rowspan="3">
      <img width="150px" src="{{=URL('download', args=prof.image)}}" />
-     </th>
+   </td>
      <td><h3><b>{{=name}}</b></h3><td>
    </tr>
    <tr>
@@ -14,6 +14,34 @@
      <td><h5><b>Saltiness:&nbsp;{{=prof.saltiness}}</b></h5></td>
    </tr>
 </table>
+{{if auth.user:}}
 {{=form}}
-{{=request.now}}
-{{=reviews}}
+{{else:}}
+<h2><b>{{=A('Log In To Post A review', _href=URL('default', 'user', args='login',vars=dict(_next=URL(args=request.args, vars=request.vars))))}}</b></h2>
+{{pass}}
+<table class = "table table-bordered">
+<tbody>
+  <thead>
+   <tr>
+      <th>Rating</th>
+      <th>Class</th>
+      <th>Comment</th>
+   </tr>
+</thead>
+{{for review in reviews:}}
+{{student=db.auth_user(auth.user.id)}}
+     <tr>
+       <td>
+          <p><b>Student:&nbsp;</b>{{=student.first_name+' '+student.last_name}}</p>
+          <p><b>Posted On:&nbsp;</b>{{=review.datetime}}</p>
+          <p><b>Rating:&nbsp;</b>{{=review.rating}}</p>
+       </td>
+       <td>
+         <p>{{student=db.auth_user(review.user_id)}}</p>
+         <p><b>Cousre:&nbsp;</b>{{=deptname.upper()}}&nbsp;{{=db.course(review.course_id).course_num}}</p><p><b>Term:</b>{{=review.quarter}}{{=review.yr}}</p>
+       </td>
+       <td >{{=review.review}}</td>
+    </tr>
+{{pass}}
+  </tbody>
+</table>
