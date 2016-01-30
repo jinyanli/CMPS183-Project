@@ -10,7 +10,7 @@ p5
 I00
 sS'sortable'
 p6
-I8
+I7
 sS'sql'
 p7
 S'DOUBLE'
@@ -22,7 +22,7 @@ sS'type'
 p10
 S'double'
 p11
-ssS'quarter'
+ssS'term'
 p12
 (dp13
 g4
@@ -66,12 +66,12 @@ I00
 sg6
 I2
 sg7
-S'INTEGER REFERENCES professor (id) ON DELETE CASCADE  '
+S'INTEGER REFERENCES professor1 (id) ON DELETE CASCADE  '
 p22
 sg9
 I00
 sg10
-S'reference professor'
+S'reference professor1'
 p23
 ssS'review'
 p24
@@ -81,7 +81,7 @@ I32768
 sg5
 I00
 sg6
-I7
+I6
 sg7
 S'TEXT'
 p26
@@ -98,18 +98,17 @@ I512
 sg5
 I00
 sg6
-I9
+I8
 sg7
 S'TIMESTAMP'
 p30
 sg9
 I00
 sg10
-S'datetime'
-p31
+g28
 ssS'course_id'
-p32
-(dp33
+p31
+(dp32
 g4
 I512
 sg5
@@ -117,32 +116,16 @@ I00
 sg6
 I4
 sg7
-S'INTEGER REFERENCES course (id) ON DELETE CASCADE  '
+S'INTEGER REFERENCES course1 (id) ON DELETE CASCADE  '
+p33
+sg9
+I00
+sg10
+S'reference course1'
 p34
-sg9
-I00
-sg10
-S'reference course'
-p35
-ssS'yr'
-p36
-(dp37
-g4
-I512
-sg5
-I00
-sg6
-I6
-sg7
-S'CHAR(512)'
-p38
-sg9
-I00
-sg10
-g15
 ssS'id'
-p39
-(dp40
+p35
+(dp36
 g4
 I512
 sg5
@@ -151,33 +134,9 @@ sg6
 I1
 sg7
 S'INTEGER PRIMARY KEY AUTOINCREMENT'
-p41
+p37
 sg9
 I00
 sg10
-S'id'
-p42
-ssS'posted_on'
-p43
-(dp44
-S'sortable'
-p45
-I9
-sS'sql'
-p46
-S'TIMESTAMP'
-p47
-sS'length'
-p48
-I512
-sS'notnull'
-p49
-I00
-sS'unique'
-p50
-I00
-sS'type'
-p51
-S'datetime'
-p52
+g35
 ss.
