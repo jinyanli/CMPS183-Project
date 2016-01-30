@@ -4,11 +4,12 @@
 <h1>{{=classShort.short_name}} {{=ucscClass.course_num}}: {{=ucscClass.name}}</h1>
 
 <div style="text-align:center">
-    {{=A('Add a class', _href=URL('addClass', args=ucscClass.id))}}
+    {{=A('Add Class', _href=URL('addClass', args=ucscClass.id))}}
 </div>
 
 <ul>
     {{for uclass in info:}}
-    <p>{{=uclass.quarter}} {{=uclass.year}} {{=uclass.description}}</p>
+    {{term = uclass.quarter + " " + uclass.year}}
+    {{=LI(A(term, _href=URL("term", args=uclass.id)))}}
     {{pass}}
 </ul>

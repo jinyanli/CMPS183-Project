@@ -114,7 +114,7 @@ db.define_table('UCSCclass', # 'class' is a python reserved word
    Field('course_id', 'reference course', writable=False, readable=False),
    Field('description', 'text'),
    Field('quarter', requires=IS_IN_SET(['Fall', 'Winter', 'Spring', 'Summer'])),
-   Field('year', requires=IS_INT_IN_RANGE(2000, 2050)),
+   Field('year', requires=IS_INT_IN_RANGE(2000, 2051)),
    Field('difficulty','double'),
    Field('textbook_id', 'list:reference textbook', writable=False, readable=False),
    Field('professor_id', 'reference professor', writable=False, readable=False))
@@ -125,7 +125,7 @@ db.define_table('student',
    Field('last_name', 'string'))
 
 db.define_table('classReview',
-   Field('classReview_id', writable=False, readable=False),
+   Field('class_id', writable=False, readable=False),
    Field('student_id', 'reference student', writable=False, readable=False),
    Field('content','text',update=True),
    Field('term'),
