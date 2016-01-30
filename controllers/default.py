@@ -89,14 +89,17 @@ def showProfessor():
     #info = db(db.course.course_id==dept.id).select()
 #    return locals()
 
+#function on show professor page
+@auth.requires_login()
 def addProfessor():
     crud.messages.submit_button = 'Submit'
     crud.settings.keepvalues = True
     crud.settings.label_separator = ' :'
     crud.settings.formstyle = 'ul'
-    form = crud.create(db.professor)
+    form = crud.create(db.professor,next='showProfessor')
     return locals()
 
+#function of class page
 def professorCreate():
     db.professor.department_id.default = request.args(0)
     redirect='showprofessor/'+request.args(0)
