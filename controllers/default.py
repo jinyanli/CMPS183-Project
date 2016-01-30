@@ -77,6 +77,11 @@ def showProfessor():
     profs = db().select(db.professor.ALL, orderby=db.professor.first_name)
     return locals()
 
+def professorEdit():
+    prof = db.professor(request.args(0)) or redirect(URL('showProfessor'))
+    form = crud.update(db.professor,prof,next='showProfessor')
+    return locals()
+
 def professorReview():
     prof= db.professor(request.args(0)) or redirect(URL('showProfessor'))
     return locals()
