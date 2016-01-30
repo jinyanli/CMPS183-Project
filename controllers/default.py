@@ -109,6 +109,7 @@ def addProfessor():
 
 def professorCreate():
     db.professor.department_id.default = request.args(0)
+    redirect = "showprofessor/%s" % request.args(0)
     crud.messages.submit_button = 'Add Professor'
     crud.settings.label_separator = ' :'
     form = crud.create(db.professor)
