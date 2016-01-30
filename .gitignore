@@ -5,3 +5,4 @@ sessions/
 sessions/*.log
 
 *.log
+databases/sql.log
