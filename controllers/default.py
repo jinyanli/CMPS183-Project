@@ -89,6 +89,9 @@ def professorEdit():
 
 def professorReview():
     prof= db.professor(request.args(0)) or redirect(URL('showProfessor'))
+    dept=deslugify(db.department(prof.department_id).name)
+    db.professorReview.professor_id.default = prof.id
+    form = SQLFORM(db.professorReview).process() if auth.user else '<b>Log In To Post A Review</b>'
     return locals()
 
 @auth.requires_login()
