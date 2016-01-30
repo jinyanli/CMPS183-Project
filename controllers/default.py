@@ -12,7 +12,6 @@ crud = Crud(db)
 
 def index():
     response.flash = T("Slug Hero")
-    message='Welcome Slug Hero'
     return dict(message=T('Welcome to Slug Hero'))
 
 def showDepartment():
@@ -94,7 +93,7 @@ def addProfessor():
     crud.settings.keepvalues = True
     crud.settings.label_separator = ' :'
     crud.settings.formstyle = 'ul'
-    form = crud.create(db.professor)
+    form = crud.create(db.professor, next='showProfessor')
     return locals()
 
 def professorCreate():

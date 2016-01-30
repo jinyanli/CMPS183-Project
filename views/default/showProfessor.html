@@ -1,4 +1,7 @@
 {{extend 'layout.html'}}
 <h1>Show Professor</h1>
-
-{{=profs}}
+{{=A('add Professor', _class='btn btn-primary', _href=URL('addProfessor'))}}
+{{for prof in profs:}}
+    {{name="%s %s" % (prof.first_name, prof.last_name)}}
+    {{=LI(A(name, _href=URL('rateProfessor', args=prof.id)))}}
+{{pass}}
