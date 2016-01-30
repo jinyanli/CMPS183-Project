@@ -1,4 +1,14 @@
-errors/
+errors/*
+
 sessions/
 
+<<<<<<< HEAD
+=======
+sessions/*.log
+
+*.log
+
+databases/sql.log
+
+>>>>>>> master
 databases/sql.log

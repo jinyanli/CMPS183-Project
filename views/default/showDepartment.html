@@ -1,12 +1,19 @@
 {{extend 'layout.html'}}
 <table>
+<<<<<<< HEAD
   <tr>
     <td>{{=A('Manage Departments',_href=URL('manageDepartemnt'))}}</td>
   </tr>
+=======
+>>>>>>> master
   {{for dept in depts:}}
   <tr>
-    <td>{{=A(dept.name,_href=URL('showCourse',args=dept.id))}}</td>
-    <td>{{=dept.short_name}}</td>
+    <td>{{=A(dept.name,_href=URL('showCourse',args=dept.id))}}&nbsp;&nbsp;</td>
+    <td>{{=dept.short_name.upper()}}&nbsp;&nbsp;</td>
+    <td>{{=A('edit',_href=URL('departmentEdit',args=dept.id))}}</td>
   </tr>
   {{pass}}
+  <tr>
+    <td>{{=A('add Departments',_href=URL('departmentCreate'))}}</td>
+  </tr>
 </table>

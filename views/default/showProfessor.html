@@ -1,0 +1,14 @@
+{{extend 'layout.html'}}
+<h1>Show Professor</h1>
+{{=A('add Professor', _class='btn btn-primary', _href=URL('addProfessor'))}}
+</br>
+<table>
+  {{for prof in profs:}}
+  {{name="%s %s" % (prof.first_name, prof.last_name)}}
+  <tr>
+    <td>{{=A(name, _href=URL('professorReview', args=prof.id))}}</td>
+    <td>&nbsp;&nbsp;&nbsp;</td>
+    <td>{{=A('edit',_href=URL('professorEdit',args=prof.id))}}</td>
+  </tr>
+  {{pass}}
+</table>

@@ -1,0 +1,12 @@
+{{extend 'layout.html'}}
+<table>
+  {{for comm in comms:}}
+  <tr>
+    <td>{{=A(comm.datetime)}}</td>
+    <td>{{=A(comm.body)}}</td> 
+  </tr>
+  {{pass}}
+  <tr>
+    <td>{{=A('add item',_href=URL('commCreate'))}}</td>
+  </tr>
+</table>

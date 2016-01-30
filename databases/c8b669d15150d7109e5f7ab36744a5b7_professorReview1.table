@@ -66,12 +66,12 @@ I00
 sg6
 I2
 sg7
-S'INTEGER REFERENCES professor (id) ON DELETE CASCADE  '
+S'INTEGER REFERENCES professor1 (id) ON DELETE CASCADE  '
 p22
 sg9
 I00
 sg10
-S'reference professor'
+S'reference professor1'
 p23
 ssS'review'
 p24
@@ -116,12 +116,12 @@ I00
 sg6
 I4
 sg7
-S'INTEGER REFERENCES course (id) ON DELETE CASCADE  '
+S'INTEGER REFERENCES course1 (id) ON DELETE CASCADE  '
 p33
 sg9
 I00
 sg10
-S'reference course'
+S'reference course1'
 p34
 ssS'id'
 p35
