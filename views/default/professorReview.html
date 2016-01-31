@@ -1,4 +1,5 @@
 {{extend 'layout.html'}}
+{{import string}}
 {{name="%s %s" % (prof.first_name, prof.last_name)}}
 <table>
    <tr>
@@ -15,7 +16,8 @@
    </tr>
 </table>
 {{if auth.user:}}
-{{=form}}
+<h2><b>{{=A('Post A Review', _href=URL('postProfessorReview', args=prof.id))}}</b></h2>
+{{#=form}}
 {{else:}}
 <h2><b>{{=A('Log In To Post A review', _href=URL('default', 'user', args='login',vars=dict(_next=URL(args=request.args, vars=request.vars))))}}</b></h2>
 {{pass}}
@@ -29,18 +31,23 @@
    </tr>
 </thead>
 {{for review in reviews:}}
-{{student=db.auth_user(auth.user.id)}}
+{{student=db.auth_user(review.user_id)}}
      <tr>
        <td>
-          <p><b>Student:&nbsp;</b>{{=student.first_name+' '+student.last_name}}</p>
           <p><b>Posted On:&nbsp;</b>{{=review.datetime}}</p>
-          <p><b>Rating:&nbsp;</b>{{=review.rating}}</p>
+          <p><b>Helpfulness:&nbsp;</b>{{=review.helpfulness}}</p>
+          <p><b>Clarity:&nbsp;</b>{{=review.clarity}}</p>
+          <p><b>Easiness:&nbsp;</b>{{=review.easiness}}</p>
+          <p><b>Overall Rating:&nbsp;</b>{{=review.rating}}</p>
        </td>
        <td>
          <p>{{student=db.auth_user(review.user_id)}}</p>
          <p><b>Cousre:&nbsp;</b>{{=deptname.upper()}}&nbsp;{{=db.course(review.course_id).course_num}}</p><p><b>Term:</b>{{=review.quarter}}{{=review.yr}}</p>
        </td>
-       <td >{{=review.review}}</td>
+       <td>
+         <p><b>{{=string.capwords(student.first_name+' '+student.last_name)}}&nbsp;says:</b></p>
+         {{=review.review}}
+       </td>
     </tr>
 {{pass}}
   </tbody>

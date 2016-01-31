@@ -70,7 +70,7 @@ def createClass():
     form=SQLFORM.factory(db.ucscClass,db.professor)
     if form.process().accepted:
         response.flash = 'class added'
-        redirect(URL('showClass', request.args(0,cast=int)))
+        redirect(URL('showClass', args=request.args(0,cast=int)))
     return locals()
 
 def editClass():
@@ -82,35 +82,40 @@ def showProfessor():
     profs = db().select(db.professor.ALL, orderby=db.professor.first_name)
     return locals()
 
+@auth.requires_login()
 def professorEdit():
     prof = db.professor(request.args(0,cast=int)) or redirect(URL('showProfessor'))
     form = crud.update(db.professor,prof,next='showProfessor')
     return locals()
 
 def professorReview():
-
     prof= db.professor(request.args(0,cast=int)) or redirect(URL('showProfessor'))
     dept=deslugify(db.department(prof.department_id).name)
-
-    if auth.user:
-       db.profReview.user_id.default = auth.user.id
-       db.profReview.professor_id.default = prof.id
-       #fields = ['description', 'quarter', 'year', 'difficulty']
-
-       deptname=db.department(prof.department_id).short_name
-       rep=deptname.upper()+' '+'%(course_num)s'
-       db.profReview.course_id.requires = IS_IN_DB(db(db.course.department_id==prof.department_id), db.course.id,rep,zero=T('choose one'))
-       message=TAG("<b>Log In To Post A Review</b>")
-       form = SQLFORM(db.profReview).process() if auth.user else message
-       if form.process().accepted:
-           response.flash = 'review added'
-           redirect(URL('professorReview', request.args(0,cast=int)))
-
+    deptname=db.department(prof.department_id).short_name
     reviews = db().select(db.profReview.ALL, orderby=db.profReview.datetime)
-
     return locals()
 
 @auth.requires_login()
+def postProfessorReview():
+    prof= db.professor(request.args(0,cast=int)) or redirect(URL('professorReview', args=request.args(0,cast=int)))
+    #redirect(URL('professorReview', args=request.args(0,cast=int)))
+    db.profReview.user_id.default = auth.user.id
+    db.profReview.professor_id.default = prof.id
+      #fields = ['description', 'quarter', 'year', 'difficulty']
+    deptname=db.department(prof.department_id).short_name
+    rep=deptname.upper()+' '+'%(course_num)s'
+    db.profReview.course_id.requires = IS_IN_DB(db(db.course.department_id==prof.department_id), db.course.id,rep,zero=T('choose one'))
+    message=TAG("<b>Log In To Post A Review</b>")
+    form = SQLFORM(db.profReview)
+    if form.process().accepted:
+       profReview=db.profReview(prof.id)
+       #avg=(int(profReview.helpfulness)+int(profReview.clarity)+int(profReview.easiness))/3.0
+       #db.profReview.update_or_insert(db.profReview.professor_id==prof.id,rating=avg)
+       session.flash = 'review added'
+       redirect(URL('default','professorReview', args=request.args(0,cast=int)))
+    return locals()
+
+#@auth.requires_login()
 #def professorCreate():
     #dept = db.department(request.args(0,cast=int)) or redirect(URL('index'))
     #db.course.department_id.default = dept.id

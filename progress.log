@@ -147,3 +147,6 @@
 [2016-01-29 19:03:12] EDIT SlugHero/views/default/showCourse.html: 0
 [2016-01-29 19:09:32] CREATE default/professorReview.html: 0
 [2016-01-29 19:09:55] EDIT SlugHero/views/default/professorReview.html: -2
+[2016-01-30 15:47:17] CREATE default/postProfessorReview.html: 0
+[2016-01-30 15:47:29] EDIT SlugHero/views/default/postProfessorReview.html: -1
+[2016-01-30 15:47:45] EDIT SlugHero/views/default/postProfessorReview.html: 0

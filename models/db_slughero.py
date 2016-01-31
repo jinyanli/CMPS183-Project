@@ -83,7 +83,11 @@ db.define_table('profReview',
      Field('quarter', requires=IS_IN_SET(['Fall', 'Winter', 'Spring', 'Summer'])),
      Field('yr', requires=IS_INT_IN_RANGE(2000, 2051)),#year
      Field('review', 'text', update=True),
-     Field('rating', 'double'),
+     Field('helpfulness', requires=IS_IN_SET([1,2,3,4,5])),
+     Field('clarity', requires=IS_IN_SET([1,2,3,4,5])),
+     Field('easiness', requires=IS_IN_SET([1,2,3,4,5])),
+     Field('rating', 'double', readable=False,writable=False,
+            compute=lambda r: (int(r['helpfulness'])+int(r['clarity'])+int(r['easiness']))/3),
      Field('datetime', 'datetime', readable=False,writable=False,default=request.now))
 
 #below table doesn't work. don't know why
