@@ -41,7 +41,7 @@ db.define_table('ucscClass', # 'class' is a python reserved word
     Field('user_id', 'reference auth_user', readable=False, writable=False),
     Field('datetime', 'datetime'))
 
-db.define_table('classRevieww',
+db.define_table('classReview',
     Field('user_id', 'reference  auth_user', readable=False, writable=False),
     Field('ucscClass_id', 'reference  ucscClass', readable=False, writable=False),
     Field('body', 'text', update=True),
@@ -50,7 +50,7 @@ db.define_table('classRevieww',
     Field('rating', 'double'),
     Field('datetime', 'datetime', readable=False,writable=False, default=request.now))
 
-db.define_table('postt',
+db.define_table('post',
     Field('ucscClass_id', 'reference ucscClass', readable=False, writable=False),
     Field('user_id', 'reference  auth_user', readable=False, writable=False),
     Field('title', 'string', notnull=True),
@@ -60,28 +60,23 @@ db.define_table('postt',
     Field('datetime', 'datetime', readable=False,writable=False,default=request.now))
 
 #comment is a resevered key word. Can't be used
-db.define_table('commm',
+db.define_table('comm',
     Field('user_id', 'reference  auth_user', readable=False, writable=False),
-    Field('post_id', 'reference postt', readable=False , writable=False),
+    Field('post_id', 'reference post', readable=False , writable=False),
     Field('body', 'text'),
     Field('datetime', 'datetime', readable=False,writable=False,default=request.now))
 
 
-db.define_table('studentGradee',
+db.define_table('studentGrade',
     Field('user_id', 'reference auth_user', readable=False, writable=False),
     Field('grade', 'list:string'),
     Field('ucscClass_id', 'reference ucscClass', readable=False, writable=False))
 
 gradeRange=['A+', 'A', 'A-', 'B+', 'B', 'B-', 'C+', 'C', 'C-', 'D', 'F', 'P', 'NP']
-db.studentGradee.grade.requires = IS_IN_SET(gradeRange)
+db.studentGrade.grade.requires = IS_IN_SET(gradeRange)
 
-<<<<<<< HEAD
-#new table for pro
-db.define_table('profRevieww',
-=======
-#new table for professor
+
 db.define_table('profReview',
->>>>>>> refs/remotes/origin/jinyan2
      Field('professor_id', 'reference professor', readable=False, writable=False),
      Field('user_id', 'reference auth_user', readable=False, writable=False),
      Field('course_id', 'reference course'),
@@ -95,21 +90,7 @@ db.define_table('profReview',
             compute=lambda r: (int(r['helpfulness'])+int(r['clarity'])+int(r['easiness']))/3),
      Field('datetime', 'datetime', readable=False,writable=False,default=request.now))
 
-#below table doesn't work. don't know why
-"""
-db.define_table('profReview',
-    Field('professor_id', 'reference professor', readable=False, writable=False),
-    Field('user_id', 'reference auth_user', readable=False, writable=False),
-    Field('course_id', 'reference course'),
-    Field('quarter', requires=IS_IN_SET(['Fall', 'Winter', 'Spring', 'Summer'])),
-    Field('yr', requires=IS_INT_IN_RANGE(2000, 2051)),#year
-    Field('review', 'text', update=True),
-    Field('rating', 'double'),
-    Field('posted_on', 'datetime', readable=False,writable=False))
-db.professorRevieww.rating.requires = IS_FLOAT_IN_RANGE(0, 5)
-"""
-
-db.define_table('notee',
+db.define_table('note',
     Field('title', 'string'),
     Field('notefile', 'upload'),
     Field('user_id', 'reference auth_user', readable=False, writable=False),
@@ -119,9 +100,9 @@ db.define_table('notee',
     Field('datetime', 'datetime'))
 
 noteType = ['exam', 'homework', 'class note', 'course material', 'solution', 'other']
-db.notee.notetype.requires = IS_IN_SET(noteType)
+db.note.notetype.requires = IS_IN_SET(noteType)
 
-db.define_table('textbookk',
+db.define_table('textbook',
     Field('title', 'string', ondelete='CASCADE'),
     Field('author', 'list:string'),
     Field('publication_year', 'integer'),
