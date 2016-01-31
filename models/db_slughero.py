@@ -59,8 +59,10 @@ db.define_table('post',
     Field('title', 'string', notnull=True),
     Field('body', 'text', notnull=True),
     Field('price', 'integer'), # price is in cents (eg 4000 -> $40)
+    Field('status','boolean', default=False),
+    Field('datetime', 'datetime', readable=False,writable=False,default=request.now),
     Field('image', 'upload'),
-    Field('datetime', 'datetime', readable=False,writable=False,default=request.now))
+    format = '%(title)s')
 
 #comment is a resevered key word. Can't be used
 db.define_table('comm',
