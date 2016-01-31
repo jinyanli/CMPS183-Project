@@ -86,6 +86,7 @@ def professorEdit():
     form = crud.update(db.professor,prof,next='showProfessor')
     return locals()
 
+#function for professorReview page
 def professorReview():
     prof= db.professor(request.args(0,cast=int)) or redirect(URL('showProfessor'))
     avg=db.profReview.rating.avg()
@@ -96,6 +97,7 @@ def professorReview():
     reviews =db(db.profReview.professor_id==prof.id).select(db.profReview.ALL, orderby=db.profReview.datetime)
     return locals()
 
+#function for posting a review for a professor for postProfessorReview page
 @auth.requires_login()
 def postProfessorReview():
     prof= db.professor(request.args(0,cast=int)) or redirect(URL('professorReview', args=request.args(0,cast=int)))
@@ -113,6 +115,7 @@ def postProfessorReview():
        redirect(URL('default','professorReview', args=request.args(0,cast=int)))
     return locals()
 
+#function for edit a review in the professor page
 @auth.requires_login()
 def editProfessorReview():
     profreview=db.profReview(request.args(0,cast=int)) or redirect(URL('professorReview', args=request.args(1,cast=int)))
@@ -130,6 +133,7 @@ def editProfessorReview():
     #info = db(db.course.course_id==dept.id).select()
 #    return locals()
 
+#this function is for adding for showProfessor page
 def addProfessor():
     crud.messages.submit_button = 'Submit'
     crud.settings.keepvalues = True
@@ -138,6 +142,7 @@ def addProfessor():
     form = crud.create(db.professor, next='showProfessor')
     return locals()
 
+#Jason's function
 def professorCreate():
     db.professor.department_id.default = request.args(0,cast=int)
     redirect = "showprofessor/%s" % request.args(0,cast=int)
@@ -146,6 +151,8 @@ def professorCreate():
     form = crud.create(db.professor)
     return locals()
 
+#below are helen's functions for creating general discussion forum
+#some of them doesn't work
 def showPost():
     posts = db().select(db.post.ALL, orderby=db.post.datetime)
     return locals()
@@ -158,7 +165,7 @@ def postCreate():
 
 @auth.requires_login()
 def postEdit():
-    post = db.postt(request.args(0,cast=int)) or redirect(URL('showPost'))
+    post = db.post(request.args(0,cast=int)) or redirect(URL('showPost'))
     form = crud.update(db.course,course,next='showPost')
     return locals()
 
