@@ -143,13 +143,13 @@ def professorCreate():
     return locals()
 
 def showPost():
-    posts = db().select(db.postt.ALL, orderby=db.postt.datetime)
+    posts = db().select(db.post.ALL, orderby=db.post.datetime)
     return locals()
 
 @auth.requires_login()
 def postCreate():
-    db.postt.ucscClass_id.default = request.args(0,cast=int)
-    form = crud.create(db.postt,next=URL('showPost'))
+    db.post.ucscClass_id.default = request.args(0,cast=int)
+    form = crud.create(db.post,next=URL('showPost'))
     return locals()
 
 @auth.requires_login()
@@ -160,19 +160,19 @@ def postEdit():
 
 
 def showComm():
-    comms = db().select(db.commm.ALL, orderby=db.commm.datetime)
+    comms = db().select(db.comm.ALL, orderby=db.comm.datetime)
     return locals()
 
 @auth.requires_login()
 def commCreate():
-    db.commm.post_id_id.default = request.args(0,cast=int)
-    form = crud.create(db.commm,next=URL('showComm'))
+    db.comm.post_id_id.default = request.args(0,cast=int)
+    form = crud.create(db.comm,next=URL('showComm'))
     return locals()
 
 @auth.requires_login()
 def commEdit():
-    comm = db.commm(request.args(0,cast=int)) or redirect(URL('showComm'))
-    form = crud.update(db.commm,comm,next='showComm')
+    comm = db.comm(request.args(0,cast=int)) or redirect(URL('showComm'))
+    form = crud.update(db.comm,comm,next='showComm')
     return locals()
 
 @cache.action()
