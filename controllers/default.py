@@ -19,7 +19,6 @@ def showDepartment():
     depts = db().select(db.department.ALL, orderby=db.department.name)
     for dept in depts:
         dept.name=deslugify(dept.name)
-
     return locals()
 
 @auth.requires_login()
@@ -42,7 +41,6 @@ def showCourse():
 @auth.requires_login()
 def courseCreate():
     db.course.department_id.default = request.args(0,cast=int)
-    #redirect='showCourse/'+request.args(0,cast=int)
     form = crud.create(db.course,next=URL('showCourse',args=request.args(0,cast=int)))
     return locals()
 
@@ -106,7 +104,6 @@ def postProfessorReview():
     deptname=db.department(prof.department_id).short_name
     rep=deptname.upper()+' '+'%(course_num)s'
     db.profReview.course_id.requires = IS_IN_DB(db(db.course.department_id==prof.department_id), db.course.id,rep,zero=T('choose one'))
-    message=TAG("<b>Log In To Post A Review</b>")
     form = SQLFORM(db.profReview)
     if form.process().accepted:
        avg=db.profReview.rating.avg()
@@ -116,6 +113,12 @@ def postProfessorReview():
        redirect(URL('default','professorReview', args=request.args(0,cast=int)))
     return locals()
 
+@auth.requires_login()
+def editProfessorReview():
+    profreview=db.profReview(request.args(0,cast=int)) or redirect(URL('professorReview', args=request.args(1,cast=int)))
+    if auth.user_id == profreview.user_id:
+       form = crud.update(db.profReview, profreview, next=URL('professorReview', args=request.args(1,cast=int)))
+    return dict(form=form)
 #@auth.requires_login()
 #def professorCreate():
     #dept = db.department(request.args(0,cast=int)) or redirect(URL('index'))
