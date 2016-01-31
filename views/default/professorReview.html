@@ -34,7 +34,6 @@
 {{student=db.auth_user(review.user_id)}}
      <tr>
        <td>
-          <p><b>Posted On:&nbsp;</b>{{=review.datetime}}</p>
           <p><b>Helpfulness:&nbsp;</b>{{=review.helpfulness}}</p>
           <p><b>Clarity:&nbsp;</b>{{=review.clarity}}</p>
           <p><b>Easiness:&nbsp;</b>{{=review.easiness}}</p>
@@ -47,6 +46,7 @@
        <td>
          <p><b>{{=string.capwords(student.first_name+' '+student.last_name)}}&nbsp;says:</b></p>
          {{=review.review}}
+         <p><b>Posted On:&nbsp;</b>{{=review.datetime}}</p>
        </td>
     </tr>
 {{pass}}
