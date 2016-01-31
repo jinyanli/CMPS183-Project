@@ -7,9 +7,6 @@ def deslugify(_slug):
     """
     return string.capwords(_slug.replace('-', ' '))
 
-db.define_table('category',
-    Field('name'))
-
 db.define_table('department',
     Field('name', 'string', unique=True, requires=(IS_SLUG(), IS_NOT_EMPTY())),
     Field('short_name', 'string', unique=True, requires=(IS_SLUG(), IS_NOT_EMPTY())),

@@ -18,7 +18,7 @@ def index():
     return dict(message=T('Welcome to Slug Hero'))
 
 def bookExchange():
-    page = request.args(1,cast=int,default=0)
+    page = request.args(0,cast=int,default=0)
     start = page*POSTS_PER_PAGE
     stop = start+POSTS_PER_PAGE
     show_all = request.args(0) == 'all'
@@ -30,10 +30,10 @@ def bookExchange():
 
     if show_all:
         q = db.post
-        listings = db().select(orderby = ~db.post.title, limitby=(start,stop))
+        listings = db().select(orderby = db.post.title, limitby=(start,stop))
     else:
         q=(db.post.status == True)
-        listings = db(db.post.status == True).select(orderby = ~db.post.title, limitby=(start,stop))
+        listings = db(db.post.status == True).select(orderby = db.post.title, limitby=(start,stop))
 
     form = SQLFORM.grid(q,
         args=request.args[:1],
