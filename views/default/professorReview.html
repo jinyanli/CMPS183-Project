@@ -47,6 +47,9 @@
          <p><b>{{=string.capwords(student.first_name+' '+student.last_name)}}&nbsp;says:</b></p>
          {{=review.review}}
          <p><b>Posted On:&nbsp;</b>{{=review.datetime}}</p>
+         {{if auth.user_id == review.user_id:}}
+         <p><b>{{=A('edit',_href=URL('editProfessorReview',args=[review.id, prof.id]))}}</b></p>
+         {{pass}}
        </td>
     </tr>
 {{pass}}
