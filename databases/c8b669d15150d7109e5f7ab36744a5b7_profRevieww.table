@@ -10,7 +10,7 @@ p5
 I00
 sS'sortable'
 p6
-I8
+I11
 sS'sql'
 p7
 S'DOUBLE'
@@ -39,9 +39,25 @@ I00
 sg10
 S'string'
 p15
-ssS'user_id'
+ssS'clarity'
 p16
 (dp17
+g4
+I512
+sg5
+I00
+sg6
+I9
+sg7
+S'CHAR(512)'
+p18
+sg9
+I00
+sg10
+g15
+ssS'user_id'
+p19
+(dp20
 g4
 I512
 sg5
@@ -50,15 +66,15 @@ sg6
 I3
 sg7
 S'INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  '
-p18
+p21
 sg9
 I00
 sg10
 S'reference auth_user'
-p19
+p22
 ssS'professor_id'
-p20
-(dp21
+p23
+(dp24
 g4
 I512
 sg5
@@ -67,15 +83,15 @@ sg6
 I2
 sg7
 S'INTEGER REFERENCES professor (id) ON DELETE CASCADE  '
-p22
+p25
 sg9
 I00
 sg10
 S'reference professor'
-p23
+p26
 ssS'review'
-p24
-(dp25
+p27
+(dp28
 g4
 I32768
 sg5
@@ -84,31 +100,71 @@ sg6
 I7
 sg7
 S'TEXT'
-p26
+p29
 sg9
 I00
 sg10
 S'text'
-p27
+p30
 ssS'datetime'
-p28
-(dp29
+p31
+(dp32
 g4
 I512
 sg5
 I00
 sg6
-I9
+I12
 sg7
 S'TIMESTAMP'
-p30
+p33
 sg9
 I00
 sg10
+<<<<<<< HEAD:databases/c8b669d15150d7109e5f7ab36744a5b7_profRevieww.table
 g28
 ssS'course_id'
 p31
 (dp32
+=======
+S'datetime'
+p34
+ssS'helpfulness'
+p35
+(dp36
+g4
+I512
+sg5
+I00
+sg6
+I8
+sg7
+S'CHAR(512)'
+p37
+sg9
+I00
+sg10
+g15
+ssS'easiness'
+p38
+(dp39
+g4
+I512
+sg5
+I00
+sg6
+I10
+sg7
+S'CHAR(512)'
+p40
+sg9
+I00
+sg10
+g15
+ssS'course_id'
+p41
+(dp42
+>>>>>>> refs/remotes/origin/jinyan2:databases/c8b669d15150d7109e5f7ab36744a5b7_profReview.table
 g4
 I512
 sg5
@@ -117,15 +173,26 @@ sg6
 I4
 sg7
 S'INTEGER REFERENCES course (id) ON DELETE CASCADE  '
+<<<<<<< HEAD:databases/c8b669d15150d7109e5f7ab36744a5b7_profRevieww.table
 p33
+=======
+p43
+>>>>>>> refs/remotes/origin/jinyan2:databases/c8b669d15150d7109e5f7ab36744a5b7_profReview.table
 sg9
 I00
 sg10
 S'reference course'
+<<<<<<< HEAD:databases/c8b669d15150d7109e5f7ab36744a5b7_profRevieww.table
 p34
 ssS'yr'
 p35
 (dp36
+=======
+p44
+ssS'quarter'
+p45
+(dp46
+>>>>>>> refs/remotes/origin/jinyan2:databases/c8b669d15150d7109e5f7ab36744a5b7_profReview.table
 g4
 I512
 sg5
@@ -134,14 +201,23 @@ sg6
 I6
 sg7
 S'CHAR(512)'
+<<<<<<< HEAD:databases/c8b669d15150d7109e5f7ab36744a5b7_profRevieww.table
 p37
+=======
+p47
+>>>>>>> refs/remotes/origin/jinyan2:databases/c8b669d15150d7109e5f7ab36744a5b7_profReview.table
 sg9
 I00
 sg10
 g15
 ssS'id'
+<<<<<<< HEAD:databases/c8b669d15150d7109e5f7ab36744a5b7_profRevieww.table
 p38
 (dp39
+=======
+p48
+(dp49
+>>>>>>> refs/remotes/origin/jinyan2:databases/c8b669d15150d7109e5f7ab36744a5b7_profReview.table
 g4
 I512
 sg5
@@ -150,9 +226,41 @@ sg6
 I1
 sg7
 S'INTEGER PRIMARY KEY AUTOINCREMENT'
+<<<<<<< HEAD:databases/c8b669d15150d7109e5f7ab36744a5b7_profRevieww.table
 p40
 sg9
 I00
 sg10
 g38
+=======
+p50
+sg9
+I00
+sg10
+S'id'
+p51
+ssS'posted_on'
+p52
+(dp53
+S'sortable'
+p54
+L9L
+sS'sql'
+p55
+S'TIMESTAMP'
+p56
+sS'length'
+p57
+L512L
+sS'notnull'
+p58
+L0L
+sS'unique'
+p59
+L0L
+sS'type'
+p60
+S'datetime'
+p61
+>>>>>>> refs/remotes/origin/jinyan2:databases/c8b669d15150d7109e5f7ab36744a5b7_profReview.table
 ss.

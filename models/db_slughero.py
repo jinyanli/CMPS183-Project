@@ -75,15 +75,24 @@ db.define_table('studentGradee',
 gradeRange=['A+', 'A', 'A-', 'B+', 'B', 'B-', 'C+', 'C', 'C-', 'D', 'F', 'P', 'NP']
 db.studentGradee.grade.requires = IS_IN_SET(gradeRange)
 
+<<<<<<< HEAD
 #new table for pro
 db.define_table('profRevieww',
+=======
+#new table for professor
+db.define_table('profReview',
+>>>>>>> refs/remotes/origin/jinyan2
      Field('professor_id', 'reference professor', readable=False, writable=False),
      Field('user_id', 'reference auth_user', readable=False, writable=False),
      Field('course_id', 'reference course'),
      Field('quarter', requires=IS_IN_SET(['Fall', 'Winter', 'Spring', 'Summer'])),
      Field('yr', requires=IS_INT_IN_RANGE(2000, 2051)),#year
      Field('review', 'text', update=True),
-     Field('rating', 'double'),
+     Field('helpfulness', requires=IS_IN_SET([1,2,3,4,5])),
+     Field('clarity', requires=IS_IN_SET([1,2,3,4,5])),
+     Field('easiness', requires=IS_IN_SET([1,2,3,4,5])),
+     Field('rating', 'double', readable=False,writable=False,
+            compute=lambda r: (int(r['helpfulness'])+int(r['clarity'])+int(r['easiness']))/3),
      Field('datetime', 'datetime', readable=False,writable=False,default=request.now))
 
 #below table doesn't work. don't know why

@@ -147,6 +147,7 @@
 [2016-01-29 19:03:12] EDIT SlugHero/views/default/showCourse.html: 0
 [2016-01-29 19:09:32] CREATE default/professorReview.html: 0
 [2016-01-29 19:09:55] EDIT SlugHero/views/default/professorReview.html: -2
+<<<<<<< HEAD
 [2016-01-30 11:05:06] CREATE _default/showPost.html: 0
 [2016-01-30 11:36:23] EDIT SlugHero/views/_default/showPost.html: 13
 [2016-01-30 11:36:59] EDIT SlugHero/views/_default/showPost.html: 0
@@ -159,3 +160,8 @@
 [2016-01-30 11:53:33] CREATE default/showPost.html: 0
 [2016-01-30 11:53:48] EDIT SlugHero/views/default/showPost.html: 13
 [2016-01-30 11:56:56] EDIT SlugHero/views/default/showComm.html: 9
+=======
+[2016-01-30 15:47:17] CREATE default/postProfessorReview.html: 0
+[2016-01-30 15:47:29] EDIT SlugHero/views/default/postProfessorReview.html: -1
+[2016-01-30 15:47:45] EDIT SlugHero/views/default/postProfessorReview.html: 0
+>>>>>>> refs/remotes/origin/jinyan2
