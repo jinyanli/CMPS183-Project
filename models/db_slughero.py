@@ -75,7 +75,7 @@ db.define_table('studentGrade',
 gradeRange=['A+', 'A', 'A-', 'B+', 'B', 'B-', 'C+', 'C', 'C-', 'D', 'F', 'P', 'NP']
 db.studentGrade.grade.requires = IS_IN_SET(gradeRange)
 
-#new table for professor
+
 db.define_table('profReview',
      Field('professor_id', 'reference professor', readable=False, writable=False),
      Field('user_id', 'reference auth_user', readable=False, writable=False),
@@ -89,20 +89,6 @@ db.define_table('profReview',
      Field('rating', 'double', readable=False,writable=False,
             compute=lambda r: (int(r['helpfulness'])+int(r['clarity'])+int(r['easiness']))/3),
      Field('datetime', 'datetime', readable=False,writable=False,default=request.now))
-
-#below table doesn't work. don't know why
-"""
-db.define_table('profReview',
-    Field('professor_id', 'reference professor', readable=False, writable=False),
-    Field('user_id', 'reference auth_user', readable=False, writable=False),
-    Field('course_id', 'reference course'),
-    Field('quarter', requires=IS_IN_SET(['Fall', 'Winter', 'Spring', 'Summer'])),
-    Field('yr', requires=IS_INT_IN_RANGE(2000, 2051)),#year
-    Field('review', 'text', update=True),
-    Field('rating', 'double'),
-    Field('posted_on', 'datetime', readable=False,writable=False))
-db.professorReview.rating.requires = IS_FLOAT_IN_RANGE(0, 5)
-"""
 
 db.define_table('note',
     Field('title', 'string'),

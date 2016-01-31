@@ -142,6 +142,39 @@ def professorCreate():
     form = crud.create(db.professor)
     return locals()
 
+def showPost():
+    posts = db().select(db.postt.ALL, orderby=db.postt.datetime)
+    return locals()
+
+@auth.requires_login()
+def postCreate():
+    db.postt.ucscClass_id.default = request.args(0,cast=int)
+    form = crud.create(db.postt,next=URL('showPost'))
+    return locals()
+
+@auth.requires_login()
+def postEdit():
+    post = db.postt(request.args(0,cast=int)) or redirect(URL('showPost'))
+    form = crud.update(db.course,course,next='showPost')
+    return locals()
+
+
+def showComm():
+    comms = db().select(db.commm.ALL, orderby=db.commm.datetime)
+    return locals()
+
+@auth.requires_login()
+def commCreate():
+    db.commm.post_id_id.default = request.args(0,cast=int)
+    form = crud.create(db.commm,next=URL('showComm'))
+    return locals()
+
+@auth.requires_login()
+def commEdit():
+    comm = db.commm(request.args(0,cast=int)) or redirect(URL('showComm'))
+    form = crud.update(db.commm,comm,next='showComm')
+    return locals()
+
 @cache.action()
 def download():
     """
