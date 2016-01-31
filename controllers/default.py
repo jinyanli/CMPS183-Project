@@ -62,13 +62,16 @@ def showClass():
     return locals()
 
 def createClass():
-    db.ucscClass.course_id.default = request.args(0,cast=int)
-    dept_id=db(db.course.id==db.ucscClass.course_id).select(db.course.department_id)
-    db.professor.department_id.default = dept_id
-    form=SQLFORM.factory(db.ucscClass,db.professor)
+    ucscClass = db.course(request.args(0, cast=int)) or redirect(URL('index'))
+    db.UCSCclass.course_id.default = ucscClass.id
+    fields = ['description', 'quarter', 'year', 'difficulty']
+    #labels = {'name':'Professor Name'}
+    form = SQLFORM(db.UCSCclass, fields=fields)
+    form.add_button('Back', URL('showClass', args=ucscClass.id))
     if form.process().accepted:
-        response.flash = 'class added'
-        redirect(URL('showClass', args=request.args(0,cast=int)))
+        response.flash = 'Class added'
+        redirect(URL('showClass', args=ucscClass.id))
+    info = db(db.UCSCclass.course_id==ucscClass.id).select()
     return locals()
 
 def editClass():
