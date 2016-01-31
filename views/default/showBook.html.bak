@@ -2,7 +2,7 @@
 <h1>Book image:</h1>
 <div style="text-align:center">
     <img
-         width="200px" height="250"src="{{=URL('download', args=image.image)}}" />
+         width="190px" height="250"src="{{=URL('download', args=image.image)}}" />
 </div>
 <div class ="well">
     <h2>{{=image.title}}</h2>

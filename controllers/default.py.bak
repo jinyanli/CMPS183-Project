@@ -11,12 +11,18 @@ import string
 from gluon.tools import Crud
 crud = Crud(db)
 
+POSTS_PER_PAGE = 10
+
 def index():
     response.flash = T("Slug Hero")
     return dict(message=T('Welcome to Slug Hero'))
 
 def bookExchange():
+    page = request.args(0,cast=int,default=0)
+    start = page*POSTS_PER_PAGE
+    stop = start+POSTS_PER_PAGE
     show_all = request.args(0) == 'all'
+
     if show_all:
         button = A('Show available items', _class="btn btn-info", _href=URL('default', 'bookExchange'))
     else:
@@ -24,10 +30,10 @@ def bookExchange():
 
     if show_all:
         q = db.post
-        listings = db().select(db.post.ALL, orderby = db.post.title)
+        listings = db().select(orderby = db.post.title, limitby=(start,stop))
     else:
         q=(db.post.status == True)
-        listings = db(db.post.status == True).select(db.post.ALL, orderby = db.post.title)
+        listings = db(db.post.status == True).select(orderby = db.post.title, limitby=(start,stop))
 
     form = SQLFORM.grid(q,
         args=request.args[:1],
@@ -44,7 +50,7 @@ def bookExchange():
     return locals()
 
 def showBook():
-    image = db.post(request.args(0,cast=int)) or redirect(URL('index'))
+    image = db.post(request.args(0,cast=int)) or redirect(URL('bookExchange'))
     return locals()
 
 def addBookItem():

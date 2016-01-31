@@ -4,16 +4,22 @@
 <h1>Sale Textbooks:</h1>
 <ol type ="1">
 {{for image in listings:}}
-    <div class ="well">
+    <div class ="page-header">
        {{=LI(A( image.title, _href=URL("showBook", args=image.id)))}}
         <img width="40px" height="60"src="{{=URL('download', args=image.image)}}" />
     </div>
 {{pass}}
 </ol>
+{{if page>0:}}
+{{=A('previous',_class="btn btn-info", _href=(URL(args=(page-1))))}}
+{{pass}}
 
+{{if len(listings)>=10:}}
+{{=A('next',_class="btn btn-info", _href=(URL(args=(page+1))))}}
+{{pass}}
 
 <!---{{=form}}--->
 <p>
 {{=A('New post', _class="btn btn-primary", _href=URL('default', 'addBookItem'))}}
-{{=button}}
+<!---{{=button}}--->
 </p>
