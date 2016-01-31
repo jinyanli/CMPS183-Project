@@ -90,27 +90,28 @@ def professorEdit():
 
 def professorReview():
     prof= db.professor(request.args(0,cast=int)) or redirect(URL('showProfessor'))
+    avg=db.profReview.rating.avg()
+    saltiness=db(db.profReview.professor_id==prof.id).select(avg).first()[avg]
+    db(db.professor.id == prof.id).update(saltiness=saltiness)
     dept=deslugify(db.department(prof.department_id).name)
     deptname=db.department(prof.department_id).short_name
-    reviews = db().select(db.profReview.ALL, orderby=db.profReview.datetime)
+    reviews =db(db.profReview.professor_id==prof.id).select(db.profReview.ALL, orderby=db.profReview.datetime)
     return locals()
 
 @auth.requires_login()
 def postProfessorReview():
     prof= db.professor(request.args(0,cast=int)) or redirect(URL('professorReview', args=request.args(0,cast=int)))
-    #redirect(URL('professorReview', args=request.args(0,cast=int)))
     db.profReview.user_id.default = auth.user.id
     db.profReview.professor_id.default = prof.id
-      #fields = ['description', 'quarter', 'year', 'difficulty']
     deptname=db.department(prof.department_id).short_name
     rep=deptname.upper()+' '+'%(course_num)s'
     db.profReview.course_id.requires = IS_IN_DB(db(db.course.department_id==prof.department_id), db.course.id,rep,zero=T('choose one'))
     message=TAG("<b>Log In To Post A Review</b>")
     form = SQLFORM(db.profReview)
     if form.process().accepted:
-       profReview=db.profReview(prof.id)
-       #avg=(int(profReview.helpfulness)+int(profReview.clarity)+int(profReview.easiness))/3.0
-       #db.profReview.update_or_insert(db.profReview.professor_id==prof.id,rating=avg)
+       avg=db.profReview.rating.avg()
+       saltiness=db(db.profReview.professor_id==prof.id).select(avg).first()[avg]
+       db(db.professor.id == prof.id).update(saltiness=saltiness)
        session.flash = 'review added'
        redirect(URL('default','professorReview', args=request.args(0,cast=int)))
     return locals()

@@ -25,7 +25,7 @@ db.define_table('professor',
     Field('last_name', 'string', default=None, requires=(IS_SLUG(), IS_NOT_EMPTY())),
     Field('image', 'upload'),
     Field('department_id', 'reference department'),
-    Field('saltiness', 'double'))
+    Field('saltiness', 'double', readable=False, writable=False))
 db.professor.department_id.requires = IS_IN_DB(db, db.department.id, '%(name)s')
 
 quarter=['fall', 'winter', 'spring', 'summer']
@@ -87,7 +87,7 @@ db.define_table('profReview',
      Field('clarity', requires=IS_IN_SET([1,2,3,4,5])),
      Field('easiness', requires=IS_IN_SET([1,2,3,4,5])),
      Field('rating', 'double', readable=False,writable=False,
-            compute=lambda r: (int(r['helpfulness'])+int(r['clarity'])+int(r['easiness']))/3),
+            compute=lambda r: (float(r['helpfulness'])+float(r['clarity'])+float(r['easiness']))/3.0),
      Field('datetime', 'datetime', readable=False,writable=False,default=request.now))
 
 db.define_table('note',

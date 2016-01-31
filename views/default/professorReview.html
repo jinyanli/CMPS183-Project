@@ -6,13 +6,13 @@
      <td rowspan="3">
      <img width="150px" src="{{=URL('download', args=prof.image)}}" />
    </td>
-     <td><h3><b>{{=name}}</b></h3><td>
+     <td><h3><b>&nbsp;{{=name}}</b></h3><td>
    </tr>
    <tr>
-     <td><h5><b>Department:&nbsp;{{=dept}}</b></h5></td>
+     <td><h5><b>&nbsp;Department:&nbsp;{{=dept}}</b></h5></td>
    </tr>
    <tr>
-     <td><h5><b>Saltiness:&nbsp;{{=prof.saltiness}}</b></h5></td>
+     <td><h5><b>&nbsp;Saltiness:&nbsp;{{=prof.saltiness}}</b></h5></td>
    </tr>
 </table>
 {{if auth.user:}}
@@ -34,7 +34,6 @@
 {{student=db.auth_user(review.user_id)}}
      <tr>
        <td>
-          <p><b>Posted On:&nbsp;</b>{{=review.datetime}}</p>
           <p><b>Helpfulness:&nbsp;</b>{{=review.helpfulness}}</p>
           <p><b>Clarity:&nbsp;</b>{{=review.clarity}}</p>
           <p><b>Easiness:&nbsp;</b>{{=review.easiness}}</p>
@@ -47,6 +46,7 @@
        <td>
          <p><b>{{=string.capwords(student.first_name+' '+student.last_name)}}&nbsp;says:</b></p>
          {{=review.review}}
+         <p><b>Posted On:&nbsp;</b>{{=review.datetime}}</p>
        </td>
     </tr>
 {{pass}}
