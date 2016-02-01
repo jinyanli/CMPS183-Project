@@ -1,0 +1,17 @@
+{{left_sidebar_enabled,right_sidebar_enabled=False,('message' in globals())}}
+{{extend 'layout.html'}}
+
+<h1>Sale Items:</h1>
+<ol type ="1">
+{{for image in listings:}}
+    <div class ="well">
+       {{=LI(A( image.title, _href=URL("show", args=image.id)))}}
+        <img width="60px" height="40"src="{{=URL('download', args=image.image)}}" />
+    </div>
+{{pass}}
+</ol>
+<!---{{=form}}--->
+<p>
+{{=A('New post', _class="btn btn-primary", _href=URL('default', 'addBookItem'))}}
+{{=button}}
+</p>

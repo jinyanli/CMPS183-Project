@@ -3,10 +3,10 @@
 
 <table>
   {{for aClass in classes:}}
-  {{className=course.name+' '+'aClass.quarter'+' '+aClass.year_}}
+  {{className=course.name+' '+'aClass.quarter'+' '+str(aClass.yr)}}
   <tr>
-    <td>{{=A(className,_href=URL('classPage',args=ucscClass.id))}}</td>
-    <td>{{=A('edit',_href=URL('editClass',args=ucscClass.id))}}</td>
+    <td>{{=A(className,_href=URL('classPage',args=aClass.id))}}</td>
+    <td>{{=A('edit',_href=URL('editClass',args=aClass.id))}}</td>
   </tr>
   {{pass}}
   <tr>

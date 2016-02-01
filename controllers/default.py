@@ -11,15 +11,64 @@ import string
 from gluon.tools import Crud
 crud = Crud(db)
 
+POSTS_PER_PAGE = 10
+
 def index():
     response.flash = T("Slug Hero")
     return dict(message=T('Welcome to Slug Hero'))
+
+def bookExchange():
+    page = request.args(0,cast=int,default=0)
+    start = page*POSTS_PER_PAGE
+    stop = start+POSTS_PER_PAGE
+    show_all = request.args(0) == 'all'
+
+    if show_all:
+        button = A('Show available items', _class="btn btn-info", _href=URL('default', 'bookExchange'))
+    else:
+        button = A('Show all items', _class="btn btn-info", _href=URL('default', 'bookExchange', args=['all']))
+
+    if show_all:
+        q = db.post
+        listings = db().select(orderby = db.post.title, limitby=(start,stop))
+    else:
+        q=(db.post.status == True)
+        listings = db(db.post.status == True).select(orderby = db.post.title, limitby=(start,stop))
+
+    form = SQLFORM.grid(q,
+        args=request.args[:1],
+        fields=[db.post.title,
+                    db.post.title,
+                    db.post.body,
+               ],
+        editable=False, deletable=False,
+        paginate=10,
+        csv=False,
+        create=False,
+        searchable=False
+        )
+    return locals()
+
+def showBook():
+    image = db.post(request.args(0,cast=int)) or redirect(URL('bookExchange'))
+    return locals()
+
+def addBookItem():
+    crud.messages.submit_button = 'Place on market'
+    crud.settings.keepvalues = True
+    crud.settings.label_separator = ' :'
+    crud.settings.formstyle = 'ul'
+    form = crud.create(db.post)
+    return locals()
+
+def manageBookItems():
+    grid = SQLFORM.grid(db.post)
+    return locals()
 
 def showDepartment():
     depts = db().select(db.department.ALL, orderby=db.department.name)
     for dept in depts:
         dept.name=deslugify(dept.name)
-
     return locals()
 
 @auth.requires_login()
@@ -42,7 +91,6 @@ def showCourse():
 @auth.requires_login()
 def courseCreate():
     db.course.department_id.default = request.args(0,cast=int)
-    #redirect='showCourse/'+request.args(0,cast=int)
     form = crud.create(db.course,next=URL('showCourse',args=request.args(0,cast=int)))
     return locals()
 
@@ -63,15 +111,26 @@ def showClass():
     classes = db(db.ucscClass.course_id==course.id).select(orderby=db.ucscClass.yr,limitby=(0,100))
     return locals()
 
+def check_term(form):
+    q = form.vars.quarter
+    y = form.vars.year
+    query = db((db.ucscClass.quarter == q) & (db.ucscClass.year == y)).select()
+    if query:
+        form.errors.query = 'Term already exists'
+        response.flash = 'Term already exists'
+
 def createClass():
-    db.ucscClass.course_id.default = request.args(0,cast=int)
-    dept_id=db(db.course.id==db.ucscClass.course_id).select(db.course.department_id)
-    db.professor.department_id.default = dept_id
-    form=SQLFORM.factory(db.ucscClass,db.professor)
-    if form.process().accepted:
-        response.flash = 'class added'
-        redirect(URL('showClass', request.args(0,cast=int)))
-    return locals()
+    ucscClass = db.course(request.args(0, cast=int)) or redirect(URL('index'))
+    db.ucscClass.course_id.default = ucscClass.id
+    fields = ['syllabus', 'quarter', 'yr', 'difficulty']
+    #labels = {'name':'Professor Name'}
+    form = SQLFORM(db.ucscClass, fields=fields)
+    form.add_button('Back', URL('showClass', args=ucscClass.id))
+    if form.process(onvalidation=check_term).accepted:
+        response.flash = 'Class added'
+        redirect(URL('showClass', args=ucscClass.id))
+    info = db(db.ucscClass.course_id==ucscClass.id).select()
+    return dict(form=form)
 
 def editClass():
     course = db.course(request.args(0,cast=int)) or redirect(URL('showClass',args=request.args(0,cast=int)))
@@ -82,36 +141,49 @@ def showProfessor():
     profs = db().select(db.professor.ALL, orderby=db.professor.first_name)
     return locals()
 
+@auth.requires_login()
 def professorEdit():
     prof = db.professor(request.args(0,cast=int)) or redirect(URL('showProfessor'))
     form = crud.update(db.professor,prof,next='showProfessor')
     return locals()
 
+#function for professorReview page
 def professorReview():
-
     prof= db.professor(request.args(0,cast=int)) or redirect(URL('showProfessor'))
+    avg=db.profReview.rating.avg()
+    saltiness=db(db.profReview.professor_id==prof.id).select(avg).first()[avg]
+    db(db.professor.id == prof.id).update(saltiness=saltiness)
     dept=deslugify(db.department(prof.department_id).name)
-
-    if auth.user:
-       db.profReview.user_id.default = auth.user.id
-       db.profReview.professor_id.default = prof.id
-       #db.profReview.datetime.defualt = request.now
-       #fields = ['description', 'quarter', 'year', 'difficulty']
-
-       deptname=db.department(prof.department_id).short_name
-       rep=deptname.upper()+' '+'%(course_num)s'
-       db.profReview.course_id.requires = IS_IN_DB(db(db.course.department_id==prof.department_id), db.course.id,rep,zero=T('choose one'))
-       message=TAG("<b>Log In To Post A Review</b>")
-       form = SQLFORM(db.profReview).process() if auth.user else message
-       if form.process().accepted:
-           response.flash = 'review added'
-           redirect(URL('professorReview', request.args(0,cast=int)))
-
-    reviews = db().select(db.profReview.ALL, orderby=db.profReview.datetime)
-
+    deptname=db.department(prof.department_id).short_name
+    reviews =db(db.profReview.professor_id==prof.id).select(db.profReview.ALL, orderby=db.profReview.datetime)
     return locals()
 
+#function for posting a review for a professor for postProfessorReview page
 @auth.requires_login()
+def postProfessorReview():
+    prof= db.professor(request.args(0,cast=int)) or redirect(URL('professorReview', args=request.args(0,cast=int)))
+    db.profReview.user_id.default = auth.user.id
+    db.profReview.professor_id.default = prof.id
+    deptname=db.department(prof.department_id).short_name
+    rep=deptname.upper()+' '+'%(course_num)s'
+    db.profReview.course_id.requires = IS_IN_DB(db(db.course.department_id==prof.department_id), db.course.id,rep,zero=T('choose one'))
+    form = SQLFORM(db.profReview)
+    if form.process().accepted:
+       avg=db.profReview.rating.avg()
+       saltiness=db(db.profReview.professor_id==prof.id).select(avg).first()[avg]
+       db(db.professor.id == prof.id).update(saltiness=saltiness)
+       session.flash = 'review added'
+       redirect(URL('default','professorReview', args=request.args(0,cast=int)))
+    return locals()
+
+#function for edit a review in the professor page
+@auth.requires_login()
+def editProfessorReview():
+    profreview=db.profReview(request.args(0,cast=int)) or redirect(URL('professorReview', args=request.args(1,cast=int)))
+    if auth.user_id == profreview.user_id:
+       form = crud.update(db.profReview, profreview, next=URL('professorReview', args=request.args(1,cast=int)))
+    return dict(form=form)
+#@auth.requires_login()
 #def professorCreate():
     #dept = db.department(request.args(0,cast=int)) or redirect(URL('index'))
     #db.course.department_id.default = dept.id
@@ -122,6 +194,7 @@ def professorReview():
     #info = db(db.course.course_id==dept.id).select()
 #    return locals()
 
+#this function is for adding for showProfessor page
 def addProfessor():
     crud.messages.submit_button = 'Submit'
     crud.settings.keepvalues = True
@@ -130,6 +203,7 @@ def addProfessor():
     form = crud.create(db.professor, next='showProfessor')
     return locals()
 
+#Jason's function
 def professorCreate():
     db.professor.department_id.default = request.args(0,cast=int)
     redirect = "showprofessor/%s" % request.args(0,cast=int)
@@ -138,37 +212,39 @@ def professorCreate():
     form = crud.create(db.professor)
     return locals()
 
+#below are helen's functions for creating general discussion forum
+#some of them doesn't work
 def showPost():
-    posts = db().select(db.postt.ALL, orderby=db.postt.datetime)
+    posts = db().select(db.post.ALL, orderby=db.post.datetime)
     return locals()
 
 @auth.requires_login()
 def postCreate():
-    db.postt.ucscClass_id.default = request.args(0,cast=int)
-    form = crud.create(db.postt,next=URL('showPost'))
+    db.post.ucscClass_id.default = request.args(0,cast=int)
+    form = crud.create(db.post,next=URL('showPost'))
     return locals()
 
 @auth.requires_login()
 def postEdit():
-    post = db.postt(request.args(0,cast=int)) or redirect(URL('showPost'))
+    post = db.post(request.args(0,cast=int)) or redirect(URL('showPost'))
     form = crud.update(db.course,course,next='showPost')
     return locals()
 
 
 def showComm():
-    comms = db().select(db.commm.ALL, orderby=db.commm.datetime)
+    comms = db().select(db.comm.ALL, orderby=db.comm.datetime)
     return locals()
 
 @auth.requires_login()
 def commCreate():
-    db.commm.post_id_id.default = request.args(0,cast=int)
-    form = crud.create(db.commm,next=URL('showComm'))
+    db.comm.post_id_id.default = request.args(0,cast=int)
+    form = crud.create(db.comm,next=URL('showComm'))
     return locals()
 
 @auth.requires_login()
 def commEdit():
-    comm = db.commm(request.args(0,cast=int)) or redirect(URL('showComm'))
-    form = crud.update(db.commm,comm,next='showComm')
+    comm = db.comm(request.args(0,cast=int)) or redirect(URL('showComm'))
+    form = crud.update(db.comm,comm,next='showComm')
     return locals()
 
 @cache.action()

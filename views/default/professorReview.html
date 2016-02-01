@@ -1,19 +1,57 @@
 {{extend 'layout.html'}}
+{{import string}}
 {{name="%s %s" % (prof.first_name, prof.last_name)}}
 <table>
    <tr>
-     <th rowspan="3">
+     <td rowspan="3">
      <img width="150px" src="{{=URL('download', args=prof.image)}}" />
-     </th>
-     <td><h3><b>{{=name}}</b></h3><td>
+   </td>
+     <td><h3><b>&nbsp;{{=name}}</b></h3><td>
    </tr>
    <tr>
-     <td><h5><b>Department:&nbsp;{{=dept}}</b></h5></td>
+     <td><h5><b>&nbsp;Department:&nbsp;{{=dept}}</b></h5></td>
    </tr>
    <tr>
-     <td><h5><b>Saltiness:&nbsp;{{=prof.saltiness}}</b></h5></td>
+     <td><h5><b>&nbsp;Saltiness:&nbsp;{{=prof.saltiness}}</b></h5></td>
    </tr>
 </table>
-{{=form}}
-{{=request.now}}
-{{=reviews}}
+{{if auth.user:}}
+<h2><b>{{=A('Post A Review', _href=URL('postProfessorReview', args=prof.id))}}</b></h2>
+{{#=form}}
+{{else:}}
+<h2><b>{{=A('Log In To Post A review', _href=URL('default', 'user', args='login',vars=dict(_next=URL(args=request.args, vars=request.vars))))}}</b></h2>
+{{pass}}
+<table class = "table table-bordered">
+<tbody>
+  <thead>
+   <tr>
+      <th>Rating</th>
+      <th>Class</th>
+      <th>Comment</th>
+   </tr>
+</thead>
+{{for review in reviews:}}
+{{student=db.auth_user(review.user_id)}}
+     <tr>
+       <td>
+          <p><b>Helpfulness:&nbsp;</b>{{=review.helpfulness}}</p>
+          <p><b>Clarity:&nbsp;</b>{{=review.clarity}}</p>
+          <p><b>Easiness:&nbsp;</b>{{=review.easiness}}</p>
+          <p><b>Overall Rating:&nbsp;</b>{{=review.rating}}</p>
+       </td>
+       <td>
+         <p>{{student=db.auth_user(review.user_id)}}</p>
+         <p><b>Cousre:&nbsp;</b>{{=deptname.upper()}}&nbsp;{{=db.course(review.course_id).course_num}}</p><p><b>Term:</b>{{=review.quarter}}{{=review.yr}}</p>
+       </td>
+       <td>
+         <p><b>{{=string.capwords(student.first_name+' '+student.last_name)}}&nbsp;says:</b></p>
+         {{=review.review}}
+         <p><b>Posted On:&nbsp;</b>{{=review.datetime}}</p>
+         {{if auth.user_id == review.user_id:}}
+         <p><b>{{=A('edit',_href=URL('editProfessorReview',args=[review.id, prof.id]))}}</b></p>
+         {{pass}}
+       </td>
+    </tr>
+{{pass}}
+  </tbody>
+</table>
