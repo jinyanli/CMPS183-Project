@@ -61,14 +61,25 @@ def showClass():
     classes = db(db.ucscClass.course_id==course.id).select(orderby=db.ucscClass.yr,limitby=(0,100))
     return locals()
 
+def check_term(form):
+    q = form.vars.quarter
+    y = form.vars.year
+    query = db((db.UCSCclass.quarter == q) & (db.UCSCclass.year == y)).select()
+    if query:
+        form.errors.query = 'Term already exists'
+        response.flash = 'Term already exists'
+
 def createClass():
-    db.ucscClass.course_id.default = request.args(0,cast=int)
-    dept_id=db(db.course.id==db.ucscClass.course_id).select(db.course.department_id)
-    db.professor.department_id.default = dept_id
-    form=SQLFORM.factory(db.ucscClass,db.professor)
-    if form.process().accepted:
-        response.flash = 'class added'
-        redirect(URL('showClass', args=request.args(0,cast=int)))
+    ucscClass = db.course(request.args(0, cast=int)) or redirect(URL('index'))
+    db.UCSCclass.course_id.default = ucscClass.id
+    fields = ['description', 'quarter', 'year', 'difficulty']
+    #labels = {'name':'Professor Name'}
+    form = SQLFORM(db.UCSCclass, fields=fields)
+    form.add_button('Back', URL('showClass', args=ucscClass.id))
+    if form.process(onvalidation=check_term).accepted:
+        response.flash = 'Class added'
+        redirect(URL('showClass', args=ucscClass.id))
+    info = db(db.UCSCclass.course_id==ucscClass.id).select()
     return locals()
 
 def editClass():
