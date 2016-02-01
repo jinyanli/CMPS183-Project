@@ -64,23 +64,23 @@ def showClass():
 def check_term(form):
     q = form.vars.quarter
     y = form.vars.year
-    query = db((db.UCSCclass.quarter == q) & (db.UCSCclass.year == y)).select()
+    query = db((db.ucscClass.quarter == q) & (db.ucscClass.year == y)).select()
     if query:
         form.errors.query = 'Term already exists'
         response.flash = 'Term already exists'
 
 def createClass():
     ucscClass = db.course(request.args(0, cast=int)) or redirect(URL('index'))
-    db.UCSCclass.course_id.default = ucscClass.id
-    fields = ['description', 'quarter', 'year', 'difficulty']
+    db.ucscClass.course_id.default = ucscClass.id
+    fields = ['syllabus', 'quarter', 'yr', 'difficulty']
     #labels = {'name':'Professor Name'}
-    form = SQLFORM(db.UCSCclass, fields=fields)
+    form = SQLFORM(db.ucscClass, fields=fields)
     form.add_button('Back', URL('showClass', args=ucscClass.id))
     if form.process(onvalidation=check_term).accepted:
         response.flash = 'Class added'
         redirect(URL('showClass', args=ucscClass.id))
-    info = db(db.UCSCclass.course_id==ucscClass.id).select()
-    return locals()
+    info = db(db.ucscClass.course_id==ucscClass.id).select()
+    return dict(form=form)
 
 def editClass():
     course = db.course(request.args(0,cast=int)) or redirect(URL('showClass',args=request.args(0,cast=int)))
