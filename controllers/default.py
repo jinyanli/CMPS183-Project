@@ -107,8 +107,8 @@ def showCourse():
     return locals()
 
 def showClass():
-    course = db.course(request.args(0,cast=int)) or redirect(URL('showCourse',args=request.args(0,cast=int)))
-    classes = db(db.ucscClass.course_id==course.id).select(orderby=db.ucscClass.yr,limitby=(0,100))
+    uClass = db.course(request.args(0, cast=int)) or redirect(URL('index'))
+    info = db(db.ucscClass.course_id==uClass.id).select(orderby=db.ucscClass.yr | db.ucscClass.quarter)
     return locals()
 
 def check_term(form):
