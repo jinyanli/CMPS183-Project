@@ -155,7 +155,7 @@ def professorReview():
     db(db.professor.id == prof.id).update(saltiness=saltiness)
     dept=deslugify(db.department(prof.department_id).name)
     deptname=db.department(prof.department_id).short_name
-    reviews =db(db.profReview.professor_id==prof.id).select(db.profReview.ALL, orderby=db.profReview.datetime)
+    reviews =db(db.profReview.professor_id==prof.id).select(db.profReview.ALL, orderby=~db.profReview.datetime)
     return locals()
 
 #function for posting a review for a professor for postProfessorReview page
