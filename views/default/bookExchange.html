@@ -2,7 +2,7 @@
 {{extend 'layout.html'}}
 
 <h1>Sale Textbooks:</h1>
-<ol start ="{{=start}}">
+<ol start ="{{=start+1}}">
 {{for image in listings:}}
     <div class ="page-header">
        {{=LI(A( image.title, _href=URL("showBook", args=image.id)))}}

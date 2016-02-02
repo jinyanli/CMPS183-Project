@@ -86,7 +86,7 @@ db.define_table('profReview',
      Field('user_id', 'reference auth_user', readable=False, writable=False),
      Field('course_id', 'reference course'),
      Field('quarter', requires=IS_IN_SET(['Fall', 'Winter', 'Spring', 'Summer'])),
-     Field('yr', requires=IS_INT_IN_RANGE(2000, 2051)),#year
+     Field('yr', requires=IS_IN_SET(range(2000, 2101))),#year
      Field('review', 'text', update=True),
      Field('helpfulness', requires=IS_IN_SET([1,2,3,4,5])),
      Field('clarity', requires=IS_IN_SET([1,2,3,4,5])),
