@@ -2,6 +2,7 @@
 {{extend 'layout.html'}}
 
 <h1>Sale Textbooks:</h1>
+
 <ol start ="{{=start+1}}">
 {{for image in listings:}}
     <div class ="page-header">
@@ -18,8 +19,32 @@
 {{=A('next',_class="btn btn-info", _href=(URL(args=(page+1))))}}
 {{pass}}
 
-<!---{{=form}}--->
-<p>
-{{=A('New post', _class="btn btn-primary", _href=URL('default', 'addBookItem'))}}
-<!---{{=button}}--->
+<p>Page of {{=page+1}}/{{=number}}
+
+{{if (page <= 2 and number >= 5):}}
+{{for showNum in range(0, 5):}}
+{{=A(showNum+1,_class="btn btn-link", _href=(URL(args=(showNum))))}}
+{{pass}}
+{{pass}}
+
+{{if (page+5)>=(number):}}
+{{for showNum in range(page, number):}}
+{{=A(showNum+1,_class="btn btn-link", _href=(URL(args=(showNum))))}}
+{{pass}}
+{{pass}}
+
+{{if (page >2 and (page+5) < number):}}
+{{for showNum in range(page-2, page+3) :}}
+{{=A(showNum+1,_class="btn btn-link", _href=(URL(args=(showNum))))}}
+{{pass}}
+{{pass}}
 </p>
+
+<form >
+  <input name="num" />
+  <input type="submit" />
+</form>
+{{URL(args=(request.vars.num))}}
+
+<!---{{=form}}--->
+
