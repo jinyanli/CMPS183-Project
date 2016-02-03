@@ -34,7 +34,8 @@ def bookExchange():
     else:
         q=(db.post.status == True)
         listings = db(db.post.status == True).select(orderby = db.post.title, limitby=(start,stop))
-
+    i = 0
+    number = db()(db.post.id > 0).count()
     form = SQLFORM.grid(q,
         args=request.args[:1],
         fields=[db.post.title,
@@ -47,6 +48,11 @@ def bookExchange():
         create=False,
         searchable=False
         )
+    return locals()
+
+def showClass():
+    ucscClass = db.course(request.args(0, cast=int)) or redirect(URL('index'))
+    info = db(db.ucscClass.course_id==ucscClass.id).select(orderby=db.ucscClass.year | db.ucscClass.quarter)
     return locals()
 
 def showBook():
@@ -107,14 +113,14 @@ def showCourse():
     return locals()
 
 def showClass():
-    course = db.course(request.args(0,cast=int)) or redirect(URL('showCourse',args=request.args(0,cast=int)))
-    classes = db(db.ucscClass.course_id==course.id).select(orderby=db.ucscClass.yr,limitby=(0,100))
+    uClass = db.course(request.args(0, cast=int)) or redirect(URL('index'))
+    info = db(db.ucscClass.course_id==uClass.id).select(orderby=db.ucscClass.yr | db.ucscClass.quarter)
     return locals()
 
 def check_term(form):
     q = form.vars.quarter
     y = form.vars.year
-    query = db((db.ucscClass.quarter == q) & (db.ucscClass.year == y)).select()
+    query = db((db.ucscClass.quarter == q) & (db.ucscClass.yr == y)).select()
     if query:
         form.errors.query = 'Term already exists'
         response.flash = 'Term already exists'
@@ -134,7 +140,7 @@ def createClass():
 
 def editClass():
     course = db.course(request.args(0,cast=int)) or redirect(URL('showClass',args=request.args(0,cast=int)))
-    classes = db(db.ucscClass.course_id==course.id).select(orderby=db.ucscClass.year_,limitby=(0,100))
+    classes = db(db.ucscClass.course_id==course.id).select(orderby=db.ucscClass.yr,limitby=(0,100))
     return locals()
 
 def showProfessor():
@@ -155,7 +161,7 @@ def professorReview():
     db(db.professor.id == prof.id).update(saltiness=saltiness)
     dept=deslugify(db.department(prof.department_id).name)
     deptname=db.department(prof.department_id).short_name
-    reviews =db(db.profReview.professor_id==prof.id).select(db.profReview.ALL, orderby=db.profReview.datetime)
+    reviews =db(db.profReview.professor_id==prof.id).select(db.profReview.ALL, orderby=~db.profReview.datetime)
     return locals()
 
 #function for posting a review for a professor for postProfessorReview page
