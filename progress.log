@@ -917,3 +917,7 @@
 [2016-01-26 16:42:49] EDIT SlugHero/controllers/default.py: -7
 [2016-01-26 16:42:56] EDIT SlugHero/controllers/default.py: -1
 >>>>>>> bbde310c8a1d249f3facdd19c028b4e1a49b1cf6
+[2016-02-03 20:15:47] EDIT SlugHero/controllers/default.py: 0
+[2016-02-03 20:16:51] EDIT SlugHero/views/default/index.html: 0
+[2016-02-03 20:18:00] EDIT SlugHero/views/default/index.html: -13
+[2016-02-03 20:18:38] EDIT SlugHero/controllers/default.py: 0
