@@ -2,7 +2,10 @@
 {{extend 'layout.html'}}
 
 <h1>Sale Textbooks:</h1>
-<ol type ="1">
+<h2>
+    {{=number}}
+</h2>
+<ol start ="{{=start+1}}">
 {{for image in listings:}}
     <div class ="page-header">
        {{=LI(A( image.title, _href=URL("showBook", args=image.id)))}}
@@ -12,12 +15,15 @@
 </ol>
 {{if page>0:}}
 {{=A('previous',_class="btn btn-info", _href=(URL(args=(page-1))))}}
+
 {{pass}}
 
 {{if len(listings)>=10:}}
 {{=A('next',_class="btn btn-info", _href=(URL(args=(page+1))))}}
 {{pass}}
-
+{{for i in range(0, number/10) :}}
+{{=A(i,_class="btn btn-info", _href=(URL(args=(i))))}}
+{{pass}}
 <!---{{=form}}--->
 <p>
 {{=A('New post', _class="btn btn-primary", _href=URL('default', 'addBookItem'))}}

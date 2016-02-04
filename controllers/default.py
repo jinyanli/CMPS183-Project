@@ -34,7 +34,8 @@ def bookExchange():
     else:
         q=(db.post.status == True)
         listings = db(db.post.status == True).select(orderby = db.post.title, limitby=(start,stop))
-
+    i = 0
+    number = db()(db.post.id > 0).count()
     form = SQLFORM.grid(q,
         args=request.args[:1],
         fields=[db.post.title,
