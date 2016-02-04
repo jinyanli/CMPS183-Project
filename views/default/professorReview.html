@@ -1,7 +1,7 @@
 {{extend 'layout.html'}}
 {{import string}}
 {{name="%s %s" % (prof.first_name, prof.last_name)}}
-{{=A('edit',_href=URL('professorEdit',args=[prof.id, request.function]))}}
+{{=A('edit', _class='btn btn-primary', _href=URL('professorEdit',args=[prof.id, request.function]))}}
 <table>
    <tr>
      <td rowspan="3">
@@ -49,7 +49,7 @@
          {{=review.review}}
          <p><b>Posted On:&nbsp;</b>{{=review.datetime}}</p>
          {{if auth.user_id == review.user_id:}}
-         <p><b>{{=A('edit',_href=URL('editProfessorReview',args=[review.id, prof.id]))}}</b></p>
+         <p><b>{{=A('edit', _class='btn btn-primary', _href=URL('editProfessorReview',args=[review.id, prof.id]))}}</b></p>
          {{pass}}
        </td>
     </tr>
