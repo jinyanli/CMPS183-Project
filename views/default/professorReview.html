@@ -1,6 +1,7 @@
 {{extend 'layout.html'}}
 {{import string}}
 {{name="%s %s" % (prof.first_name, prof.last_name)}}
+{{=A('edit',_href=URL('professorEdit',args=[prof.id, request.function]))}}
 <table>
    <tr>
      <td rowspan="3">

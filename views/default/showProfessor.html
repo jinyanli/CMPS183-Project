@@ -1,14 +1,23 @@
 {{extend 'layout.html'}}
 <h1>Show Professor</h1>
+<div>
 {{=A('add Professor', _class='btn btn-primary', _href=URL('addProfessor'))}}
 </br>
-<table>
-  {{for prof in profs:}}
-  {{name="%s %s" % (prof.first_name, prof.last_name)}}
-  <tr>
-    <td>{{=A(name, _href=URL('professorReview', args=prof.id))}}</td>
-    <td>&nbsp;&nbsp;&nbsp;</td>
-    <td>{{=A('edit',_href=URL('professorEdit',args=prof.id))}}</td>
-  </tr>
+</div>
+  {{for dept in depts:}}
+      <div class="container">
+        <a  data-toggle="collapse" href="#{{=dept.short_name}}"><b>{{=dept.name}}</b></a>
+          <div id="{{=dept.short_name}}" class="collapse">
+          {{for prof in profs:}}
+          <table>
+              {{if prof.department_id==dept.id:}}
+                  {{name="%s %s" % (prof.first_name, prof.last_name)}}
+                    <tr>
+                      <td>&nbsp;{{=A(name, _href=URL('professorReview', args=prof.id))}}</td>
+                    </tr>
+              {{pass}}
+          </table>
+          {{pass}}
+          </div>
+        </div>
   {{pass}}
-</table>
