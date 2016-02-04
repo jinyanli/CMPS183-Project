@@ -8,6 +8,7 @@
 ## - download is for downloading files uploaded in the db (does streaming)
 #########################################################################
 import string
+import math
 from gluon.tools import Crud
 crud = Crud(db)
 
@@ -164,6 +165,7 @@ def professorReview():
     prof= db.professor(request.args(0,cast=int)) or redirect(URL('showProfessor'))
     dept=deslugify(db.department(prof.department_id).name)
     deptname=db.department(prof.department_id).short_name
+    numOfPage=int(math.ceil(db(db.profReview.professor_id==prof.id).count()/10.0))
     reviews =db(db.profReview.professor_id==prof.id).select(db.profReview.ALL, orderby=~db.profReview.datetime, limitby=(start, stop))
     return locals()
 
