@@ -152,19 +152,19 @@ def showProfessor():
 
 @auth.requires_login()
 def professorEdit():
-    prof = db.professor(request.args(0,cast=int)) or redirect(URL(request.args(1), args=request.args(0,cast=int)))
-    form = crud.update(db.professor,prof,next=URL(request.args(1), args=request.args(0,cast=int)))
+    prof = db.professor(request.args(0,cast=int)) or redirect(URL(request.vars['currentPage'], args=request.args(0,cast=int)))
+    form = crud.update(db.professor,prof,next=URL(request.vars['currentPage'], args=request.args(0,cast=int)))
     return locals()
 
 #function for professorReview page
 def professorReview():
+    page = request.args(1,cast=int,default=0)
+    start = page*POSTS_PER_PAGE
+    stop = start+POSTS_PER_PAGE
     prof= db.professor(request.args(0,cast=int)) or redirect(URL('showProfessor'))
-    avg=db.profReview.rating.avg()
-    saltiness=db(db.profReview.professor_id==prof.id).select(avg).first()[avg]
-    db(db.professor.id == prof.id).update(saltiness=saltiness)
     dept=deslugify(db.department(prof.department_id).name)
     deptname=db.department(prof.department_id).short_name
-    reviews =db(db.profReview.professor_id==prof.id).select(db.profReview.ALL, orderby=~db.profReview.datetime)
+    reviews =db(db.profReview.professor_id==prof.id).select(db.profReview.ALL, orderby=~db.profReview.datetime, limitby=(start, stop))
     return locals()
 
 #function for posting a review for a professor for postProfessorReview page
@@ -192,16 +192,6 @@ def editProfessorReview():
     if auth.user_id == profreview.user_id:
        form = crud.update(db.profReview, profreview, next=URL('professorReview', args=request.args(1,cast=int)))
     return dict(form=form)
-#@auth.requires_login()
-#def professorCreate():
-    #dept = db.department(request.args(0,cast=int)) or redirect(URL('index'))
-    #db.course.department_id.default = dept.id
-#    form = SQLFORM(db.professor)
-#    if form.process().accepted:
-#        response.flash = 'Professor added'
-#        redirect(URL('showProfessor'))
-    #info = db(db.course.course_id==dept.id).select()
-#    return locals()
 
 #this function is for adding for showProfessor page
 def addProfessor():

@@ -1,7 +1,7 @@
 {{extend 'layout.html'}}
 {{import string}}
 {{name="%s %s" % (prof.first_name, prof.last_name)}}
-{{=A('edit', _class='btn btn-primary', _href=URL('professorEdit',args=[prof.id, request.function]))}}
+{{=A('edit', _class='btn btn-primary', _href=URL('professorEdit',args=[prof.id], vars=dict(currentPage=request.function)))}}
 <table>
    <tr>
      <td rowspan="3">
@@ -56,3 +56,10 @@
 {{pass}}
   </tbody>
 </table>
+{{if page>0:}}
+{{=A('previous',_class="btn btn-info", _href=(URL(request.function, args=(prof.id, page-1))))}}
+{{pass}}
+
+{{if len(reviews)>=10:}}
+{{=A('next',_class="btn btn-info", _href=(URL(request.function, args=(prof.id, page+1))))}}
+{{pass}}
