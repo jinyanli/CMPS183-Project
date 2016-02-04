@@ -56,6 +56,7 @@
 {{pass}}
   </tbody>
 </table>
+<p>Page {{=page+1}} of {{=numOfPage}}</p>
 {{if page>0:}}
 {{=A('previous',_class="btn btn-info", _href=(URL(request.function, args=(prof.id, page-1))))}}
 {{pass}}
