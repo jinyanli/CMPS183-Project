@@ -50,6 +50,11 @@ def bookExchange():
         )
     return locals()
 
+def showClass()
+    ucscClass = db.course(request.args(0, cast=int)) or redirect(URL('index'))
+    info = db(db.ucscClass.course_id==ucscClass.id).select(orderby=db.ucscClass.year | db.ucscClass.quarter)
+    return locals()
+
 def showBook():
     image = db.post(request.args(0,cast=int)) or redirect(URL('bookExchange'))
     return locals()
