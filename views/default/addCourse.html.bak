@@ -1,3 +1,0 @@
-{{extend 'layout.html'}}
-<h1>Fill form and submit!</h1>
-{{=form}}
