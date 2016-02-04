@@ -120,7 +120,7 @@ def showClass():
 def check_term(form):
     q = form.vars.quarter
     y = form.vars.year
-    query = db((db.ucscClass.quarter == q) & (db.ucscClass.year == y)).select()
+    query = db((db.ucscClass.quarter == q) & (db.ucscClass.yr == y)).select()
     if query:
         form.errors.query = 'Term already exists'
         response.flash = 'Term already exists'
@@ -140,7 +140,7 @@ def createClass():
 
 def editClass():
     course = db.course(request.args(0,cast=int)) or redirect(URL('showClass',args=request.args(0,cast=int)))
-    classes = db(db.ucscClass.course_id==course.id).select(orderby=db.ucscClass.year_,limitby=(0,100))
+    classes = db(db.ucscClass.course_id==course.id).select(orderby=db.ucscClass.yr,limitby=(0,100))
     return locals()
 
 def showProfessor():
