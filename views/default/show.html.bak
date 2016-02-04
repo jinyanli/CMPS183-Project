@@ -1,0 +1,13 @@
+{{extend 'layout.html'}}
+{{=A('Back To Departments', _href=URL('index'))}}
+<h1>{{=dept.name}}</h1>
+
+<div style="text-align:center">
+    {{=A('Add a course', _href=URL('addCourse', args=dept.id))}}
+</div>
+
+<ul>
+    {{for course in info:}}
+    {{=LI(A(course.name, _href=URL("showClass", args=course.id)))}}
+    {{pass}}
+</ul>
