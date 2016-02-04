@@ -56,6 +56,12 @@ def showClass():
     info = db(db.ucscClass.course_id==ucscClass.id).select(orderby=db.ucscClass.year | db.ucscClass.quarter)
     return locals()
 
+def classPage():
+    uClass = db.ucscClass(request.args(0, cast=int)) or redirect(URL('index'))
+    info = db(db.ucscClass.course_id==uClass.id).select()
+    classReview = db(db.classReview.ucscClass_id==uClass.id).select()
+    return locals()
+
 def showBook():
     image = db.post(request.args(0,cast=int)) or redirect(URL('bookExchange'))
     return locals()
