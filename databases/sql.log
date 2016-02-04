@@ -3892,3 +3892,30 @@ success!
 success!
 success!
 success!
+success!
+success!
+success!
+success!
+timestamp: 2016-02-04T02:41:49.277000
+ALTER TABLE studentGrade ADD datetime TIMESTAMP;
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
