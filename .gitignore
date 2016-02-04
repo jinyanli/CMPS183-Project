@@ -9,3 +9,4 @@ sessions/*.log
 databases/sql.log
 
 databases/sql.log
+*.log
