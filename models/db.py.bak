@@ -125,7 +125,7 @@ db.define_table('student',
    Field('last_name', 'string'))
 
 db.define_table('classReview',
-   Field('class_id', writable=False, readable=False),
+   Field('classReview_id', writable=False, readable=False),
    Field('student_id', 'reference student', writable=False, readable=False),
    Field('content','text',update=True),
    Field('term'),

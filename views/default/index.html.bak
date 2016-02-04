@@ -1,8 +1,5 @@
 {{extend 'layout.html'}}
 
-<<<<<<< HEAD
-<h1>{{=message}}</h1>
-=======
 <h1>Current Depts</h1>
 
 <ul>
@@ -15,4 +12,3 @@
     <p>Add a Department</p>
 </div>
 {{=form}}
->>>>>>> bbde310c8a1d249f3facdd19c028b4e1a49b1cf6
