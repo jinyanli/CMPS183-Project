@@ -144,13 +144,16 @@ def editClass():
     return locals()
 
 def showProfessor():
+    depts = db().select(db.department.ALL, orderby=db.department.name)
+    for dept in depts:
+        dept.name=deslugify(dept.name)
     profs = db().select(db.professor.ALL, orderby=db.professor.first_name)
     return locals()
 
 @auth.requires_login()
 def professorEdit():
-    prof = db.professor(request.args(0,cast=int)) or redirect(URL('showProfessor'))
-    form = crud.update(db.professor,prof,next='showProfessor')
+    prof = db.professor(request.args(0,cast=int)) or redirect(URL(request.args(1), args=request.args(0,cast=int)))
+    form = crud.update(db.professor,prof,next=URL(request.args(1), args=request.args(0,cast=int)))
     return locals()
 
 #function for professorReview page

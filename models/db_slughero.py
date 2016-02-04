@@ -27,7 +27,7 @@ db.define_table('professor',
     Field('department_id', 'reference department'),
     Field('saltiness', 'double', readable=False, writable=False),
     Field('user_id', 'reference auth_user', readable=False, writable=False),#keep track of who created the professor
-    Field('datetime', 'datetime'))
+    Field('datetime', 'datetime', readable=False,writable=False, default=request.now))
 
 db.professor.department_id.requires = IS_IN_DB(db, db.department.id, '%(name)s')
 
@@ -42,7 +42,7 @@ db.define_table('ucscClass', # 'class' is a python reserved word
     Field('textbook_ids', 'list:reference textbook'),
     Field('professor_id', 'reference professor', readable=False, writable=False),
     Field('user_id', 'reference auth_user', readable=False, writable=False),
-    Field('datetime', 'datetime'))
+    Field('datetime', 'datetime', readable=False,writable=False, default=request.now))
 
 db.define_table('classReview',
     Field('user_id', 'reference  auth_user', readable=False, writable=False),
