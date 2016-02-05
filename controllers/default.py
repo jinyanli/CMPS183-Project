@@ -201,7 +201,7 @@ def editProfessorReview():
        form = crud.update(db.profReview, profreview, next=URL('professorReview', args=request.args(1,cast=int)))
     return dict(form=form)
 
-#this function is for adding for showProfessor page
+#this function is for adding professor for showProfessor page
 def addProfessor():
     crud.messages.submit_button = 'Submit'
     crud.settings.keepvalues = True
