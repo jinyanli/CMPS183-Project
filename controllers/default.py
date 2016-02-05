@@ -22,21 +22,27 @@ def bookExchange():
     page = request.args(0,cast=int,default=0)
     start = page*POSTS_PER_PAGE
     stop = start+POSTS_PER_PAGE
-    show_all = request.args(0) == 'all'
-
-    if show_all:
-        button = A('Show available items', _class="btn btn-info", _href=URL('default', 'bookExchange'))
-    else:
-        button = A('Show all items', _class="btn btn-info", _href=URL('default', 'bookExchange', args=['all']))
-
-    if show_all:
-        q = db.post
-        listings = db().select(orderby = db.post.title, limitby=(start,stop))
-    else:
-        q=(db.post.status == True)
-        listings = db(db.post.status == True).select(orderby = db.post.title, limitby=(start,stop))
+    #show_all = request.args(0) == 'all'
     i = 0
-    number = db()(db.post.id > 0).count()
+    number = int(math.ceil(db()(db.post.id > 0).count() /10.0))
+    q = db.post
+    listings = db().select(orderby = db.post.title, limitby=(start,stop))
+    #a = FORM(INPUT(_name='a', requires=IS_INT_IN_RANGE(0, 10)),
+    #	INPUT(_type='submit'), value _action=URL('page_two'))
+
+    #a.add_button('Back', URL('other_page'))
+    #if show_all:
+    #button = A('Show available items', _class="btn btn-info", _href=URL('default', 'bookExchange'))
+    #else:
+    #    button = A('Show all items', _class="btn btn-info", _href=URL('default', 'bookExchange', args=['all']))
+
+    #if show_all:
+    #    q = db.post
+    #    listings = db().select(orderby = db.post.title, limitby=(start,stop))
+    #else:
+    #    q=(db.post.status == True)
+    #    listings = db(db.post.status == True).select(orderby = db.post.title, limitby=(start,stop))
+
     form = SQLFORM.grid(q,
         args=request.args[:1],
         fields=[db.post.title,
