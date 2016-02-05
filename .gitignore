@@ -16,3 +16,6 @@ databases/sql.log
 databases/sql.log
 *.log
 databases/sql.log
+
+databases/sql.log
+*.log
