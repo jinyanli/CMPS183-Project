@@ -925,3 +925,6 @@
 [2016-02-03 20:23:58] EDIT SlugHero/controllers/default.py: 0
 [2016-02-04 16:59:40] EDIT SlugHero/views/default/bookExchange.html: 1
 [2016-02-04 16:59:55] EDIT SlugHero/views/default/bookExchange.html: 0
+[2016-02-04 18:28:15] CREATE testpage.html: 0
+[2016-02-04 18:29:10] EDIT SlugHero/controllers/default.py: 2
+[2016-02-04 18:29:17] EDIT SlugHero/controllers/default.py: 0

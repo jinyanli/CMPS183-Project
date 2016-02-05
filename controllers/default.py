@@ -288,3 +288,7 @@ def deslugify(_slug):
     e.g. "electrical-engineering" => "Electrical Engineering"
     """
     return string.capwords(_slug.replace('-', ' '))
+
+def testpage():
+
+    return locals()
