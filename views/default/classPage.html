@@ -1,0 +1,18 @@
+{{extend 'layout.html'}}
+{{=A('Back To All ' + db.course[uClass.course_id].name, _href=URL('showClass', args=db.course[uClass.course_id].id))}}
+
+<div style="text-align:center">
+<h1>{{=db.course[uClass.course_id].name}}: {{=uClass.quarter}} {{=uClass.yr}}</h1>
+</div>
+
+{{if uClass.professor_id == None:}}
+    {{=A('Add a Professor', _href=URL('addProfessor', args=uClass.id))}}
+{{else:}}
+    Professor: {{=A(db.professor[uClass.professor_id].name, _href=URL('showProf', args=uClass.professor_id))}}
+{{pass}}
+
+<h1>Class Reviews</h1>
+{{for r in classReview:}}
+Rating: {{=r.rating}} - {{=r.content}}
+<br>
+{{pass}}

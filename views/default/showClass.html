@@ -1,16 +1,16 @@
 {{extend 'layout.html'}}
-<h2>List of Classes of Course {{=course.name}}</h2>
+<h2>List of Classes of Course {{=uClass.name}}</h2>
 
 <table>
-  {{for aClass in classes:}}
-  {{className=course.name+' '+'aClass.quarter'+' '+str(aClass.yr)}}
+  {{for aClass in info:}}
+  {{className=uClass.name+' '+aClass.quarter+' '+str(aClass.yr)}}
   <tr>
-    <td>{{=A(className,_href=URL('classPage',args=aClass.id))}}</td>
-    <td>{{=A('edit',_href=URL('editClass',args=aClass.id))}}</td>
+    <td>{{=A(className, _href=URL('classPage',args=aClass.id))}}</td>
+    <td>{{=A('edit', _href=URL('editClass',args=aClass.id))}}</td>
   </tr>
   {{pass}}
   <tr>
-    <td>{{=A('add a class',_href=URL('createClass',args=course.id))}}</td>
+    <td>{{=A('add a class',_href=URL('createClass',args=uClass.id))}}</td>
     <td></td>
   </tr>
 </table>

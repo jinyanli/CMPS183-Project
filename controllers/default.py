@@ -8,6 +8,7 @@
 ## - download is for downloading files uploaded in the db (does streaming)
 #########################################################################
 import string
+import math
 from gluon.tools import Crud
 crud = Crud(db)
 
@@ -48,6 +49,17 @@ def bookExchange():
         create=False,
         searchable=False
         )
+    return locals()
+
+def showClass():
+    ucscClass = db.course(request.args(0, cast=int)) or redirect(URL('index'))
+    info = db(db.ucscClass.course_id==ucscClass.id).select(orderby=db.ucscClass.year | db.ucscClass.quarter)
+    return locals()
+
+def classPage():
+    uClass = db.ucscClass(request.args(0, cast=int)) or redirect(URL('index'))
+    info = db(db.ucscClass.course_id==uClass.id).select()
+    classReview = db(db.classReview.ucscClass_id==uClass.id).select()
     return locals()
 
 def showBook():
@@ -115,7 +127,7 @@ def showClass():
 def check_term(form):
     q = form.vars.quarter
     y = form.vars.year
-    query = db((db.ucscClass.quarter == q) & (db.ucscClass.year == y)).select()
+    query = db((db.ucscClass.quarter == q) & (db.ucscClass.yr == y)).select()
     if query:
         form.errors.query = 'Term already exists'
         response.flash = 'Term already exists'
@@ -135,28 +147,32 @@ def createClass():
 
 def editClass():
     course = db.course(request.args(0,cast=int)) or redirect(URL('showClass',args=request.args(0,cast=int)))
-    classes = db(db.ucscClass.course_id==course.id).select(orderby=db.ucscClass.year_,limitby=(0,100))
+    classes = db(db.ucscClass.course_id==course.id).select(orderby=db.ucscClass.yr,limitby=(0,100))
     return locals()
 
 def showProfessor():
+    depts = db().select(db.department.ALL, orderby=db.department.name)
+    for dept in depts:
+        dept.name=deslugify(dept.name)
     profs = db().select(db.professor.ALL, orderby=db.professor.first_name)
     return locals()
 
 @auth.requires_login()
 def professorEdit():
-    prof = db.professor(request.args(0,cast=int)) or redirect(URL('showProfessor'))
-    form = crud.update(db.professor,prof,next='showProfessor')
+    prof = db.professor(request.args(0,cast=int)) or redirect(URL(request.vars['currentPage'], args=request.args(0,cast=int)))
+    form = crud.update(db.professor,prof,next=URL(request.vars['currentPage'], args=request.args(0,cast=int)))
     return locals()
 
 #function for professorReview page
 def professorReview():
+    page = request.args(1,cast=int,default=0)
+    start = page*POSTS_PER_PAGE
+    stop = start+POSTS_PER_PAGE
     prof= db.professor(request.args(0,cast=int)) or redirect(URL('showProfessor'))
-    avg=db.profReview.rating.avg()
-    saltiness=db(db.profReview.professor_id==prof.id).select(avg).first()[avg]
-    db(db.professor.id == prof.id).update(saltiness=saltiness)
     dept=deslugify(db.department(prof.department_id).name)
     deptname=db.department(prof.department_id).short_name
-    reviews =db(db.profReview.professor_id==prof.id).select(db.profReview.ALL, orderby=~db.profReview.datetime)
+    numOfPage=int(math.ceil(db(db.profReview.professor_id==prof.id).count()/10.0))
+    reviews =db(db.profReview.professor_id==prof.id).select(db.profReview.ALL, orderby=~db.profReview.datetime, limitby=(start, stop))
     return locals()
 
 #function for posting a review for a professor for postProfessorReview page
@@ -184,16 +200,6 @@ def editProfessorReview():
     if auth.user_id == profreview.user_id:
        form = crud.update(db.profReview, profreview, next=URL('professorReview', args=request.args(1,cast=int)))
     return dict(form=form)
-#@auth.requires_login()
-#def professorCreate():
-    #dept = db.department(request.args(0,cast=int)) or redirect(URL('index'))
-    #db.course.department_id.default = dept.id
-#    form = SQLFORM(db.professor)
-#    if form.process().accepted:
-#        response.flash = 'Professor added'
-#        redirect(URL('showProfessor'))
-    #info = db(db.course.course_id==dept.id).select()
-#    return locals()
 
 #this function is for adding for showProfessor page
 def addProfessor():

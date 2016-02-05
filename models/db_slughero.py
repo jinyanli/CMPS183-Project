@@ -27,7 +27,7 @@ db.define_table('professor',
     Field('department_id', 'reference department'),
     Field('saltiness', 'double', readable=False, writable=False),
     Field('user_id', 'reference auth_user', readable=False, writable=False),#keep track of who created the professor
-    Field('datetime', 'datetime'))
+    Field('datetime', 'datetime', readable=False,writable=False, default=request.now))
 
 db.professor.department_id.requires = IS_IN_DB(db, db.department.id, '%(name)s')
 
@@ -42,7 +42,7 @@ db.define_table('ucscClass', # 'class' is a python reserved word
     Field('textbook_ids', 'list:reference textbook'),
     Field('professor_id', 'reference professor', readable=False, writable=False),
     Field('user_id', 'reference auth_user', readable=False, writable=False),
-    Field('datetime', 'datetime'))
+    Field('datetime', 'datetime', readable=False,writable=False, default=request.now))
 
 db.define_table('classReview',
     Field('user_id', 'reference  auth_user', readable=False, writable=False),
@@ -75,7 +75,9 @@ db.define_table('comm',
 db.define_table('studentGrade',
     Field('user_id', 'reference auth_user', readable=False, writable=False),
     Field('grade', 'list:string'),
-    Field('ucscClass_id', 'reference ucscClass', readable=False, writable=False))
+    Field('ucscClass_id', 'reference ucscClass', readable=False, writable=False),
+    Field('datetime', 'datetime', readable=False,writable=False,default=request.now)
+    )
 
 gradeRange=['A+', 'A', 'A-', 'B+', 'B', 'B-', 'C+', 'C', 'C-', 'D', 'F', 'P', 'NP']
 db.studentGrade.grade.requires = IS_IN_SET(gradeRange)
@@ -102,7 +104,7 @@ db.define_table('note',
     Field('course_id', 'reference course', readable=False, writable=False),
     Field('professor_id', 'reference professor', readable=False, writable=False),
     Field('notetype', 'string'),
-    Field('datetime', 'datetime'))
+    Field('datetime', 'datetime', readable=False,writable=False,default=request.now))
 
 noteType = ['exam', 'homework', 'class note', 'course material', 'solution', 'other']
 db.note.notetype.requires = IS_IN_SET(noteType)

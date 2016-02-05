@@ -34,7 +34,7 @@ def bookExchange():
     else:
         q=(db.post.status == True)
         listings = db(db.post.status == True).select(orderby = db.post.title, limitby=(start,stop))
-
+    i = 0
     number = db()(db.post.id > 0).count()
     form = SQLFORM.grid(q,
         args=request.args[:1],
@@ -48,6 +48,11 @@ def bookExchange():
         create=False,
         searchable=False
         )
+    return locals()
+
+def showClass():
+    ucscClass = db.course(request.args(0, cast=int)) or redirect(URL('index'))
+    info = db(db.ucscClass.course_id==ucscClass.id).select(orderby=db.ucscClass.year | db.ucscClass.quarter)
     return locals()
 
 def showBook():
@@ -115,7 +120,7 @@ def showClass():
 def check_term(form):
     q = form.vars.quarter
     y = form.vars.year
-    query = db((db.ucscClass.quarter == q) & (db.ucscClass.year == y)).select()
+    query = db((db.ucscClass.quarter == q) & (db.ucscClass.yr == y)).select()
     if query:
         form.errors.query = 'Term already exists'
         response.flash = 'Term already exists'
