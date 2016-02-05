@@ -19,3 +19,4 @@ databases/sql.log
 
 databases/sql.log
 *.log
+*.pyc
