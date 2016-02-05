@@ -40,6 +40,7 @@
 {{pass}}
 </p>
 
+{{=A('New post', _class="btn btn-primary", _href=URL('default', 'addBookItem'))}}
 <form >
   <input name="num" />
   <input type="submit" />
@@ -47,4 +48,3 @@
 {{URL(args=(request.vars.num))}}
 
 <!---{{=form}}--->
-
