@@ -290,5 +290,14 @@ def deslugify(_slug):
     return string.capwords(_slug.replace('-', ' '))
 
 def testpage():
-
-    return locals()
+    form=FORM('Your name:',
+              INPUT(_name='name', requires=IS_NOT_EMPTY()),
+              INPUT(_type='submit'))
+    if form.accepts(request,session):
+        response.flash = 'form accepted'
+        redirect(URL('default','bookExchange', args=request.vars.name))
+    elif form.errors:
+        response.flash = 'form has errors'
+    else:
+        response.flash = 'please fill the form'
+    return dict(form=form)
