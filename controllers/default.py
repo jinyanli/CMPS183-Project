@@ -299,5 +299,5 @@ def testpage():
     elif form.errors:
         response.flash = 'form has errors'
     else:
-        response.flash = 'please fill the form'
+        response.flash = 'please fill'
     return dict(form=form)
