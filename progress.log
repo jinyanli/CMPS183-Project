@@ -941,3 +941,11 @@
 [2016-02-05 18:30:51] EDIT SlugHero/controllers/forum.py: 6
 [2016-02-05 18:31:06] EDIT SlugHero/models/menu.py: 0
 [2016-02-05 18:31:58] EDIT SlugHero/controllers/forum.py: 2
+[2016-02-06 11:29:33] EDIT SlugHero/controllers/forum.py: -7
+[2016-02-06 11:34:13] EDIT SlugHero/controllers/default.py: -2
+[2016-02-06 11:34:31] EDIT SlugHero/controllers/default.py: 0
+[2016-02-06 11:35:19] EDIT SlugHero/views/default/generalForum.html: 5
+[2016-02-06 11:36:30] CREATE default/showEachForm.html: 0
+[2016-02-06 11:36:52] EDIT SlugHero/views/default/showEachForm.html: 8
+[2016-02-06 11:39:42] EDIT SlugHero/views/default/generalForum.html: 0
+[2016-02-06 11:39:44] EDIT SlugHero/views/default/generalForum.html: 0
