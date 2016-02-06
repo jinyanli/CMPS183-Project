@@ -8,6 +8,7 @@
 ## - download is for downloading files uploaded in the db (does streaming)
 #########################################################################
 import string
+import math
 from gluon.tools import Crud
 crud = Crud(db)
 
@@ -21,21 +22,27 @@ def bookExchange():
     page = request.args(0,cast=int,default=0)
     start = page*POSTS_PER_PAGE
     stop = start+POSTS_PER_PAGE
-    show_all = request.args(0) == 'all'
-
-    if show_all:
-        button = A('Show available items', _class="btn btn-info", _href=URL('default', 'bookExchange'))
-    else:
-        button = A('Show all items', _class="btn btn-info", _href=URL('default', 'bookExchange', args=['all']))
-
-    if show_all:
-        q = db.post
-        listings = db().select(orderby = db.post.title, limitby=(start,stop))
-    else:
-        q=(db.post.status == True)
-        listings = db(db.post.status == True).select(orderby = db.post.title, limitby=(start,stop))
+    #show_all = request.args(0) == 'all'
     i = 0
-    number = db()(db.post.id > 0).count()
+    number = int(math.ceil(db()(db.post.id > 0).count() /10.0))
+    q = db.post
+    listings = db().select(orderby = db.post.title, limitby=(start,stop))
+    #a = FORM(INPUT(_name='a', requires=IS_INT_IN_RANGE(0, 10)),
+    #	INPUT(_type='submit'), value _action=URL('page_two'))
+
+    #a.add_button('Back', URL('other_page'))
+    #if show_all:
+    #button = A('Show available items', _class="btn btn-info", _href=URL('default', 'bookExchange'))
+    #else:
+    #    button = A('Show all items', _class="btn btn-info", _href=URL('default', 'bookExchange', args=['all']))
+
+    #if show_all:
+    #    q = db.post
+    #    listings = db().select(orderby = db.post.title, limitby=(start,stop))
+    #else:
+    #    q=(db.post.status == True)
+    #    listings = db(db.post.status == True).select(orderby = db.post.title, limitby=(start,stop))
+
     form = SQLFORM.grid(q,
         args=request.args[:1],
         fields=[db.post.title,
@@ -150,24 +157,28 @@ def editClass():
     return locals()
 
 def showProfessor():
+    depts = db().select(db.department.ALL, orderby=db.department.name)
+    for dept in depts:
+        dept.name=deslugify(dept.name)
     profs = db().select(db.professor.ALL, orderby=db.professor.first_name)
     return locals()
 
 @auth.requires_login()
 def professorEdit():
-    prof = db.professor(request.args(0,cast=int)) or redirect(URL('showProfessor'))
-    form = crud.update(db.professor,prof,next='showProfessor')
+    prof = db.professor(request.args(0,cast=int)) or redirect(URL(request.vars['currentPage'], args=request.args(0,cast=int)))
+    form = crud.update(db.professor,prof,next=URL(request.vars['currentPage'], args=request.args(0,cast=int)))
     return locals()
 
 #function for professorReview page
 def professorReview():
+    page = request.args(1,cast=int,default=0)
+    start = page*POSTS_PER_PAGE
+    stop = start+POSTS_PER_PAGE
     prof= db.professor(request.args(0,cast=int)) or redirect(URL('showProfessor'))
-    avg=db.profReview.rating.avg()
-    saltiness=db(db.profReview.professor_id==prof.id).select(avg).first()[avg]
-    db(db.professor.id == prof.id).update(saltiness=saltiness)
     dept=deslugify(db.department(prof.department_id).name)
     deptname=db.department(prof.department_id).short_name
-    reviews =db(db.profReview.professor_id==prof.id).select(db.profReview.ALL, orderby=~db.profReview.datetime)
+    numOfPage=int(math.ceil(db(db.profReview.professor_id==prof.id).count()/10.0))
+    reviews =db(db.profReview.professor_id==prof.id).select(db.profReview.ALL, orderby=~db.profReview.datetime, limitby=(start, stop))
     return locals()
 
 #function for posting a review for a professor for postProfessorReview page
@@ -195,18 +206,8 @@ def editProfessorReview():
     if auth.user_id == profreview.user_id:
        form = crud.update(db.profReview, profreview, next=URL('professorReview', args=request.args(1,cast=int)))
     return dict(form=form)
-#@auth.requires_login()
-#def professorCreate():
-    #dept = db.department(request.args(0,cast=int)) or redirect(URL('index'))
-    #db.course.department_id.default = dept.id
-#    form = SQLFORM(db.professor)
-#    if form.process().accepted:
-#        response.flash = 'Professor added'
-#        redirect(URL('showProfessor'))
-    #info = db(db.course.course_id==dept.id).select()
-#    return locals()
 
-#this function is for adding for showProfessor page
+#this function is for adding professor for showProfessor page
 def addProfessor():
     crud.messages.submit_button = 'Submit'
     crud.settings.keepvalues = True
@@ -287,3 +288,16 @@ def deslugify(_slug):
     e.g. "electrical-engineering" => "Electrical Engineering"
     """
     return string.capwords(_slug.replace('-', ' '))
+
+def testpage():
+    form=FORM('Your name:',
+              INPUT(_name='name', requires=IS_NOT_EMPTY()),
+              INPUT(_type='submit'))
+    if form.accepts(request,session):
+        response.flash = 'form accepted'
+        redirect(URL('default','bookExchange', args=request.vars.name))
+    elif form.errors:
+        response.flash = 'form has errors'
+    else:
+        response.flash = 'please fill the form'
+    return dict(form=form)
