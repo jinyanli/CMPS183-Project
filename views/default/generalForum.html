@@ -2,7 +2,7 @@
 <ul>
     {{for forum in forums:}}
     {{=LI(A(forum.title, _href=URL('showEachForm', args=forum.id)))}}
-
+   
     {{pass}}
 </ul>
 <br>
