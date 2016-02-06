@@ -5,14 +5,28 @@
 <h1>{{=db.course[uClass.course_id].name}}: {{=uClass.quarter}} {{=uClass.yr}}</h1>
 </div>
 
-{{if uClass.professor_id == None:}}
-    {{=A('Add a Professor', _href=URL('addProfessor', args=uClass.id))}}
-{{else:}}
-    Professor: {{=A(db.professor[uClass.professor_id].name, _href=URL('showProf', args=uClass.professor_id))}}
+<table name="forms" cellpadding="10">
+<tr><td>
+    <form action="{{=URL('professorReview', args=[prof_id])}}">
+        <img src="{{=profPic}}" alt="Professor's Pic"><br/>
+        <input type="submit" name="view_prof" value="Reviews">
+    </form></td>
+    <td>
+    <form action="{{=URL('classPage')}}" method="POST">
+    <table name="post">
+    <tr><td rowspan="3"><textarea name="myReview" cols="50" rows="5">Enter Your Review Here</textarea></td><td>&nbsp;</td>
+        <td>Year:<input type="text" name="yr" value="2016"/></td></tr>
+    <tr><td>&nbsp;</td><td>Term:<select name="term"><option>Fall</option><option>Winter</option><option>Spring</option><option>Summer</option></select></td></tr>
+    <tr><td>&nbsp;</td><td>Rating:<input type="text" name="rating"/></td></tr>
+    </table>
+    </td>
+    <tr><td>&nbsp;</td><td><input type="submit" /></td></tr>
+</form>
+</tr>
+</table>
+<ul>
+{{=LI(prof_id)}}
+{{for prof in info:}}
+{{=LI(prof)}}
 {{pass}}
-
-<h1>Class Reviews</h1>
-{{for r in classReview:}}
-Rating: {{=r.rating}} - {{=r.content}}
-<br>
-{{pass}}
+</ul>
