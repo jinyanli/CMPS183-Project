@@ -5,9 +5,9 @@
 {{for comm in comms:}}
     <li><font size="2" color="blue">comment: </font>{{=comm.body}}</li>
     {{pass}}
+
+<br>
+<br>
 [{{=A('goback', _href=URL('generalForum'))}}]
-<br>
-<br>
-
-
+[{{=A('Edit This Forum!', _href=URL('editForum', args=forum.id))}}]
 [{{=A('Add New Comment!', _href=URL('addComment', args=forum.id))}}]

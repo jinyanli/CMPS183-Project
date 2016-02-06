@@ -1,8 +1,11 @@
 <h1>This is the Forum </h1>
 <ul>
     {{for forum in forums:}}
-    {{=LI(A(forum.title, _href=URL('showEachForm', args=forum.id)))}}
-   
+    <li>[{{=A('Edit', _href=URL('editForum', args=forum.id))}}]{{=(A(forum.title, _href=URL('showEachForm', args=forum.id)))}}
+
+
+
+
     {{pass}}
 </ul>
 <br>
