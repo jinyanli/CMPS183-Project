@@ -248,9 +248,16 @@ def addForum():
 def showEachForm():
     forum = db.post(request.args(0,cast=int)) or redirect(URL('generalForum'))
     comms  = db(db.comm.post_id==forum.id).select(db.comm.ALL, orderby=~db.comm.datetime)
-    db.comm.post_id.default = forum.id
+    #db.comm.post_id.default = forum.id
     return locals()
 
+def addComment():
+    forum = db.post(request.args(0,cast=int)) or redirect(URL('generalForum'))
+    db.comm.post_id.default = forum.id
+    form = crud.create(db.comm)
+    if form.process().accepted:
+        redirect(URL('showEachForm', args=request.args(0,cast=int)))
+    return locals()
 
 
 
