@@ -13,7 +13,7 @@
      <td><h5><b>&nbsp;Department:&nbsp;{{=dept}}</b></h5></td>
    </tr>
    <tr>
-     <td><h5><b>&nbsp;Saltiness:&nbsp;{{=prof.saltiness}}</b></h5></td>
+     <td><h5><b>&nbsp;Saltiness:&nbsp;{{="%.1f" % prof.saltiness}}/5</b></h5></td>
    </tr>
 </table>
 {{if auth.user:}}
@@ -38,7 +38,7 @@
           <p><b>Helpfulness:&nbsp;</b>{{=review.helpfulness}}</p>
           <p><b>Clarity:&nbsp;</b>{{=review.clarity}}</p>
           <p><b>Easiness:&nbsp;</b>{{=review.easiness}}</p>
-          <p><b>Overall Rating:&nbsp;</b>{{=review.rating}}</p>
+          <p><b>Overall Rating:&nbsp;</b>{{="%.1f" % review.rating}}/5</p>
        </td>
        <td>
          <p>{{student=db.auth_user(review.user_id)}}</p>
