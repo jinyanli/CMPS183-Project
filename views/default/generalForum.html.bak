@@ -7,4 +7,3 @@
     {{pass}}
 </ul>
 <br>
-[{{=A('Add New Post!', _href=URL('addForum'))}}]

@@ -227,38 +227,36 @@ def professorCreate():
 
 #below are helen's functions for creating general discussion forum
 #some of them doesn't work
-def showPost():
-    posts = db().select(db.post.ALL, orderby=db.post.datetime)
+
+def generalForum():
+    forums = db( db.post.price == None , db.post.status == False).select(orderby = db.post.datetime)
+    db.post.status.writable = db.post.status.readable = False
+    db.post.price.writable = db.post.price.readable = False
+    db.post.image.writable = db.post.image.readable = False
+    #form = crud.create(db.post).process()
     return locals()
 
-@auth.requires_login()
-def postCreate():
-    db.post.ucscClass_id.default = request.args(0,cast=int)
-    form = crud.create(db.post,next=URL('showPost'))
-    return locals()
-
-@auth.requires_login()
-def postEdit():
-    post = db.post(request.args(0,cast=int)) or redirect(URL('showPost'))
-    form = crud.update(db.course,course,next='showPost')
+def addForum():
+    db.post.forumSection.default="forum"
+    db.post.price.writable = db.post.price.readable = False
+    db.post.status.writable = db.post.status.readable = False
+    db.post.image.writable = db.post.image.readable = False
+    form = crud.create(db.post).process(next='generalForum')
     return locals()
 
 
-def showComm():
-    comms = db().select(db.comm.ALL, orderby=db.comm.datetime)
+def showEachForm():
+    forum = db.post(request.args(0,cast=int)) or redirect(URL('generalForum'))
+    comms  = db(db.comm.post_id==forum.id).select(db.comm.ALL, orderby=~db.comm.datetime)
+    db.comm.post_id.default = forum.id
     return locals()
 
-@auth.requires_login()
-def commCreate():
-    db.comm.post_id_id.default = request.args(0,cast=int)
-    form = crud.create(db.comm,next=URL('showComm'))
-    return locals()
 
-@auth.requires_login()
-def commEdit():
-    comm = db.comm(request.args(0,cast=int)) or redirect(URL('showComm'))
-    form = crud.update(db.comm,comm,next='showComm')
-    return locals()
+
+
+
+
+
 
 @cache.action()
 def download():
