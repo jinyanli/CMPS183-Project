@@ -937,3 +937,7 @@
 =======
 [2016-02-05 18:09:08] EDIT SlugHero/controllers/default.py: 0
 >>>>>>> origin/master
+[2016-02-05 18:30:31] CREATE forum.py: 0
+[2016-02-05 18:30:51] EDIT SlugHero/controllers/forum.py: 6
+[2016-02-05 18:31:06] EDIT SlugHero/models/menu.py: 0
+[2016-02-05 18:31:58] EDIT SlugHero/controllers/forum.py: 2

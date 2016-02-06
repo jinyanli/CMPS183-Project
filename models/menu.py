@@ -29,7 +29,7 @@ response.menu = [
     (T('Department'), False, URL('SlugHero', 'default', 'showDepartment')),
     (T('Professor'), False, URL('SlugHero', 'default', 'showProfessor')),
     (T('Textbook Exchange'), False, URL('SlugHero', 'default', 'bookExchange')),
-    (T('Forum'), False, URL('SlugHero', 'default', 'generalForum'))
+    (T('Forum'), False, URL('SlugHero', 'forum', 'generalForum'))
 ]
 
 #DEVEOPMENT_MENU = True
