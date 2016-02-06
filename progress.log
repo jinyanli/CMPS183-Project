@@ -960,3 +960,6 @@
 [2016-02-06 12:00:19] EDIT SlugHero/controllers/forum.py: 0
 [2016-02-06 12:00:51] EDIT SlugHero/controllers/forum.py: -7
 [2016-02-06 12:01:48] EDIT SlugHero/controllers/default.py: 6
+[2016-02-06 13:52:52] CREATE default/editComment.html: 0
+[2016-02-06 13:53:25] EDIT SlugHero/views/default/editComment.html: 0
+[2016-02-06 13:53:26] EDIT SlugHero/views/default/editComment.html: 0

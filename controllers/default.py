@@ -242,6 +242,16 @@ def addForum():
     form = crud.create(db.post).process(next='generalForum')
     return locals()
 
+def editForum():
+
+    forum = db.post(request.args(0,cast=int))
+    #db.post.post_id.default = forum.id
+    db.post.price.writable = db.post.price.readable = False
+    db.post.status.writable = db.post.status.readable = False
+    db.post.image.writable = db.post.image.readable = False
+    form = crud.update(db.post, forum, next=URL('showEachForm', args=request.args(0,cast=int)))
+    return locals()
+
 def showEachForm():
     forum = db.post(request.args(0,cast=int)) or redirect(URL('generalForum'))
     comms  = db(db.comm.post_id==forum.id).select(db.comm.ALL, orderby=db.comm.datetime)
@@ -255,9 +265,15 @@ def addComment():
         redirect(URL('showEachForm', args=request.args(0,cast=int)))
     return locals()
 
+#still a issue here
+def editComment():
+    forum = db.post(request.args(0,cast=int)) #or redirect(URL('showEachForm', args=request.args(0,cast=int)))
+    db.comm.post_id.default = forum.id
+    comm = db.comm(request.args(0,cast=int))
+    #db.comm.comm_id.default = comm.id
 
-
-   
+    form = crud.update(db.comm, comm, next=URL('showEachForm', args=request.args(0,cast=int)))
+    return locals()
 
 @cache.action()
 def download():
