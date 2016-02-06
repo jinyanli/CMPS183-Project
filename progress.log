@@ -963,3 +963,4 @@
 [2016-02-06 13:52:52] CREATE default/editComment.html: 0
 [2016-02-06 13:53:25] EDIT SlugHero/views/default/editComment.html: 0
 [2016-02-06 13:53:26] EDIT SlugHero/views/default/editComment.html: 0
+[2016-02-06 14:40:33] EDIT SlugHero/controllers/default.py: -1
