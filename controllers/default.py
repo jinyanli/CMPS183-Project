@@ -63,7 +63,6 @@ def showClass():
     return locals()
 
 def classPage():
-    def classPage():
     uClass = db.ucscClass(request.args(0, cast=int)) or redirect(URL('index'))
     info = db(db.ucscClass.course_id==uClass.id).select()
     professors = db().select(db.professor.ALL, orderby=db.professor.id)
