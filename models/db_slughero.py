@@ -102,13 +102,19 @@ db.define_table('note',
     Field('title', 'string'),
     Field('notefile', 'upload'),
     Field('user_id', 'reference auth_user', readable=False, writable=False),
-    Field('course_id', 'reference course', readable=False, writable=False),
-    Field('professor_id', 'reference professor', readable=False, writable=False),
-    Field('notetype', 'string'),
     Field('datetime', 'datetime', readable=False,writable=False,default=request.now))
 
+db.define_table('noteFolder',
+     Field('title', 'string'),
+     Field('body', 'text'),
+     Field('note_id', 'reference note'),
+     Field('user_id', 'reference auth_user', readable=False, writable=False),
+     Field('course_id', 'reference course', readable=False, writable=False),
+     Field('professor_id', 'reference professor', readable=False, writable=False),
+     Field('notetype', 'string'),
+     Field('datetime', 'datetime', readable=False,writable=False,compute=request.now))
 noteType = ['exam', 'homework', 'class note', 'course material', 'solution', 'other']
-db.note.notetype.requires = IS_IN_SET(noteType)
+db.noteFolder.notetype.requires = IS_IN_SET(noteType)
 
 db.define_table('textbook',
     Field('title', 'string', ondelete='CASCADE'),
