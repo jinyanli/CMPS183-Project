@@ -1,3 +1,9 @@
-{{extend 'layout.html'}}
-<h1>This is the default/generalForum.html template</h1>
-{{=BEAUTIFY(response._vars)}}
+<h1>This is the Forum </h1>
+<ul>
+    {{for forum in forums:}}
+    {{=LI(A(forum.title, _href=URL('showEachForm', args=forum.id)))}}
+   
+    {{pass}}
+</ul>
+<br>
+[{{=A('Add New Post!', _href=URL('addForum'))}}]
