@@ -265,9 +265,15 @@ def addComment():
         redirect(URL('showEachForm', args=request.args(0,cast=int)))
     return locals()
 
+#still a issue here
+def editComment():
+    forum = db.post(request.args(0,cast=int)) #or redirect(URL('showEachForm', args=request.args(0,cast=int)))
+    db.comm.post_id.default = forum.id
+    comm = db.comm(request.args(0,cast=int))
+    #db.comm.comm_id.default = comm.id
 
-
-
+    form = crud.update(db.comm, comm, next=URL('showEachForm', args=request.args(0,cast=int)))
+    return locals()
 
 @cache.action()
 def download():
