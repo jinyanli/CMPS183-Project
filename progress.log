@@ -928,4 +928,8 @@
 [2016-02-04 18:28:15] CREATE testpage.html: 0
 [2016-02-04 18:29:10] EDIT SlugHero/controllers/default.py: 2
 [2016-02-04 18:29:17] EDIT SlugHero/controllers/default.py: 0
+<<<<<<< HEAD
 [2016-02-05 17:54:54] EDIT SlugHero/controllers/default.py: 0
+=======
+[2016-02-05 17:58:16] EDIT SlugHero/controllers/default.py: 0
+>>>>>>> master

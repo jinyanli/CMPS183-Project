@@ -300,4 +300,5 @@ def testpage():
         response.flash = 'form has errors'
     else:
         response.flash = 'please fill the fo'
+
     return dict(form=form)
