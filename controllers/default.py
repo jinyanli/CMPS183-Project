@@ -226,7 +226,7 @@ def professorCreate():
     return locals()
 
 #below are helen's functions for creating general discussion forum
-#some of them doesn't work
+
 def generalForum():
     forums = db( db.post.price == None , db.post.status == False).select(orderby = db.post.datetime)
     db.post.status.writable = db.post.status.readable = False

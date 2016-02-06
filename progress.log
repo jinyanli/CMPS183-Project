@@ -955,3 +955,8 @@
 [2016-02-06 11:50:34] DELETE SlugHero/views/default/showComm.html: -12
 [2016-02-06 11:51:58] CREATE default/addComment.html: 0
 [2016-02-06 11:52:53] EDIT SlugHero/views/default/addComment.html: 0
+[2016-02-06 11:59:41] EDIT SlugHero/controllers/default.py: -6
+[2016-02-06 12:00:16] EDIT SlugHero/controllers/forum.py: 7
+[2016-02-06 12:00:19] EDIT SlugHero/controllers/forum.py: 0
+[2016-02-06 12:00:51] EDIT SlugHero/controllers/forum.py: -7
+[2016-02-06 12:01:48] EDIT SlugHero/controllers/default.py: 6
