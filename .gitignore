@@ -21,3 +21,4 @@ databases/sql.log
 *.log
 *.pyc
 databases/sql.log
+progress.log
