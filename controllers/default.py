@@ -247,7 +247,7 @@ def addForum():
 
 def showEachForm():
     forum = db.post(request.args(0,cast=int)) or redirect(URL('generalForum'))
-    comms  = db(db.comm.post_id==forum.id).select(db.comm.ALL, orderby=~db.comm.datetime)
+    comms  = db(db.comm.post_id==forum.id).select(db.comm.ALL, orderby=db.comm.datetime)
     #db.comm.post_id.default = forum.id
     return locals()
 
