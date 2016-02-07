@@ -20,3 +20,7 @@ databases/sql.log
 databases/sql.log
 *.log
 *.pyc
+databases/sql.log
+progress.log
+databases/sql.log
+*.log

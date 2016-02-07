@@ -48,6 +48,7 @@ db.define_table('ucscClass', # 'class' is a python reserved word
 db.define_table('classReview',
     Field('user_id', 'reference  auth_user', readable=False, writable=False),
     Field('ucscClass_id', 'reference  ucscClass', readable=False, writable=False),
+    Field('professor_id', 'reference professor', readable=False, writable=False),
     Field('body', 'text', update=True),
     Field('quarter', requires=IS_IN_SET(['Fall', 'Winter', 'Spring', 'Summer'])),
     Field('yr', requires=IS_INT_IN_RANGE(2000, 2051)),
@@ -58,6 +59,7 @@ db.define_table('post',
     Field('ucscClass_id', 'reference ucscClass', readable=False, writable=False),
     Field('user_id', 'reference  auth_user', readable=False, writable=False),
     Field('title', 'string', notnull=True),
+    Field('forumSection', 'string'),#to tell whether the post belong textbookExchange or generalDiscussion
     Field('body', 'text', notnull=True),
     Field('price', 'integer'), # price is in cents (eg 4000 -> $40)
     Field('status','boolean', default=False),
@@ -102,13 +104,19 @@ db.define_table('note',
     Field('title', 'string'),
     Field('notefile', 'upload'),
     Field('user_id', 'reference auth_user', readable=False, writable=False),
-    Field('course_id', 'reference course', readable=False, writable=False),
-    Field('professor_id', 'reference professor', readable=False, writable=False),
-    Field('notetype', 'string'),
     Field('datetime', 'datetime', readable=False,writable=False,default=request.now))
 
+db.define_table('noteFolder',
+     Field('title', 'string'),
+     Field('body', 'text'),
+     Field('note_id', 'reference note'),
+     Field('user_id', 'reference auth_user', readable=False, writable=False),
+     Field('course_id', 'reference course', readable=False, writable=False),
+     Field('professor_id', 'reference professor', readable=False, writable=False),
+     Field('notetype', 'string'),
+     Field('datetime', 'datetime', readable=False,writable=False,compute=request.now))
 noteType = ['exam', 'homework', 'class note', 'course material', 'solution', 'other']
-db.note.notetype.requires = IS_IN_SET(noteType)
+db.noteFolder.notetype.requires = IS_IN_SET(noteType)
 
 db.define_table('textbook',
     Field('title', 'string', ondelete='CASCADE'),
