@@ -48,6 +48,7 @@ db.define_table('ucscClass', # 'class' is a python reserved word
 db.define_table('classReview',
     Field('user_id', 'reference  auth_user', readable=False, writable=False),
     Field('ucscClass_id', 'reference  ucscClass', readable=False, writable=False),
+    Field('professor_id', 'reference professor', readable=False, writable=False),
     Field('body', 'text', update=True),
     Field('quarter', requires=IS_IN_SET(['Fall', 'Winter', 'Spring', 'Summer'])),
     Field('yr', requires=IS_INT_IN_RANGE(2000, 2051)),

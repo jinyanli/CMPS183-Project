@@ -13,7 +13,12 @@
      <td><h5><b>&nbsp;Department:&nbsp;{{=dept}}</b></h5></td>
    </tr>
    <tr>
-     <td><h5><b>&nbsp;Saltiness:&nbsp;{{="%.1f" % prof.saltiness}}/5</b></h5></td>
+     {{if prof.saltiness:}}
+     {{saltiness="%.1f" % prof.saltiness}}
+     {{else:}}
+     {{saltiness='None'}}
+     {{pass}}
+     <td><h5><b>&nbsp;Saltiness:&nbsp;{{=saltiness }}/5</b></h5></td>
    </tr>
 </table>
 {{if auth.user:}}
