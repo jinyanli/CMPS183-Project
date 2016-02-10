@@ -292,7 +292,7 @@ def editComment():
     return locals()
 
 def courseNotes():
-    response.flash = T("Course Notes")
+    uCourse = db.course(request.args(0, cast=int)) or redirect(URL('index'))
     return locals()
 
 @cache.action()
