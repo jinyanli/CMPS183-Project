@@ -6,3 +6,17 @@
              _href=URL('uploadNotes', args=uCourse.id))}}
     </span>
 </h1>
+
+<table>
+  {{for note in notes:}}
+  {{=note}}
+  <!-- <tr>
+    <td>{{=A(note.title, _href=URL('classPage',args=aClass.id))}}</td>
+    <td>{{=A('edit', _href=URL('editClass',args=aClass.id))}}</td>
+  </tr> -->
+  {{pass}}
+  <tr>
+    <td>{{=A('upload notes', _href=URL('uploadNotes', args=uCourse.id))}}</td>
+    <td></td>
+  </tr>
+</table>

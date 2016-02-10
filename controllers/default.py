@@ -292,7 +292,11 @@ def editComment():
     return locals()
 
 def courseNotes():
-    uCourse = db.course(request.args(0, cast=int)) or redirect(URL('index'))
+    course_id = request.args(0, cast=int)
+    uCourse = db.course(course_id) or redirect(URL('index'))
+    # this may be correct or incorrect
+    # need entries in table 'note' to test/determine which.
+    notes = db(db.noteFolder.course_id == course_id).select(db.note.ALL)
     return locals()
 
 def uploadNotes():

@@ -32,12 +32,12 @@ I00
 sg6
 I4
 sg7
-S'INTEGER REFERENCES note (id) ON DELETE CASCADE  '
+S'TEXT'
 p14
 sg9
 I00
 sg10
-S'reference note'
+S'list:reference note'
 p15
 ssS'user_id'
 p16
@@ -105,10 +105,11 @@ p30
 sg9
 I00
 sg10
-g28
-ssS'notetype'
+S'datetime'
 p31
-(dp32
+ssS'notetype'
+p32
+(dp33
 g4
 I512
 sg5
@@ -117,14 +118,14 @@ sg6
 I8
 sg7
 S'CHAR(512)'
-p33
+p34
 sg9
 I00
 sg10
 g23
 ssS'course_id'
-p34
-(dp35
+p35
+(dp36
 g4
 I512
 sg5
@@ -133,15 +134,15 @@ sg6
 I6
 sg7
 S'INTEGER REFERENCES course (id) ON DELETE CASCADE  '
-p36
+p37
 sg9
 I00
 sg10
 S'reference course'
-p37
-ssS'id'
 p38
-(dp39
+ssS'id'
+p39
+(dp40
 g4
 I512
 sg5
@@ -150,9 +151,10 @@ sg6
 I1
 sg7
 S'INTEGER PRIMARY KEY AUTOINCREMENT'
-p40
+p41
 sg9
 I00
 sg10
-g38
+S'id'
+p42
 ss.
