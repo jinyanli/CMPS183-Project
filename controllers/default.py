@@ -291,6 +291,10 @@ def editComment():
     form = crud.update(db.comm, comm, next=URL('showEachForm', args=request.args(0,cast=int)))
     return locals()
 
+def courseNotes():
+    response.flash = T("Course Notes")
+    return locals()
+
 @cache.action()
 def download():
     """

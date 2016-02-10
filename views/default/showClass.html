@@ -1,5 +1,10 @@
 {{extend 'layout.html'}}
-<h2>List of Classes of Course {{=uClass.name}}</h2>
+<h2>
+    List of Classes of Course {{=uClass.name}}
+    <p class="pull-right">
+        {{=A('course notes', _href=URL('courseNotes'))}}
+    </p>
+</h2>
 
 <table>
   {{for aClass in info:}}
