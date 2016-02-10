@@ -1,6 +1,6 @@
 {{extend 'layout.html'}}
 <h2>
-    List of Classes of Course {{=deslugify(uClass.name)}}
+    List of Classes for Course {{=deslugify(uClass.name)}}
     <span class="pull-right">
         {{=A('course notes', _class='btn btn-success',
              _href=URL('courseNotes', args=uClass.id))}}

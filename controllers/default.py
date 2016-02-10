@@ -295,6 +295,11 @@ def courseNotes():
     uCourse = db.course(request.args(0, cast=int)) or redirect(URL('index'))
     return locals()
 
+def uploadNotes():
+    uCourse = db.course(request.args(0, cast=int)) or redirect(URL('index'))
+    return locals()
+
+
 @cache.action()
 def download():
     """

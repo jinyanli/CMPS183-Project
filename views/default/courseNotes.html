@@ -1,2 +1,8 @@
 {{extend 'layout.html'}}
-<h1>Course Notes for Course {{=deslugify(uCourse.name)}}</h1>
+<h1>
+    Course Notes for Course {{=deslugify(uCourse.name)}}
+    <span class="pull-right">
+        {{=A('upload notes', _class='btn btn-success',
+             _href=URL('uploadNotes', args=uCourse.id))}}
+    </span>
+</h1>
