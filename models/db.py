@@ -57,6 +57,8 @@ auth = Auth(db)
 service = Service()
 plugins = PluginManager()
 
+
+auth.settings.extra_fields['auth_user']= [Field('term', requires=IS_IN_SET(['Freshman', 'Sophomore', 'Junior', 'Senior']))]
 ## create all tables needed by auth if not custom tables
 auth.define_tables(username=False, signature=False)
 
