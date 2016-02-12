@@ -27,7 +27,7 @@ response.google_analytics_id = None
 response.menu = [
     (T('Home'), False, URL('default', 'index'), []),
     (T('Department'), False, URL('SlugHero', 'default', 'showDepartment')),
-    (T('Professor'), False, URL('SlugHero', 'default', 'showProfessor')),
+    (T('Professor'), False, URL('SlugHero', 'professor', 'showProfessor')),
     (T('Textbook Exchange'), False, URL('SlugHero', 'default', 'bookExchange')),
     (T('Forum'), False, URL('SlugHero', 'forum', 'generalForum'))
 ]
