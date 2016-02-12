@@ -41,7 +41,7 @@ db.define_table('ucscClass', # 'class' is a python reserved word
     Field('difficulty', 'double'),
     Field('enjoyment', 'double'),
     Field('textbook_ids', 'list:reference textbook'),
-    Field('professor_id', 'reference professor', readable=False, writable=False),
+    Field('professor_id', 'reference professor'),
     Field('user_id', 'reference auth_user', readable=False, writable=False),
     Field('datetime', 'datetime', readable=False,writable=False, default=request.now))
 

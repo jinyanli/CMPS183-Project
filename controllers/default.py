@@ -59,7 +59,7 @@ def bookExchange():
 
 def showClass():
     ucscClass = db.course(request.args(0, cast=int)) or redirect(URL('index'))
-    info = db(db.ucscClass.course_id==ucscClass.id).select(orderby=db.ucscClass.year | db.ucscClass.quarter)
+    info = db(db.ucscClass.course_id==ucscClass.id).select(orderby=db.ucscClass.year)
     return locals()
 
 def classPage():
