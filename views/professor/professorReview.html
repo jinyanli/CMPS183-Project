@@ -25,7 +25,7 @@
 <h2><b>{{=A('Post A Review', _href=URL('postProfessorReview', args=prof.id))}}</b></h2>
 {{#=form}}
 {{else:}}
-<h2><b>{{=A('Log In To Post A review', _href=URL('default', 'user', args='login',vars=dict(_next=URL(args=request.args, vars=request.vars))))}}</b></h2>
+<h2><b>{{=A('Log In To Post A review', _href=URL('professor', 'user', args='login',vars=dict(_next=URL(args=request.args, vars=request.vars))))}}</b></h2>
 {{pass}}
 <table class = "table table-bordered">
 <tbody>

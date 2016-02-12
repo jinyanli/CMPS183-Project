@@ -54,7 +54,7 @@ def postProfessorReview():
        saltiness=db(db.profReview.professor_id==prof.id).select(avg).first()[avg]
        db(db.professor.id == prof.id).update(saltiness=saltiness)
        session.flash = 'review added'
-       redirect(URL('default','professorReview', args=request.args(0,cast=int)))
+       redirect(URL('professorReview', args=request.args(0,cast=int)))
     return locals()
 
 @auth.requires_login()
