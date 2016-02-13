@@ -22,7 +22,7 @@ sS'type'
 p10
 S'list:string'
 p11
-ssS'ucscclass_id'
+ssS'ucscClass_id'
 p12
 (dp13
 g4
@@ -71,11 +71,10 @@ p22
 sg9
 I00
 sg10
-S'id'
-p23
+g20
 ssS'datetime'
-p24
-(dp25
+p23
+(dp24
 g4
 I512
 sg5
@@ -84,10 +83,9 @@ sg6
 I5
 sg7
 S'TIMESTAMP'
-p26
+p25
 sg9
 I00
 sg10
-S'datetime'
-p27
+g23
 ss.

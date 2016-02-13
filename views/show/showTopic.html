@@ -1,0 +1,30 @@
+{{extend 'layout.html'}}
+
+{{=A('Back', _href=URL('default', 'viewCourseTopic', args=topic.board_id))}}
+
+<br>
+<br>
+<div style="text-align:center">
+	{{=topic.datePosted.strftime("%d, %b %Y %I:%M %p")}}
+	<br>
+	<i>{{=db.auth_user[topic.op].first_name}}</i> says: {{=topic.body}}
+	{{=A('Reply', _href=URL('create', 'createReply', args=topic.id))}}
+</div>
+
+<br>
+
+{{replies = db(db.courseReply.topic_id==topic.id).select()}}
+<br>
+{{for reply in replies:}}
+	{{=reply.datePosted.strftime("%d, %b %Y %I:%M %p")}}
+	<br>
+	<i>{{=db.auth_user[reply.replyOp].first_name}}</i> says: {{=reply.body}}
+	<br>
+	{{quickReplies = db(db.courseTopicReply.topic_id==reply.id).select()}}
+	{{for qr in quickReplies:}}
+		&nbsp&nbsp&nbsp&nbsp&nbsp<i>{{=db.auth_user[qr.replyOp].first_name}}</i> says: {{=qr.body}}
+		<br>
+	{{pass}}
+	{{=A('Quick Reply', _href=URL('create', 'createReplyReply', args=reply.id))}}
+	<br><br>
+{{pass}}

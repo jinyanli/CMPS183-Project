@@ -1,5 +1,5 @@
 (dp1
-S'rating'
+S'board_id'
 p2
 (dp3
 S'length'
@@ -10,36 +10,36 @@ p5
 I00
 sS'sortable'
 p6
-I7
+I2
 sS'sql'
 p7
-S'DOUBLE'
+S'INTEGER REFERENCES course (id) ON DELETE CASCADE  '
 p8
 sS'notnull'
 p9
 I00
 sS'type'
 p10
-S'double'
+S'reference course'
 p11
-ssS'term'
+ssS'body'
 p12
 (dp13
 g4
-I512
+I32768
 sg5
 I00
 sg6
-I5
+I8
 sg7
-S'CHAR(512)'
+S'TEXT'
 p14
 sg9
 I00
 sg10
-S'string'
+S'text'
 p15
-ssS'user_id'
+ssS'yr'
 p16
 (dp17
 g4
@@ -47,16 +47,16 @@ I512
 sg5
 I00
 sg6
-I3
+I5
 sg7
-S'INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  '
+S'INTEGER'
 p18
 sg9
 I00
 sg10
-S'reference auth_user'
+S'integer'
 p19
-ssS'professor_id'
+ssS'title'
 p20
 (dp21
 g4
@@ -64,33 +64,33 @@ I512
 sg5
 I00
 sg6
-I2
+I3
 sg7
-S'INTEGER REFERENCES professor1 (id) ON DELETE CASCADE  '
+S'CHAR(512)'
 p22
 sg9
 I00
 sg10
-S'reference professor1'
+S'string'
 p23
-ssS'review'
+ssS'dateposted'
 p24
 (dp25
 g4
-I32768
+I512
 sg5
 I00
 sg6
-I6
+I7
 sg7
-S'TEXT'
+S'TIMESTAMP'
 p26
 sg9
 I00
 sg10
-S'text'
+S'datetime'
 p27
-ssS'datetime'
+ssS'replies'
 p28
 (dp29
 g4
@@ -98,15 +98,15 @@ I512
 sg5
 I00
 sg6
-I8
+I9
 sg7
-S'TIMESTAMP'
+S'INTEGER'
 p30
 sg9
 I00
 sg10
-g28
-ssS'course_id'
+g19
+ssS'quarter'
 p31
 (dp32
 g4
@@ -116,16 +116,15 @@ I00
 sg6
 I4
 sg7
-S'INTEGER REFERENCES course1 (id) ON DELETE CASCADE  '
+S'CHAR(512)'
 p33
 sg9
 I00
 sg10
-S'reference course1'
-p34
+g23
 ssS'id'
-p35
-(dp36
+p34
+(dp35
 g4
 I512
 sg5
@@ -134,9 +133,27 @@ sg6
 I1
 sg7
 S'INTEGER PRIMARY KEY AUTOINCREMENT'
-p37
+p36
 sg9
 I00
 sg10
-g35
+S'id'
+p37
+ssS'op'
+p38
+(dp39
+g4
+I512
+sg5
+I00
+sg6
+I6
+sg7
+S'INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  '
+p40
+sg9
+I00
+sg10
+S'reference auth_user'
+p41
 ss.
