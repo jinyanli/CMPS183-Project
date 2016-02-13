@@ -62,6 +62,7 @@ auth.settings.extra_fields['auth_user']= [
                  Field('term', requires=IS_IN_SET(['Freshman', 'Sophomore', 'Junior', 'Senior','Super Senior'])),
                  Field('image', 'upload')
                  ]
+
 ## create all tables needed by auth if not custom tables
 auth.define_tables(username=False, signature=False)
 
