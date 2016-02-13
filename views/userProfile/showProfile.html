@@ -1,6 +1,8 @@
 {{extend 'layout.html'}}
 {{import string}}
+{{if fromMenu==False:}}
 {{=A('back', _class='btn btn-primary', _href=URL(session.controller,session.function,args=session.args))}}
+{{pass}}
 {{if auth.user_id == user.id:}}
 <b>{{=A('edit', _class='btn btn-primary', _href=URL('editProfile',args=[user.id]))}}</b>
 {{pass}}
@@ -68,7 +70,7 @@
                     </tr>
                     <tr>
                       {{if prof.saltiness:}}
-                      {{saltiness="%.1f" % prof.saltiness}}
+                      {{saltiness="%.1f" % (5-prof.saltiness)}}
                       {{else:}}
                       {{saltiness='None'}}
                       {{pass}}
