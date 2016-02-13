@@ -14,5 +14,6 @@ def showProfile():
     controller=request.vars['controller']
     function=request.vars['function']
     args=request.vars['args']
+    numOfPage=int(math.ceil(db(db.profReview.user_id==user.id).count()/10.0))
     reviews =db(db.profReview.user_id==user.id).select(db.profReview.ALL, orderby=~db.profReview.datetime, limitby=(start, stop))
     return locals()

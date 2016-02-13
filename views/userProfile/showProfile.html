@@ -78,6 +78,14 @@
         {{pass}}
       </tbody>
     </table>
+    <p>Page {{=page+1}} of {{=numOfPage}}</p>
+    {{if page>0:}}
+    {{=A('previous',_class="btn btn-info", _href=(URL(request.function, args=(user.id, page-1))))}}
+    {{pass}}
+
+    {{if len(reviews)>=10:}}
+    {{=A('next',_class="btn btn-info", _href=(URL(request.function, args=(user.id, page+1))))}}
+    {{pass}}
     </div>
     <div id="menu1" class="tab-pane fade">
       <h3>Menu 1</h3>
