@@ -57,7 +57,6 @@ auth = Auth(db)
 service = Service()
 plugins = PluginManager()
 
-
 auth.settings.extra_fields['auth_user']= [
                  Field('term', requires=IS_IN_SET(['Freshman', 'Sophomore', 'Junior', 'Senior','Super Senior'])),
                  Field('image', 'upload')
