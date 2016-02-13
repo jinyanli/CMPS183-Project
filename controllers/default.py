@@ -183,12 +183,20 @@ def addProfessor():
 
 
 #below are helen's functions for creating general discussion forum
+<<<<<<< HEAD
+=======
+#some of them doesn't work
+>>>>>>> 7c962554208e61ea3b955ede1e8cc84cdaa267ff
 
 def generalForum():
     forums = db( db.post.price == None , db.post.status == False).select(orderby = db.post.datetime)
     db.post.status.writable = db.post.status.readable = False
     db.post.price.writable = db.post.price.readable = False
     db.post.image.writable = db.post.image.readable = False
+<<<<<<< HEAD
+=======
+    #form = crud.create(db.post).process()
+>>>>>>> 7c962554208e61ea3b955ede1e8cc84cdaa267ff
     return locals()
 
 def addForum():
@@ -201,6 +209,7 @@ def addForum():
 
 def editForum():
 
+<<<<<<< HEAD
     forum = db.post(request.args(0,cast=int))
     #db.post.post_id.default = forum.id
     db.post.price.writable = db.post.price.readable = False
@@ -232,6 +241,27 @@ def editComment():
     if form.process().accepted:
         redirect(URL('showEachForm', args=forum))
     return locals()
+=======
+def showEachForm():
+    forum = db.post(request.args(0,cast=int)) or redirect(URL('generalForum'))
+    comms  = db(db.comm.post_id==forum.id).select(db.comm.ALL, orderby=db.comm.datetime)
+    #db.comm.post_id.default = forum.id
+    return locals()
+
+def addComment():
+    forum = db.post(request.args(0,cast=int)) or redirect(URL('generalForum'))
+    db.comm.post_id.default = forum.id
+    form = crud.create(db.comm)
+    if form.process().accepted:
+        redirect(URL('showEachForm', args=request.args(0,cast=int)))
+    return locals()
+
+
+
+
+
+
+>>>>>>> 7c962554208e61ea3b955ede1e8cc84cdaa267ff
 
 @cache.action()
 def download():

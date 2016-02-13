@@ -3,6 +3,7 @@
 <li>Content: {{=forum.body}}</li>
 <li>Datatime: {{=forum.datetime}}</li>
 {{for comm in comms:}}
+<<<<<<< HEAD
     
     <li> <font size="2" color="blue">comment: </font>{{=comm.body}}[{{=A('Edit Comment', _href=URL('editComment', args=comm.id))}}]</li>
     {{pass}}
@@ -11,4 +12,13 @@
 <br>
 [{{=A('goback', _href=URL('generalForum'))}}]
 [{{=A('Edit This Forum!', _href=URL('editForum', args=forum.id))}}]
+=======
+    <li><font size="2" color="blue">comment: </font>{{=comm.body}}</li>
+    {{pass}}
+[{{=A('goback', _href=URL('generalForum'))}}]
+<br>
+<br>
+
+
+>>>>>>> 7c962554208e61ea3b955ede1e8cc84cdaa267ff
 [{{=A('Add New Comment!', _href=URL('addComment', args=forum.id))}}]

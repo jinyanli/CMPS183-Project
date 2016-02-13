@@ -70,7 +70,7 @@ I512
 sg5
 I00
 sg6
-I6
+I5
 sg7
 S'CHAR(512)'
 p28
@@ -130,7 +130,11 @@ I00
 sg10
 S'datetime'
 p41
+<<<<<<< HEAD
 ssS'ucscclass_id'
+=======
+ssS'yr'
+>>>>>>> 7c962554208e61ea3b955ede1e8cc84cdaa267ff
 p42
 (dp43
 g4
@@ -138,7 +142,11 @@ I512
 sg5
 I00
 sg6
+<<<<<<< HEAD
 I3
+=======
+I6
+>>>>>>> 7c962554208e61ea3b955ede1e8cc84cdaa267ff
 sg7
 S'INTEGER REFERENCES ucscClass (id) ON DELETE CASCADE  '
 p44
