@@ -59,7 +59,11 @@ plugins = PluginManager()
 
 auth.settings.extra_fields['auth_user']= [
                  Field('term', requires=IS_IN_SET(['Freshman', 'Sophomore', 'Junior', 'Senior','Super Senior'])),
-                 Field('image', 'upload')
+                 Field('image', 'upload'),
+                 Field('major', 'string'),
+                 Field('second_major', 'string', writable=False,default=True),
+                 Field('minor', 'string', writable=False,default=True),
+                 Field('show_email', 'boolean', writable=False,default=True)
                  ]
 
 ## create all tables needed by auth if not custom tables
