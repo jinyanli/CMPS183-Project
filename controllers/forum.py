@@ -4,7 +4,7 @@ import string
 
 # -*- coding: utf-8 -*-
 # try something like
-def index(): return dict(message="hello from forum.py")
+
 
 def editForum():
 

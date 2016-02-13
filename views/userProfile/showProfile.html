@@ -1,16 +1,34 @@
 {{extend 'layout.html'}}
 {{import string}}
-{{=A('back', _class='btn btn-primary', _href=URL(controller,function,args=args))}}
+{{=A('back', _class='btn btn-primary', _href=URL(session.controller,session.function,args=session.args))}}
+{{if auth.user_id == user.id:}}
+<b>{{=A('edit', _class='btn btn-primary', _href=URL('editProfile',args=[user.id]))}}</b>
+{{pass}}
 <table>
    <tr>
      {{if user.image:}}
-     <td rowspan="3"><img width="150px" src="{{=URL('default','download', args=user.image)}}" /></td>
-     {{pass}}
-     <td><h3><b>&nbsp;{{=string.capwords(user.first_name+' '+user.last_name)}}</b></h3><td>
+       <td rowspan="4"><img width="150px" src="{{=URL('default','download', args=user.image)}}" /></td>
+       {{pass}}
+       <td><h4><b>&nbsp;{{=string.capwords(user.first_name+' '+user.last_name)}}</b></h4><td>
    </tr>
-    <td><h3><b>&nbsp;{{=user.term}}</b></h3><td>
+      <td><h4><b>&nbsp;{{=user.term}}</b></h4><td>
    <tr>
-     <td><h3><b>&nbsp;{{=user.email}}</b></h3><td>
+      <td>
+        <h4>
+            <b>&nbsp;Major:&nbsp;{{=user.major}}</b>
+            {{if user.second_major:}}
+            <b>&nbsp;Second Major:&nbsp;{{=user.major}}</b>
+            {{pass}}
+            {{if user.minor:}}
+            <b>&nbsp;Minor:&nbsp;{{=user.minor}}</b>
+            {{pass}}
+        </h4>
+      <td>
+   </tr>
+   <tr>
+    {{if user.show_email:}}
+       <td><h4><b>&nbsp;{{=user.email}}</b></h4><td>
+    {{pass}}
    </tr>
 </table>
 
