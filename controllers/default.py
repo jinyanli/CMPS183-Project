@@ -228,6 +228,7 @@ def editComment():
     comm = db.comm(request.args(0,cast=int))
     form = SQLFORM(db.comm, comm)
     form.add_button('back', URL('showEachForm', args = forum))
+    db.comm.id.writable=db.comm.id.readable=False
     if form.process().accepted:
         redirect(URL('showEachForm', args=forum))
     return locals()
