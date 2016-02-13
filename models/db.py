@@ -61,8 +61,8 @@ auth.settings.extra_fields['auth_user']= [
                  Field('term', requires=IS_IN_SET(['Freshman', 'Sophomore', 'Junior', 'Senior','Super Senior'])),
                  Field('image', 'upload'),
                  Field('major', 'string'),
-                 Field('second_major', 'string', writable=False,default=True),
-                 Field('minor', 'string', writable=False,default=True),
+                 Field('second_major', 'string', readable=False, writable=False),
+                 Field('minor', 'string', readable=False, writable=False),
                  Field('show_email', 'boolean', writable=False,default=True)
                  ]
 

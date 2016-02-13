@@ -10,16 +10,17 @@
 </div>
 
 {{for topic in info:}}
-	{{=db.auth_user[topic.op].first_name}}
-	{{=A(topic.title, _href=URL('show','showTopic', args=topic.id))}}
+	<b>{{=A(topic.title, _href=URL('show','showTopic', args=topic.id))}}</b>
+	<br>
+	User:{{=A(db.auth_user[topic.op].first_name, _href=URL('userProfile','showProfile',args=[db.auth_user[topic.op].id], vars=dict(controller=request.controller,function=request.function,args=request.args)))}}
 	<br>
 	Date posted:
 	{{=topic.datePosted.strftime("%d, %b %Y %I:%M %p")}}
 	<br>
-	Class taken: 
+	Class taken:
 	{{=topic.quarter}} {{=topic.yr}}
 	<br>
-	Replies: 
+	Replies:
 	{{=topic.replies}}
 	<br><br>
 {{pass}}

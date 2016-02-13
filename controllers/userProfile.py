@@ -6,6 +6,7 @@ from gluon.tools import Crud
 crud = Crud(db)
 POSTS_PER_PAGE = 10
 
+@auth.requires_login()
 def showProfile():
     page = request.args(1,cast=int,default=0)
     start = page*POSTS_PER_PAGE
