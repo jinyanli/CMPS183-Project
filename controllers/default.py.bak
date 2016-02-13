@@ -191,50 +191,47 @@ def generalForum():
     db.post.image.writable = db.post.image.readable = False
     return locals()
 
-def addForum():
-    db.post.forumSection.default="forum"
-    db.post.price.writable = db.post.price.readable = False
-    db.post.status.writable = db.post.status.readable = False
-    db.post.image.writable = db.post.image.readable = False
-    form = crud.create(db.post).process(next='generalForum')
-    return locals()
+#def addForum():
+#    db.post.forumSection.default="forum"
+#    db.post.price.writable = db.post.price.readable = False
+#    db.post.status.writable = db.post.status.readable = False
+#    db.post.image.writable = db.post.image.readable = False
+#    form = crud.create(db.post).process(next='generalForum')
+#    return locals()
 
-def editForum():
+#def editForum():
 
-    forum = db.post(request.args(0,cast=int))
+#    forum = db.post(request.args(0,cast=int))
     #db.post.post_id.default = forum.id
-    db.post.price.writable = db.post.price.readable = False
-    db.post.status.writable = db.post.status.readable = False
-    db.post.image.writable = db.post.image.readable = False
-    form = crud.update(db.post, forum, next=URL('showEachForm', args=request.args(0,cast=int)))
-    return locals()
+#    db.post.price.writable = db.post.price.readable = False
+#    db.post.status.writable = db.post.status.readable = False
+#    db.post.image.writable = db.post.image.readable = False
+#    form = crud.update(db.post, forum, next=URL('showEachForm', args=request.args(0,cast=int)))
+#    return locals()
 
-def showEachForm():
-    forum = db.post(request.args(0,cast=int)) or redirect(URL('generalForum'))
-    comms  = db(db.comm.post_id==forum.id).select(db.comm.ALL, orderby=db.comm.datetime)
-    return locals()
+#def showEachForm():
+#    forum = db.post(request.args(0,cast=int)) or redirect(URL('generalForum'))
+#    comms  = db(db.comm.post_id==forum.id).select(db.comm.ALL, orderby=db.comm.datetime)
+#    return locals()
 
-def addComment():
-    forum = db.post(request.args(0,cast=int)) or redirect(URL('generalForum'))
-    db.comm.post_id.default = forum.id
-    form = crud.create(db.comm)
-    if form.process().accepted:
-        redirect(URL('showEachForm', args=request.args(0,cast=int)))
-    return locals()
+#def addComment():
+#    forum = db.post(request.args(0,cast=int)) or redirect(URL('generalForum'))
+#    db.comm.post_id.default = forum.id
+#    form = crud.create(db.comm)
+#    if form.process().accepted:
+#        redirect(URL('showEachForm', args=request.args(0,cast=int)))
+#    return locals()
 
 #still a issue here
-def editComment():
-    forum = db.post(request.args(0,cast=int)) #or redirect(URL('showEachForm', args=request.args(0,cast=int)))
-    db.comm.post_id.default = forum.id
-    comm = db.comm(request.args(0,cast=int))
-    #db.comm.comm_id.default = comm.id
-    form = SQLFORM(db.comm, comm)
-    form.add_button('back', URL('showEachForm', args=db.comm.post_id))
-    if form.process().accepted:
-        redirect(URL('showEachForm', args=db.comm.post_id))
-    args=request.args(0,cast=int)
-        #form = crud.update(db.comm, comm, next=URL('showEachForm', args=request.args(0,cast=int)))
-    return locals()
+#def editComment():
+#    forum = db.comm(request.args(0,cast=int)).post_id #or redirect(URL('showEachForm', args=request.args(0,cast=int)))
+#    comm = db.comm(request.args(0,cast=int))
+#    form = SQLFORM(db.comm, comm)
+#    form.add_button('back', URL('showEachForm', args = forum))
+#    db.comm.id.writable=db.comm.id.readable=False
+#    if form.process().accepted:
+#        redirect(URL('showEachForm', args=forum))
+#    return locals()
 
 @cache.action()
 def download():

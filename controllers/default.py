@@ -222,7 +222,7 @@ def addComment():
         redirect(URL('showEachForm', args=request.args(0,cast=int)))
     return locals()
 
-#still a issue here
+
 def editComment():
     forum = db.comm(request.args(0,cast=int)).post_id #or redirect(URL('showEachForm', args=request.args(0,cast=int)))
     comm = db.comm(request.args(0,cast=int))
