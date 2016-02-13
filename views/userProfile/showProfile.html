@@ -3,7 +3,9 @@
 {{=A('back', _class='btn btn-primary', _href=URL(controller,function,args=args))}}
 <table>
    <tr>
+     {{if user.image:}}
      <td rowspan="3"><img width="150px" src="{{=URL('default','download', args=user.image)}}" /></td>
+     {{pass}}
      <td><h3><b>&nbsp;{{=string.capwords(user.first_name+' '+user.last_name)}}</b></h3><td>
    </tr>
     <td><h3><b>&nbsp;{{=user.term}}</b></h3><td>
@@ -37,7 +39,9 @@
                  <table>
                     <tr>
                       <td rowspan="3">
-                      <img width="100px" src="{{=URL('default','download', args=prof.image)}}" />
+                        {{if prof.image:}}
+                           <img width="100px" src="{{=URL('default','download', args=prof.image)}}" />
+                        {{pass}}
                     </td>
                       <td><b>&nbsp;{{=string.capwords(name)}}</b><td>
                     </tr>

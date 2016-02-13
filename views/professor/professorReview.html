@@ -5,7 +5,9 @@
 <table>
    <tr>
      <td rowspan="3">
-     <img width="150px" src="{{=URL('default','download', args=prof.image)}}" />
+      {{if prof.image:}}
+         <img width="150px" src="{{=URL('default','download', args=prof.image)}}" />
+      {{pass}}
    </td>
      <td><h3><b>&nbsp;{{=string.capwords(name)}}</b></h3><td>
    </tr>
