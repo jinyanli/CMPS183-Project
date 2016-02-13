@@ -1,7 +1,9 @@
 {{extend 'layout.html'}}
 {{import string}}
 {{name="%s %s" % (prof.first_name, prof.last_name)}}
+{{if auth.user:}}
 {{=A('edit', _class='btn btn-primary', _href=URL('professorEdit',args=[prof.id], vars=dict(currentPage=request.function)))}}
+{{pass}}
 <table>
    <tr>
      <td rowspan="3">
