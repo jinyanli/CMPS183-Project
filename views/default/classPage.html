@@ -7,7 +7,7 @@
 
 <table name="forms" cellpadding="10">
 <tr><td>
-    <form action="{{=URL('professorReview', args=[prof_id])}}">
+    <form action="{{=URL('professor','professorReview', args=[prof_id])}}">
         <img src="{{=profPic}}" alt="Professor's Pic"><br/>
         <input type="submit" name="view_prof" value="Reviews">
     </form></td>

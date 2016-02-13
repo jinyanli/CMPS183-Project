@@ -964,3 +964,7 @@
 [2016-02-06 13:53:25] EDIT SlugHero/views/default/editComment.html: 0
 [2016-02-06 13:53:26] EDIT SlugHero/views/default/editComment.html: 0
 [2016-02-06 14:40:33] EDIT SlugHero/controllers/default.py: -1
+[2016-02-12 14:18:15] CREATE professor.py: 0
+[2016-02-12 17:11:42] EDIT SlugHero/controllers/default.py: 5
+[2016-02-12 17:14:27] EDIT SlugHero/controllers/default.py: 0
+[2016-02-12 17:15:58] EDIT SlugHero/controllers/default.py: 0

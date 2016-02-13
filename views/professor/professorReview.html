@@ -1,20 +1,24 @@
 {{extend 'layout.html'}}
 {{import string}}
 {{name="%s %s" % (prof.first_name, prof.last_name)}}
+{{if auth.user:}}
 {{=A('edit', _class='btn btn-primary', _href=URL('professorEdit',args=[prof.id], vars=dict(currentPage=request.function)))}}
+{{pass}}
 <table>
    <tr>
      <td rowspan="3">
-     <img width="150px" src="{{=URL('download', args=prof.image)}}" />
+      {{if prof.image:}}
+         <img width="150px" src="{{=URL('default','download', args=prof.image)}}" />
+      {{pass}}
    </td>
-     <td><h3><b>&nbsp;{{=name}}</b></h3><td>
+     <td><h3><b>&nbsp;{{=string.capwords(name)}}</b></h3><td>
    </tr>
    <tr>
      <td><h5><b>&nbsp;Department:&nbsp;{{=dept}}</b></h5></td>
    </tr>
    <tr>
      {{if prof.saltiness:}}
-     {{saltiness="%.1f" % prof.saltiness}}
+     {{saltiness="%.1f" % (5-prof.saltiness)}}
      {{else:}}
      {{saltiness='None'}}
      {{pass}}
@@ -50,7 +54,7 @@
          <p><b>Cousre:&nbsp;</b>{{=deptname.upper()}}&nbsp;{{=db.course(review.course_id).course_num}}</p><p><b>Term:</b>{{=review.quarter}}{{=review.yr}}</p>
        </td>
        <td>
-         <p><b>{{=string.capwords(student.first_name+' '+student.last_name)}}&nbsp;says:</b></p>
+         <p><b>{{=A(string.capwords(student.first_name+' '+student.last_name), _href=URL('userProfile','showProfile',args=[student.id], vars=dict(controller=request.controller,function=request.function,args=request.args)))}}&nbsp;says:</b></p>
          {{=review.review}}
          <p><b>Posted On:&nbsp;</b>{{=review.datetime}}</p>
          {{if auth.user_id == review.user_id:}}
