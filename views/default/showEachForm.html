@@ -3,7 +3,8 @@
 <li>Content: {{=forum.body}}</li>
 <li>Datatime: {{=forum.datetime}}</li>
 {{for comm in comms:}}
-    <li> <font size="2" color="blue">comment: </font>{{=comm.body}}[{{=A('Edit Comment', _href=URL('editComment', args=forum.id))}}]</li>
+    
+    <li> <font size="2" color="blue">comment: </font>{{=comm.body}}[{{=A('Edit Comment', _href=URL('editComment', args=comm.id))}}]</li>
     {{pass}}
 
 <br>

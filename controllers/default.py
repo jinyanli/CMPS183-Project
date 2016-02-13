@@ -224,12 +224,12 @@ def addComment():
 
 #still a issue here
 def editComment():
-    forum = db.post(request.args(0,cast=int)) #or redirect(URL('showEachForm', args=request.args(0,cast=int)))
-    db.comm.post_id.default = forum.id
+    forum = db.comm(request.args(0,cast=int)).post_id #or redirect(URL('showEachForm', args=request.args(0,cast=int)))
     comm = db.comm(request.args(0,cast=int))
-    #db.comm.comm_id.default = comm.id
-
-    form = crud.update(db.comm, comm, next=URL('showEachForm', args=request.args(0,cast=int)))
+    form = SQLFORM(db.comm, comm)
+    form.add_button('back', URL('showEachForm', args = forum))
+    if form.process().accepted:
+        redirect(URL('showEachForm', args=forum))
     return locals()
 
 @cache.action()
