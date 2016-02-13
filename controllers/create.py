@@ -21,6 +21,7 @@ def createReply():
     form.add_button('back', URL('show', 'showTopic', args=topic.id))
     if form.process().accepted:
         response.flash = "Post added"
+        db(db.courseTopic.id == topic.id).update(replies=topic.replies+1)
         redirect(URL('show', 'showTopic', args=topic.id))
     return locals()
 

@@ -72,7 +72,7 @@ sg9
 I00
 sg10
 g19
-ssS'datePosted'
+ssS'dateposted'
 p23
 (dp24
 g4
@@ -89,7 +89,7 @@ I00
 sg10
 S'datetime'
 p26
-ssS'yr'
+ssS'replies'
 p27
 (dp28
 g4
@@ -97,7 +97,7 @@ I512
 sg5
 I00
 sg6
-I5
+I9
 sg7
 S'INTEGER'
 p29
@@ -106,9 +106,25 @@ I00
 sg10
 S'integer'
 p30
-ssS'id'
+ssS'yr'
 p31
 (dp32
+g4
+I512
+sg5
+I00
+sg6
+I5
+sg7
+S'INTEGER'
+p33
+sg9
+I00
+sg10
+g30
+ssS'id'
+p34
+(dp35
 g4
 I512
 sg5
@@ -117,14 +133,15 @@ sg6
 I1
 sg7
 S'INTEGER PRIMARY KEY AUTOINCREMENT'
-p33
+p36
 sg9
 I00
 sg10
-g31
+S'id'
+p37
 ssS'op'
-p34
-(dp35
+p38
+(dp39
 g4
 I512
 sg5
@@ -133,10 +150,10 @@ sg6
 I6
 sg7
 S'INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  '
-p36
+p40
 sg9
 I00
 sg10
 S'reference auth_user'
-p37
+p41
 ss.

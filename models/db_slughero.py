@@ -131,19 +131,20 @@ db.define_table('courseTopic',
     Field('yr', 'integer', requires=IS_IN_SET(range(2000, 2101))),
     Field('op', 'reference auth_user', readable=False, writable=False),
     Field('datePosted', 'datetime', readable=False, writable=False, default=request.now),
-    Field('body', 'text'))
+    Field('body', 'text'),
+    Field('replies', 'integer', default=0, readable=True, writable=False))
 
 db.define_table('courseReply',
-    Field('topic_id', 'reference courseTopic', readable=True, writable=False),
-    Field('board_id', 'reference courseTopic', readable=True, writable=False),
+    Field('topic_id', 'reference courseTopic', readable=False, writable=False),
+    Field('board_id', 'reference courseTopic', readable=False, writable=False),
     Field('op', 'reference auth_user', readable=False, writable=False),
     Field('replyOp', 'reference auth_user', readable=False, writable=False),
     Field('datePosted', 'datetime', readable=False, writable=False, default=request.now),
     Field('body', 'text'))
 
 db.define_table('courseTopicReply',
-    Field('topic_id', 'reference courseReply', readable=True, writable=False),
-    Field('board_id', 'reference courseReply', readable=True, writable=False),
-    Field('replyOp', 'reference auth_user', readable=True, writable=False),
+    Field('topic_id', 'reference courseReply', readable=False, writable=False),
+    Field('board_id', 'reference courseReply', readable=False, writable=False),
+    Field('replyOp', 'reference auth_user', readable=False, writable=False),
     Field('datePosted', 'datetime', readable=False, writable=False, default=request.now),
     Field('body', 'text'))
