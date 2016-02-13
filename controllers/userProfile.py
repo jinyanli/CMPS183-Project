@@ -11,6 +11,10 @@ def showProfile():
     start = page*POSTS_PER_PAGE
     stop = start+POSTS_PER_PAGE
     user = db.auth_user(request.args(0,cast=int)) or redirect(URL(request.vars['controller'], request.vars['function'], args=request.vars['args']))
+    if request.vars['fromMenu']=='True':
+       fromMenu=True
+    else:
+       fromMenu=False
     if request.vars['edit']!='True':
         session.controller=request.vars['controller']
         session.function=request.vars['function']

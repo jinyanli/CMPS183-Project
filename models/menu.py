@@ -32,6 +32,9 @@ response.menu = [
     (T('Forum'), False, URL('SlugHero', 'forum', 'generalForum'))
 ]
 
+if auth.user:
+   response.menu+=[(T('my Profile'), False, URL('SlugHero', 'userProfile', 'showProfile',args=auth.user.id, vars=dict(fromMenu=True)))]
+
 #DEVEOPMENT_MENU = True
 
 #########################################################################

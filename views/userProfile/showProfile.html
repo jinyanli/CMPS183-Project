@@ -1,6 +1,8 @@
 {{extend 'layout.html'}}
 {{import string}}
+{{if fromMenu==False:}}
 {{=A('back', _class='btn btn-primary', _href=URL(session.controller,session.function,args=session.args))}}
+{{pass}}
 {{if auth.user_id == user.id:}}
 <b>{{=A('edit', _class='btn btn-primary', _href=URL('editProfile',args=[user.id]))}}</b>
 {{pass}}
