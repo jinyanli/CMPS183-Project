@@ -4,13 +4,15 @@
 {{=A('back', _class='btn btn-primary', _href=URL(session.controller,session.function,args=session.args))}}
 {{pass}}
 {{if auth.user_id == user.id:}}
-<b>{{=A('edit', _class='btn btn-primary', _href=URL('editProfile',args=[user.id]))}}</b>
+<b>{{=A('edit', _class='btn btn-primary', _href=URL('editProfile',args=[user.id], vars=dict(fromMenu=fromMenu)))}}</b>
 {{pass}}
 <table>
    <tr>
      {{if user.image:}}
        <td rowspan="4"><img width="150px" src="{{=URL('default','download', args=user.image)}}" /></td>
-       {{pass}}
+     {{else:}}
+       <td rowspan="4"><img width="150px" src="/SlugHero/static/images/user.png" /></td>
+     {{pass}}
        <td><h4><b>&nbsp;{{=string.capwords(user.first_name+' '+user.last_name)}}</b></h4><td>
    </tr>
       <td><h4><b>&nbsp;{{=user.term}}</b></h4><td>

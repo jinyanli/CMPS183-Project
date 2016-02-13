@@ -29,5 +29,5 @@ def editProfile():
     form=SQLFORM(db.auth_user, user, ignore_rw=True,
                  fields=['first_name', 'last_name', 'email', 'term', 'image', 'show_email', 'major', 'second_major', 'minor'])
     if form.process().accepted:
-       redirect(URL('showProfile', args=request.args(0,cast=int), vars=dict(edit=True)))
+       redirect(URL('showProfile', args=request.args(0,cast=int), vars=dict(edit=True, fromMenu=request.vars['fromMenu'])))
     return dict(form=form)
