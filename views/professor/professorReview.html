@@ -50,7 +50,7 @@
          <p><b>Cousre:&nbsp;</b>{{=deptname.upper()}}&nbsp;{{=db.course(review.course_id).course_num}}</p><p><b>Term:</b>{{=review.quarter}}{{=review.yr}}</p>
        </td>
        <td>
-         <p><b>{{=string.capwords(student.first_name+' '+student.last_name)}}&nbsp;says:</b></p>
+         <p><b>{{=A(string.capwords(student.first_name+' '+student.last_name), _href=URL('userProfile','showProfile',args=[student.id], vars=dict(controller=request.controller,function=request.function,args=request.args)))}}&nbsp;says:</b></p>
          {{=review.review}}
          <p><b>Posted On:&nbsp;</b>{{=review.datetime}}</p>
          {{if auth.user_id == review.user_id:}}
