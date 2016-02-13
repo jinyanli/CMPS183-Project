@@ -27,6 +27,12 @@
     <!-- All JavaScript at the bottom, except for Modernizr which enables
          HTML5 elements & feature detects -->
     <script src="{{=URL('static','js/modernizr-2.8.3.min.js')}}"></script>
+    <style type="text/css">${demo.css}</style>
+    <script src="{{=URL('static','js/highcharts.js')}}"></script>
+    <script src="{{=URL('static','js/highcharts-3d.js')}}"></script>
+    <script src="{{=URL('static','js/highcharts-more.js')}}"></script>
+    <script src="{{=URL('static','js/modules/data.js')}}"></script>
+    <script src="{{=URL('static','js/modules/drilldown.js')}}"></script>
     <!--[if lt IE 9]>
         <script src="{{=URL('static','js/respond-1.4.2.min.js')}}"></script>
         <![endif]-->
@@ -69,7 +75,7 @@
         </div>
       </div>
     </nav>
-    <!-- Masthead ===================================== -->    
+    <!-- Masthead ===================================== -->
     {{block header}}
     {{end}}
     <!-- Main ========================================= -->
@@ -101,7 +107,7 @@
 
     </div>
 
-    {{block footer}} <!-- this is default footer -->      
+    {{block footer}} <!-- this is default footer -->
     <footer class="footer">
       <div class="container-fluid">
         <div class="copyright pull-left">{{=T('Copyright')}} &#169; {{=request.now.year}}</div>
