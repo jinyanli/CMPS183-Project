@@ -332,3 +332,8 @@ def testpage():
     else:
         response.flash = 'please fill the form'
     return dict(form=form)
+
+def viewCourseTopic():
+    uCourse = db.course(request.args(0, cast=int)) or redirect(URL('index'))
+    info = db(db.courseTopic.board_id==uCourse.id).select()
+    return locals()

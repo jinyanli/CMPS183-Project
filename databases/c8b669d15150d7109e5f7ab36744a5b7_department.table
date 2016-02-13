@@ -20,11 +20,10 @@ p9
 I00
 sS'type'
 p10
-S'id'
-p11
+g2
 ssS'short_name'
-p12
-(dp13
+p11
+(dp12
 g4
 I512
 sg5
@@ -33,15 +32,15 @@ sg6
 I3
 sg7
 S'CHAR(512) UNIQUE'
-p14
+p13
 sg9
 I00
 sg10
 S'string'
-p15
+p14
 ssS'name'
-p16
-(dp17
+p15
+(dp16
 g4
 I512
 sg5
@@ -50,9 +49,9 @@ sg6
 I2
 sg7
 S'CHAR(512) UNIQUE'
-p18
+p17
 sg9
 I00
 sg10
-g15
+g14
 ss.

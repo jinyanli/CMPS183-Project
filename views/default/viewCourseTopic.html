@@ -1,0 +1,22 @@
+{{extend 'layout.html'}}
+
+{{=A('Back', _href=URL('default', 'showClass', args=uCourse.id))}}
+
+<div style="text-align:center">
+	<h1>
+		{{=uCourse.name}}
+	</h1>
+	{{=A('Create New Topic', _href=URL('create','createTopic', args=uCourse.id))}}
+</div>
+
+{{for topic in info:}}
+	{{=db.auth_user[topic.op].first_name}}
+	{{=A(topic.title, _href=URL('show','showTopic', args=topic.id))}}
+	<br>
+	Date posted:
+	{{=topic.datePosted.strftime("%d, %b %Y %I:%M %p")}}
+	<br>
+	Class taken: 
+	{{=topic.quarter}} {{=topic.yr}}
+	<br><br>
+{{pass}}
