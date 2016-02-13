@@ -23,34 +23,49 @@
 
   <div class="tab-content">
     <div id="profreview" class="tab-pane fade in active">
-      <h3>Professor Review</h3>
-      
+      <h3>Professor Reviews</h3>
+
       <table class = "table table-bordered">
       <tbody>
-        <thead>
-         <tr>
-            <th>Rating</th>
-            <th>Class</th>
-            <th>Comment</th>
-         </tr>
-      </thead>
         {{for review in reviews:}}
             {{prof= db.professor(review.professor_id)}}
             {{dept=deslugify(db.department(prof.department_id).name)}}
             {{deptname=db.department(prof.department_id).short_name}}
-             <tr>
+            {{name="%s %s" % (prof.first_name, prof.last_name)}}
+            <tr>
                <td>
-                  <p><b>Helpfulness:&nbsp;</b>{{=review.helpfulness}}</p>
-                  <p><b>Clarity:&nbsp;</b>{{=review.clarity}}</p>
-                  <p><b>Easiness:&nbsp;</b>{{=review.easiness}}</p>
-                  <p><b>Overall Rating:&nbsp;</b>{{="%.1f" % review.rating}}/5</p>
-               </td>
-               <td>
-                 <p><b>Cousre:&nbsp;</b>{{=deptname.upper()}}&nbsp;{{=db.course(review.course_id).course_num}}</p><p><b>Term:</b>{{=review.quarter}}{{=review.yr}}</p>
-               </td>
-               <td>
+                 <table>
+                    <tr>
+                      <td rowspan="3">
+                      <img width="100px" src="{{=URL('default','download', args=prof.image)}}" />
+                    </td>
+                      <td><b>&nbsp;{{=string.capwords(name)}}</b><td>
+                    </tr>
+                    <tr>
+                      <td><b>&nbsp;Department:&nbsp;{{=dept}}</b></td>
+                    </tr>
+                    <tr>
+                      {{if prof.saltiness:}}
+                      {{saltiness="%.1f" % prof.saltiness}}
+                      {{else:}}
+                      {{saltiness='None'}}
+                      {{pass}}
+                      <td><b>&nbsp;Saltiness:&nbsp;{{=saltiness }}/5</b></td>
+                    </tr>
+                 </table>
+                  <p>
+                    <b>Helpfulness:&nbsp;</b>{{=review.helpfulness}}
+                    <b>Clarity:&nbsp;</b>{{=review.clarity}}
+                    <b>Easiness:&nbsp;</b>{{=review.easiness}}
+                    <b>Overall Rating:&nbsp;</b>{{="%.1f" % review.rating}}/5
+                  </p>
+                 <p>
+                    <b>Cousre:&nbsp;</b>{{=deptname.upper()}}&nbsp;{{=db.course(review.course_id).course_num}}
+                    <b>&nbsp;Term:</b>{{=review.quarter}}{{=review.yr}}
+                    <b>&nbsp;Posted On:&nbsp;</b>{{=review.datetime}}
+                  </p>
                  {{=review.review}}
-                 <p><b>Posted On:&nbsp;</b>{{=review.datetime}}</p>
+
                  {{if auth.user_id == review.user_id:}}
                  <p><b>{{=A('edit', _class='btn btn-primary', _href=URL('editProfessorReview',args=[review.id, prof.id]))}}</b></p>
                  {{pass}}

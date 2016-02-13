@@ -1,4 +1,5 @@
 {{extend 'layout.html'}}
+{{import string}}
 <h1>Show Professor</h1>
 <div>
 {{=A('add Professor', _class='btn btn-primary', _href=URL('addProfessor'))}}
@@ -13,7 +14,7 @@
               {{if prof.department_id==dept.id:}}
                   {{name="%s %s" % (prof.first_name, prof.last_name)}}
                     <tr>
-                      <td>&nbsp;{{=A(name, _href=URL('professorReview', args=prof.id))}}</td>
+                      <td>&nbsp;{{=A(string.capwords(name), _href=URL('professorReview', args=prof.id))}}</td>
                     </tr>
               {{pass}}
           </table>
