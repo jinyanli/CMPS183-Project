@@ -183,7 +183,7 @@ def classPageaAddProfessor():
                  fields=['professor_id'])
     if form.process().accepted:
        redirect(URL('classPage',args=request.args(0,cast=int)))
-
+    #form for creating a new professor
     db.professor.department_id.default=course.department_id
     fields = ['first_name', 'last_name', 'image']
     form2 = SQLFORM(db.professor, fields=fields)
