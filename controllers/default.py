@@ -63,25 +63,19 @@ def showClass():
     return locals()
 
 def classPage():
-    uClass = db.ucscClass(request.args(0, cast=int)) or redirect(URL('index'))
-    info = db(db.ucscClass.course_id==uClass.id).select()
-    professors = db().select(db.professor.ALL, orderby=db.professor.id)
-    profPic = ""
-    prof_id = None
-    for item in info:
-        for prof in professors:
-            if item.professor_id == prof.id:
-                profPic = prof.image
-                prof_id = prof.id
-    classReviews = db(db.profReview.course_id==uClass.id).select()
-    if prof_id == None:
-        prof_id=1
-    profReviews = db(db.profReview.professor_id==prof_id).select()
+    thisClass = db.ucscClass(request.args(0, cast=int)) or redirect(URL('index'))
+    courseInfo = db.course(thisClass.course_id)
+    thisClassProfessor=db.professor(thisClass.professor_id)
+    professors = db(db.professor.department_id==courseInfo.department_id).select(db.professor.ALL, orderby=db.professor.id)
+    classReviews = db(db.classReview.ucscClass_id==thisClass.id).select()
+    profReviews = db(db.profReview.professor_id==thisClass.professor_id).select()
+    """
     reviews = []
     for cRev in classReviews:
         for pRev in profReviews:
             if cRev.id == pRev.id:
                 reviews.append(pRev)
+    """
     return locals()
 
 def showBook():
@@ -168,9 +162,9 @@ def createClass():
     return dict(form=form)
 
 def editClass():
-    course = db.course(request.args(0,cast=int)) or redirect(URL('showClass',args=request.args(0,cast=int)))
-    classes = db(db.ucscClass.course_id==course.id).select(orderby=db.ucscClass.yr,limitby=(0,100))
-    return locals()
+    aClass = db.ucscClass(request.args(0,cast=int)) or redirect(URL('showClass',args=request.args(0,cast=int)))
+    form = crud.update(db.ucscClass,aClass,next=URL('showClass',args=aClass.course_id))
+    return dict(form=form)
 
 #this function is for adding professor for showProfessor page
 def addProfessor():
@@ -181,9 +175,15 @@ def addProfessor():
     form = crud.create(db.professor, next='showProfessor')
     return locals()
 
-
-
-
+def classPageaAddProfessor():
+    thisClass = db.ucscClass(request.args(0,cast=int)) or redirect(URL('showClass',args=request.args(0,cast=int)))
+    course=db.course(thisClass.course_id)
+    db.ucscClass.professor_id.requires = IS_IN_DB(db((db.course.department_id==db.professor.department_id) & (db.course.id==thisClass.course_id)), db.professor.id, '%(first_name)s'+' '+'%(last_name)s', zero=T('choose one'))
+    form=SQLFORM(db.ucscClass, thisClass, ignore_rw=True,
+                 fields=['professor_id'])
+    if form.process().accepted:
+       redirect(URL('classPage',args=request.args(0,cast=int)))
+    return dict(form=form)
 
 @cache.action()
 def download():
@@ -192,7 +192,6 @@ def download():
     http://..../[app]/default/download/[filename]
     """
     return response.download(request, db)
-
 
 def call():
     """

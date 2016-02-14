@@ -1,14 +1,16 @@
 {{extend 'layout.html'}}
-{{=A('Back To All ' + db.course[uClass.course_id].name, _href=URL('showClass', args=db.course[uClass.course_id].id))}}
+{{=A('Back To All ' + db.course[thisClass.course_id].name, _href=URL('showClass', args=db.course[thisClass.course_id].id))}}
 
 <div style="text-align:center">
-<h1>{{=db.course[uClass.course_id].name}}: {{=uClass.quarter}} {{=uClass.yr}}</h1>
+<h1>{{=db.course[thisClass.course_id].name}}: {{=thisClass.quarter}} {{=thisClass.yr}}</h1>
 </div>
-
+{{if thisClass.professor_id is None:}}
+{{=A('add Professor', _class='btn btn-primary', _href=URL('classPageaAddProfessor', args=thisClass.id))}}
+{{pass}}
 <table name="forms" cellpadding="10">
 <tr><td>
-    <form action="{{=URL('professor','professorReview', args=[prof_id])}}">
-        <img src="{{=profPic}}" alt="Professor's Pic"><br/>
+    <form action="{{=URL('professor','professorReview', args=thisClass.professor_id)}}">
+        <img width="100px" src="{{=URL('default','download', args=db.professor(thisClass.professor_id).image)}}" alt="Professor's Pic"><br/>
         <input type="submit" name="view_prof" value="Reviews">
     </form></td>
     <td>
@@ -25,8 +27,8 @@
 </tr>
 </table>
 <ul>
-{{=LI(prof_id)}}
-{{for prof in info:}}
-{{=LI(prof)}}
-{{pass}}
+{{#=LI(prof_id)}}
+{{#for prof in info:}}
+{{#=LI(prof)}}
+{{#pass}}
 </ul>

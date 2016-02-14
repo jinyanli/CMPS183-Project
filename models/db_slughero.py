@@ -27,7 +27,9 @@ db.define_table('professor',
     Field('department_id', 'reference department'),
     Field('saltiness', 'double', readable=False, writable=False),
     Field('user_id', 'reference auth_user', readable=False, writable=False),#keep track of who created the professor
-    Field('datetime', 'datetime', readable=False,writable=False, default=request.now))
+    Field('datetime', 'datetime', readable=False,writable=False, default=request.now)
+    #format = '%(first_name)s'+' '+'%(last_name)s'
+    )
 
 db.professor.department_id.requires = IS_IN_DB(db, db.department.id, '%(name)s')
 
