@@ -20,6 +20,7 @@ def showProfessor():
     profs = db().select(db.professor.ALL, orderby=db.professor.first_name)
     return locals()
 
+@auth.requires_login()
 def addProfessor():
     crud.messages.submit_button = 'Submit'
     crud.settings.keepvalues = True
