@@ -4,7 +4,7 @@
 
 <div style="text-align:center">
 	<h1>
-		{{=uCourse.name}}
+		{{=deslugify(uCourse.name)}}
 	</h1>
 	{{=A('Create New Topic', _href=URL('create','createTopic', args=uCourse.id))}}
 </div>
