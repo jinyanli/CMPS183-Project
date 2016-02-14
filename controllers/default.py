@@ -63,26 +63,9 @@ def showClass():
     return locals()
 
 def classPage():
-    def classPage():
     uClass = db.ucscClass(request.args(0, cast=int)) or redirect(URL('index'))
     info = db(db.ucscClass.course_id==uClass.id).select()
-    professors = db().select(db.professor.ALL, orderby=db.professor.id)
-    profPic = ""
-    prof_id = None
-    for item in info:
-        for prof in professors:
-            if item.professor_id == prof.id:
-                profPic = prof.image
-                prof_id = prof.id
-    classReviews = db(db.profReview.course_id==uClass.id).select()
-    if prof_id == None:
-        prof_id=1
-    profReviews = db(db.profReview.professor_id==prof_id).select()
-    reviews = []
-    for cRev in classReviews:
-        for pRev in profReviews:
-            if cRev.id == pRev.id:
-                reviews.append(pRev)
+    classReview = db(db.classReview.ucscClass_id==uClass.id).select()
     return locals()
 
 def showBook():
@@ -306,15 +289,6 @@ def deslugify(_slug):
     """
     return string.capwords(_slug.replace('-', ' '))
 
-def testpage():
-    form=FORM('Your name:',
-              INPUT(_name='name', requires=IS_NOT_EMPTY()),
-              INPUT(_type='submit'))
-    if form.accepts(request,session):
-        response.flash = 'form accepted'
-        redirect(URL('default','bookExchange', args=request.vars.name))
-    elif form.errors:
-        response.flash = 'form has errors'
-    else:
-        response.flash = 'please fill the form'
-    return dict(form=form)
+def testpage()
+
+    return locals()

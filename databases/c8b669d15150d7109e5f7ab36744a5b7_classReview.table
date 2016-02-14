@@ -10,7 +10,7 @@ p5
 I00
 sS'sortable'
 p6
-I4
+I5
 sS'sql'
 p7
 S'TEXT'
@@ -30,7 +30,7 @@ I512
 sg5
 I00
 sg6
-I7
+I8
 sg7
 S'DOUBLE'
 p14
@@ -70,7 +70,7 @@ I512
 sg5
 I00
 sg6
-I6
+I7
 sg7
 S'CHAR(512)'
 p28
@@ -96,7 +96,7 @@ I00
 sg10
 S'reference  auth_user'
 p33
-ssS'datetime'
+ssS'professor_id'
 p34
 (dp35
 g4
@@ -104,18 +104,35 @@ I512
 sg5
 I00
 sg6
-I8
+I4
 sg7
-S'TIMESTAMP'
+S'INTEGER REFERENCES professor (id) ON DELETE CASCADE  '
 p36
 sg9
 I00
 sg10
-S'datetime'
+S'reference professor'
 p37
-ssS'ucscclass_id'
+ssS'datetime'
 p38
 (dp39
+g4
+I512
+sg5
+I00
+sg6
+I9
+sg7
+S'TIMESTAMP'
+p40
+sg9
+I00
+sg10
+S'datetime'
+p41
+ssS'ucscclass_id'
+p42
+(dp43
 g4
 I512
 sg5
@@ -124,31 +141,31 @@ sg6
 I3
 sg7
 S'INTEGER REFERENCES ucscClass (id) ON DELETE CASCADE  '
-p40
+p44
 sg9
 I00
 sg10
 S'reference  ucscClass'
-p41
+p45
 ssS'quarter'
-p42
-(dp43
+p46
+(dp47
 g4
 I512
 sg5
 I00
 sg6
-I5
+I6
 sg7
 S'CHAR(512)'
-p44
+p48
 sg9
 I00
 sg10
 g29
 ssS'id'
-p45
-(dp46
+p49
+(dp50
 g4
 I512
 sg5
@@ -157,10 +174,10 @@ sg6
 I1
 sg7
 S'INTEGER PRIMARY KEY AUTOINCREMENT'
-p47
+p51
 sg9
 I00
 sg10
 S'id'
-p48
+p52
 ss.
