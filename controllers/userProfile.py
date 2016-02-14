@@ -6,6 +6,11 @@ from gluon.tools import Crud
 crud = Crud(db)
 POSTS_PER_PAGE = 10
 
+"""
+def isEmpty(form):
+    if form.vars.body is None:
+       form.errors.body = 'cannot be empty'
+"""
 @auth.requires_login()
 def showProfile():
     page = request.args(1,cast=int,default=0)
@@ -16,12 +21,21 @@ def showProfile():
        fromMenu=True
     else:
        fromMenu=False
-    if request.vars['edit']!='True':
+    if request.vars['edit']!='True' and request.vars['pageButton']!='True':
         session.controller=request.vars['controller']
         session.function=request.vars['function']
         session.args=request.vars['args']
     numOfPage=int(math.ceil(db(db.profReview.user_id==user.id).count()/10.0))
     reviews =db(db.profReview.user_id==user.id).select(db.profReview.ALL, orderby=~db.profReview.datetime, limitby=(start, stop))
+    db.privateMessage.sender.default = auth.user.id
+    db.privateMessage.recipient.default = user.id
+    messageForm=SQLFORM(db.privateMessage)
+    if messageForm.process().accepted:
+       session.flash = 'record inserted'
+    elif messageForm.errors:
+       session.flash = 'form has errors'
+    else:
+       session.flash= 'please fill the form'
     return locals()
 
 def editProfile():
@@ -31,3 +45,7 @@ def editProfile():
     if form.process().accepted:
        redirect(URL('showProfile', args=request.args(0,cast=int), vars=dict(edit=True, fromMenu=request.vars['fromMenu'])))
     return dict(form=form)
+
+def inbox():
+    messages = db(db.privateMessage.sender==request.args(0,cast=int)).select()
+    return dict(messages=messages)

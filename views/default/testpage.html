@@ -31,5 +31,23 @@ window.onload = function () {
 </head>
 <body>
 <div id="chartContainer" style="height: 300px; width: 25%;"></div>
+
+<form enctype="multipart/form-data"
+      action="{{=URL()}}" method="POST">
+Your name:
+<input name="first_name" />
+<input name="last_name" />
+<input type="submit" />
+</form>
+<form method="GET">
+  <input type="radio" name="gender" value="male" checked> Male<br>
+  <input type="radio" name="gender" value="female"> Female<br>
+  <input type="radio" name="gender" value="other"> Other
+	<input type="submit" />
+</form>
+<h2>Submitted variables</h2>
+{{=BEAUTIFY(request.vars)}}
+{{=request.vars['first_name']}}
+{{=request.vars['last_name']}}
 </body>
 </html>
