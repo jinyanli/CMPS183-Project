@@ -183,7 +183,18 @@ def classPageaAddProfessor():
                  fields=['professor_id'])
     if form.process().accepted:
        redirect(URL('classPage',args=request.args(0,cast=int)))
-    return dict(form=form)
+
+    db.professor.department_id.default=course.department_id
+    fields = ['first_name', 'last_name', 'image']
+    form2 = SQLFORM(db.professor, fields=fields)
+    if form2.process().accepted:
+       db(db.ucscClass.id == thisClass.id).update(professor_id=form2.vars.id)
+       redirect(URL('classPage',args=request.args(0,cast=int)))
+    elif form2.errors:
+        response.flash = 'form has errors'
+    else:
+        response.flash = 'please fill the form'
+    return dict(form=form,form2=form2)
 
 @cache.action()
 def download():
