@@ -10,8 +10,12 @@
 <table name="forms" cellpadding="10">
 <tr><td>
     <form action="{{=URL('professor','professorReview', args=thisClass.professor_id)}}">
+        {{if thisClass.professor_id != None:}}
         <img width="100px" src="{{=URL('default','download', args=db.professor(thisClass.professor_id).image)}}" alt="Professor's Pic"><br/>
         <input type="submit" name="view_prof" value="Reviews">
+        {{else:}}
+        <b>Add A Professor For the Class</b>
+        {{pass}}
     </form></td>
     <td>
     <form action="{{=URL('classPage')}}" method="POST">

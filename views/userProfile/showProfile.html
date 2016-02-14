@@ -11,7 +11,7 @@
      {{if user.image:}}
        <td rowspan="4"><img width="150px" src="{{=URL('default','download', args=user.image)}}" /></td>
      {{else:}}
-       <td rowspan="4"><img width="150px" src="/SlugHero/static/images/user.png" /></td>
+       <td rowspan="4"><img width="150px" src="/SlugHero/static/images/slug.png" /></td>
      {{pass}}
        <td><h4><b>&nbsp;{{=string.capwords(user.first_name+' '+user.last_name)}}</b></h4><td>
    </tr>

@@ -16,8 +16,8 @@ db.define_table('course',
     Field('department_id', 'reference department', readable=False, writable=False),
     Field('course_num', 'string', requires=(IS_SLUG(), IS_NOT_EMPTY())),
     Field('name', 'string', unique=True, requires=(IS_SLUG(), IS_NOT_EMPTY())),
-    Field('description', 'text')
-    #format = lambda this: deslugify(db.department(this.department_id).name)+ ' '+this.course_num
+    Field('description', 'text'),
+    format = lambda this: deslugify(db.department(this.department_id).name)+ ' '+this.course_num
     )
 
 db.define_table('professor',
@@ -27,8 +27,8 @@ db.define_table('professor',
     Field('department_id', 'reference department'),
     Field('saltiness', 'double', readable=False, writable=False),
     Field('user_id', 'reference auth_user', readable=False, writable=False),#keep track of who created the professor
-    Field('datetime', 'datetime', readable=False,writable=False, default=request.now)
-    #format = '%(first_name)s'+' '+'%(last_name)s'
+    Field('datetime', 'datetime', readable=False,writable=False, default=request.now),
+    format = '%(first_name)s'+' '+'%(last_name)s'
     )
 
 db.professor.department_id.requires = IS_IN_DB(db, db.department.id, '%(name)s')
@@ -40,8 +40,8 @@ db.define_table('ucscClass', # 'class' is a python reserved word
     Field('quarter', 'string', requires=IS_IN_SET(quarter)),
     Field('yr', 'integer', requires=IS_IN_SET(range(2000, 2101))), # year is a keyword in SQL
     Field('term', 'string'),
-    Field('difficulty', 'double'),
-    Field('enjoyment', 'double'),
+    Field('difficulty', 'double', readable=False, writable=False),
+    Field('enjoyment', 'double', readable=False, writable=False),
     Field('textbook_ids', 'list:reference textbook'),
     Field('professor_id', 'reference professor', readable=False, writable=False),
     Field('user_id', 'reference auth_user', readable=False, writable=False),
@@ -54,7 +54,8 @@ db.define_table('classReview',
     Field('body', 'text', update=True),
     Field('quarter', requires=IS_IN_SET(['Fall', 'Winter', 'Spring', 'Summer'])),
     Field('yr', requires=IS_INT_IN_RANGE(2000, 2051)),
-    Field('rating', 'double'),
+    Field('difficulty', 'double'),
+    Field('enjoyment', 'double'),
     Field('datetime', 'datetime', readable=False,writable=False, default=request.now))
 
 db.define_table('post',
