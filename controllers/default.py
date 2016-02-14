@@ -63,25 +63,29 @@ def showClass():
     return locals()
 
 def classPage():
-    uClass = db.ucscClass(request.args(0, cast=int)) or redirect(URL('index'))
-    info = db(db.ucscClass.course_id==uClass.id).select()
+    uClass = db.ucscClass(request.args(0, cast=int)) or redirect(URL('showCourse')) #ucscClass.id is unique
+    course = db(db.ucscClass.course_id==uClass.course_id).select() #selects all
     professors = db().select(db.professor.ALL, orderby=db.professor.id)
     profPic = ""
-    prof_id = None
-    for item in info:
+    prof_id = uClass.professor_id
+    for item in course:
         for prof in professors:
             if item.professor_id == prof.id:
                 profPic = prof.image
                 prof_id = prof.id
-    classReviews = db(db.profReview.course_id==uClass.id).select()
-    if prof_id == None:
-        prof_id=1
-    profReviews = db(db.profReview.professor_id==prof_id).select()
+    classReviews = db(db.classReview.professor_id==prof_id).select()
     reviews = []
-    for cRev in classReviews:
-        for pRev in profReviews:
-            if cRev.id == pRev.id:
-                reviews.append(pRev)
+    for review in classReviews:
+        if review.ucscClass_id == uClass.id:
+            reviews.append(review)
+    form = SQLFORM(db.classReview)
+    if form.process(session=None, formname='postReview').accepted:
+        response.flash = 'review accepted'
+        #redirect(URL('varTest'))
+    elif form.errors:
+        response.flash = 'Error: your submission is incomplete'
+    else:
+        response.flash = 'You may fill in the form to post a review'
     return locals()
 
 def showBook():
