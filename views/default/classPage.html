@@ -5,7 +5,7 @@
 <h1>{{=db.course[thisClass.course_id].name}}: {{=thisClass.quarter}} {{=thisClass.yr}}</h1>
 </div>
 {{if thisClass.professor_id is None:}}
-{{=A('add Professor', _class='btn btn-primary', _href=URL('classPageaAddProfessor', args=thisClass.id))}}
+{{=A('add Professor', _class='btn btn-primary', _href=URL('classPageAddProfessor', args=thisClass.id))}}
 {{pass}}
 <table name="forms" cellpadding="10">
 <tr><td>

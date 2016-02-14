@@ -175,7 +175,7 @@ def addProfessor():
     form = crud.create(db.professor, next='showProfessor')
     return locals()
 
-def classPageaAddProfessor():
+def classPageAddProfessor():
     thisClass = db.ucscClass(request.args(0,cast=int)) or redirect(URL('showClass',args=request.args(0,cast=int)))
     course=db.course(thisClass.course_id)
     db.ucscClass.professor_id.requires = IS_IN_DB(db((db.course.department_id==db.professor.department_id) & (db.course.id==thisClass.course_id)), db.professor.id, '%(first_name)s'+' '+'%(last_name)s', zero=T('choose one'))
