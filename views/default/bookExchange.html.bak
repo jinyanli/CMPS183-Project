@@ -4,10 +4,10 @@
 <h1>Sale Textbooks:</h1>
 
 <ol start ="{{=start+1}}">
-{{for book in listings:}}
+{{for image in listings:}}
     <div class ="page-header">
-       {{=LI(A( book.title, _href=URL("showBook", args=book.id)))}}
-        <img width="40px" height="60"src="{{=URL('download', args=book.image)}}" />
+       {{=LI(A( image.title, _href=URL("showBook", args=image.id)))}}
+        <img width="40px" height="60"src="{{=URL('download', args=image.image)}}" />
     </div>
 {{pass}}
 </ol>
@@ -40,5 +40,11 @@
 {{pass}}
 </p>
 
-{{=A('New post', _class="btn btn-primary", _href=URL('forum', 'addBookItem'))}}
-{{=enterNumber}}
+{{=A('New post', _class="btn btn-primary", _href=URL('default', 'addItem'))}}
+<form >
+  <input name="num" />
+  <input type="submit" />
+</form>
+{{URL(args=(request.vars.num))}}
+
+<!---{{=form}}--->
