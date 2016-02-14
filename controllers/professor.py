@@ -39,6 +39,12 @@ def professorReview():
     deptname=db.department(prof.department_id).short_name
     numOfPage=int(math.ceil(db(db.profReview.professor_id==prof.id).count()/10.0))
     reviews =db(db.profReview.professor_id==prof.id).select(db.profReview.ALL, orderby=~db.profReview.datetime, limitby=(start, stop))
+    avgHelpfulness=db.profReview.helpfulness.avg()
+    helpfulness=db(db.profReview.professor_id==prof.id).select(avgHelpfulness).first()[avgHelpfulness]
+    avgClarity=db.profReview.clarity.avg()
+    clarity=db(db.profReview.professor_id==prof.id).select(avgClarity).first()[avgClarity]
+    avgEasiness=db.profReview.easiness.avg()
+    easiness=db(db.profReview.professor_id==prof.id).select(avgEasiness).first()[avgEasiness]
     return locals()
 
 @auth.requires_login()
