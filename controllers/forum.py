@@ -61,7 +61,6 @@ def bookExchange():
     start = page*POSTS_PER_PAGE
     stop = start+POSTS_PER_PAGE
     #show_all = request.args(0) == 'all'
-    i = 0
     number = int(math.ceil(db()(db.post.id > 0).count() /10.0))
     q = db.post
     listings = db().select(orderby =~ db.post.datetime, limitby=(start,stop))
@@ -80,7 +79,6 @@ def bookExchange():
     #else:
     #    q=(db.post.status == True)
     #    listings = db(db.post.status == True).select(orderby = db.post.title, limitby=(start,stop))
-
     form = SQLFORM.grid(q,
         args=request.args[:1],
         fields=[db.post.title,
@@ -93,7 +91,14 @@ def bookExchange():
         create=False,
         searchable=False
         )
+    enterNumber= FORM('Go to page:', INPUT(_name='num', requires= IS_INT_IN_RANGE(1,number+1)), 
+                               INPUT(_type='submit', _value= "Go"))
+    if enterNumber.process().accepted:
+        redirect(URL(args=(int(request.vars.num) -1)))
+    elif enterNumber.errors:
+        response.flash = 'form has errors'
     return locals()
+
 
 @auth.requires_login()
 def showBook():

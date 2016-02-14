@@ -41,10 +41,4 @@
 </p>
 
 {{=A('New post', _class="btn btn-primary", _href=URL('forum', 'addBookItem'))}}
-<form action="{{=URL(args=(request.vars.num))}}" method="post">
-  <input name="num" />
-  <input type="submit" />
-</form>
-{{URL(args=(request.vars.num))}}
-
-<!---{{=form}}--->
+{{=enterNumber}}
