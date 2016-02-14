@@ -225,7 +225,8 @@ def testpage():
         response.flash = 'form has errors'
     else:
         response.flash = 'please fill the form'
-    return dict(form=form)
+    A=30
+    return dict(form=form, A=A)
 
 def viewCourseTopic():
     uCourse = db.course(request.args(0, cast=int)) or redirect(URL('index'))
