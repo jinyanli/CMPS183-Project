@@ -7,26 +7,29 @@
 
 <table name="forms" cellpadding="10">
 <tr><td>
-    <form action="{{=URL('professor','professorReview', args=[prof_id])}}">
+    <form action="{{=URL('professorReview', args=[prof_id])}}" name="classInfo">
         <img src="{{=profPic}}" alt="Professor's Pic"><br/>
         <input type="submit" name="view_prof" value="Reviews">
     </form></td>
     <td>
-    <form action="{{=URL('classPage')}}" method="POST">
+    <form action="{{=URL('classPage', args=[uClass.id])}}" method="POST">
     <table name="post">
-    <tr><td rowspan="3"><textarea name="myReview" cols="50" rows="5">Enter Your Review Here</textarea></td><td>&nbsp;</td>
+    <tr><td rowspan="3"><textarea name="body" cols="50" rows="5">Enter Your Review Here</textarea></td><td>&nbsp;</td>
         <td>Year:<input type="text" name="yr" value="2016"/></td></tr>
-    <tr><td>&nbsp;</td><td>Term:<select name="term"><option>Fall</option><option>Winter</option><option>Spring</option><option>Summer</option></select></td></tr>
+    <tr><td>&nbsp;</td><td>Term:<select name="quarter"><option>Fall</option><option>Winter</option><option>Spring</option><option>Summer</option></select></td></tr>
     <tr><td>&nbsp;</td><td>Rating:<input type="text" name="rating"/></td></tr>
-    </table>
-    </td>
-    <tr><td>&nbsp;</td><td><input type="submit" /></td></tr>
+    <td><input type="submit" /></td></tr></table>
+    <input type="hidden" name="ucscClass_id" value="{{=uClass.id}}"/>
+    <input type="hidden" name="professor_id" value="{{=prof_id}}"/>
+    <input type="hidden" name="user_id" value="ptoy"/>
+    <input type="hidden" name="_formname" value="postReview"/>
 </form>
-</tr>
-</table>
-<ul>
-{{=LI(prof_id)}}
-{{for prof in info:}}
-{{=LI(prof)}}
+{{=uClass.id}}
+{{for review in reviews:}}
+<p>
+{{=review.quarter}}
+{{=review.yr}}
+{{=review.body}}
+{{=review.user_id}}
 {{pass}}
-</ul>
+</p>
