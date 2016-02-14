@@ -1,4 +1,10 @@
 {{extend 'layout.html'}}
+<div>
+    <ul class="breadcrumb" style="background-color:white; border-style: none;">
+        <li >{{=A('List of Professors', _href=URL('showProfessor'))}}</li>
+        <li class="active"><a href="#">Professor Review</a></li>
+    </ul>
+</div>
 {{import string}}
 {{name="%s %s" % (prof.first_name, prof.last_name)}}
 {{if auth.user:}}
