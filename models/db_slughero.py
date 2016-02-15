@@ -65,7 +65,7 @@ db.define_table('post',
     Field('ucscClass_id', 'reference ucscClass', readable=False, writable=False),
     Field('user_id', 'reference  auth_user', readable=False, writable=False),
     Field('title', 'string', notnull=True),
-    Field('forumSection', 'string'),#to tell whether the post belong textbookExchange or generalDiscussion
+    Field('forumSection', 'string', readable=False, writable=False),#to tell whether the post belong textbookExchange or generalDiscussion
     Field('body', 'text', notnull=True),
     Field('price', 'integer'), # price is in cents (eg 4000 -> $40)
     Field('status','boolean', default=False),

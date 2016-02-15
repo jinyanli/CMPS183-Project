@@ -61,9 +61,9 @@ def bookExchange():
     start = page*POSTS_PER_PAGE
     stop = start+POSTS_PER_PAGE
     #show_all = request.args(0) == 'all'
-    number = int(math.ceil(db()(db.post.id > 0).count() /10.0))
     q = db.post
-    listings = db().select(orderby =~ db.post.datetime, limitby=(start,stop))
+    listings = db(db.post.forumSection=='bookExchange').select(orderby =~ db.post.datetime, limitby=(start,stop))
+    number = int(math.ceil(db(db.post.forumSection=='bookExchange')(db.post.id > 0).count() /10.0))
     #a = FORM(INPUT(_name='a', requires=IS_INT_IN_RANGE(0, 10)),
     #   INPUT(_type='submit'), value _action=URL('page_two'))
 
@@ -129,6 +129,7 @@ def showBook():
 @auth.requires_login()
 def addBookItem():
     db.post.user_id.default = auth.user.id
+    db.post.forumSection.default = 'bookExchange'
     crud.messages.submit_button = 'Place on market'
     crud.settings.keepvalues = True
     crud.settings.label_separator = ' :'
