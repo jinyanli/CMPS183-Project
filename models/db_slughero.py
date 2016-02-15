@@ -78,7 +78,7 @@ db.define_table('post',
 db.define_table('comm',
     Field('user_id', 'reference  auth_user', readable=False, writable=False),
     Field('post_id', 'reference post', readable=False , writable=False),
-    Field('body', 'text'),
+    Field('body', 'text', requires= IS_NOT_EMPTY()),
     Field('datetime', 'datetime', readable=False,writable=False,default=request.now))
 
 
