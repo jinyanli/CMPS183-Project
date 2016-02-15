@@ -91,7 +91,7 @@ def bookExchange():
         create=False,
         searchable=False
         )
-    enterNumber= FORM('Go to page:', INPUT(_name='num', requires= IS_INT_IN_RANGE(1,number+1)), 
+    enterNumber= FORM('Go to page:', INPUT(_name='num', requires= IS_INT_IN_RANGE(1,number+1),_size ='1'), 
                                INPUT(_type='submit', _value= "Go"))
     if enterNumber.process().accepted:
         redirect(URL(args=(int(request.vars.num) -1)))
@@ -103,6 +103,27 @@ def bookExchange():
 @auth.requires_login()
 def showBook():
     book = db.post(request.args(0,cast=int)) or redirect(URL('bookExchange'))
+    db.comm.user_id.default = auth.user.id
+    db.comm.post_id.default = book.id
+    form=SQLFORM(db.comm, record=None,
+        deletable=False, linkto=None,
+        upload=None, fields=None, labels=None,
+        col3={}, submit_button='Post',
+        delete_label='Check to delete:',
+        showid=True, readonly=False,
+        comments=True, keepopts=[],
+        ignore_rw=False, record_id=None,
+        formstyle='table3cols',
+        buttons=['submit'], separator=': ')
+    #crud.settings.captcha = None
+    #crud.settings.showid = False
+    #crud.settings.label_separator = ':'
+    #crud.messages.submit_button = 'Post'
+    #crud.settings.formstyle = 'divs'
+    #form = crud.create(db.comm)
+    if form.process().accepted:
+        response.flash = 'your comment is posted'
+    comments = db(db.comm.post_id == book.id).select(db.comm.ALL, orderby=~db.comm.datetime)
     return locals()
 
 @auth.requires_login()
