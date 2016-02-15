@@ -22,6 +22,9 @@
         <li>Available for sale: {{=book.status}}</li>
         <li>Date: {{=book.datetime}}</li>
     </ul>
+    {{if auth.user_id == book.user_id:}}
+    <p><b>{{=A('edit', _class='btn btn-primary', _href=URL('editBookItem',args=[book.id]))}}</b></p>
+    {{pass}}
 </div>
 
 {{if len(comments):}}
@@ -37,6 +40,11 @@
     <ul style="list-style-type:none">
         <li>{{=comment.body}}</li>
     </ul>
+    {{if auth.user_id == comment.user_id:}}
+    <div style="text-align:right">
+    <p><b>{{=A('edit', _class='btn btn-link', _href=URL('editComment',args=[comment.id]))}}</b></p>
+    </div>
+    {{pass}}
 </div>
 {{pass}}
 </p>
