@@ -27,8 +27,8 @@ def showProfile():
         session.args=request.vars['args']
     numOfPage=int(math.ceil(db(db.profReview.user_id==user.id).count()/10.0))
     reviews =db(db.profReview.user_id==user.id).select(db.profReview.ALL, orderby=~db.profReview.datetime, limitby=(start, stop))
-    db.privateMessage.sender.default = auth.user.id
-    db.privateMessage.recipient.default = user.id
+    db.privateMessage.sender_id.default = auth.user.id
+    db.privateMessage.recipient_id.default = user.id
     messageForm=SQLFORM(db.privateMessage)
     if messageForm.process().accepted:
        session.flash = 'record inserted'
@@ -47,5 +47,5 @@ def editProfile():
     return dict(form=form)
 
 def inbox():
-    messages = db(db.privateMessage.sender==request.args(0,cast=int)).select()
+    messages = db(db.privateMessage.sender_id==request.args(0,cast=int)).select()
     return dict(messages=messages)

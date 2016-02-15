@@ -157,8 +157,8 @@ db.define_table('courseTopicReply',
     Field('body', 'text'))
 
 db.define_table('privateMessage',
-    Field('sender', 'reference auth_user', readable=False, writable=False),
-    Field('recipient', 'reference auth_user', readable=False, writable=False),
+    Field('sender_id', 'reference auth_user', readable=False, writable=False),
+    Field('recipient_id', 'reference auth_user', readable=False, writable=False),
     Field('posted_on', 'datetime', readable=False, writable=False, default=request.now),
     Field('body', 'text',requires=IS_NOT_EMPTY()))
 
