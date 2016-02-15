@@ -16,7 +16,7 @@ def showProfile():
        fromMenu=True
     else:
        fromMenu=False
-    if request.vars['edit']!='True':
+    if request.vars['edit']!='True' and request.vars['pageButton']!='True':
         session.controller=request.vars['controller']
         session.function=request.vars['function']
         session.args=request.vars['args']
