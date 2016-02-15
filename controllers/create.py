@@ -14,7 +14,6 @@ def createTopic():
 def createReply():
     topic = db.courseTopic(request.args(0, cast=int)) or redirect(URL('show', 'showTopic', args=topic.id))
     db.courseReply.topic_id.default = topic.id
-    #db.courseReply.board_id.default = topic.board_id
     db.courseReply.op.default = topic.op
     db.courseReply.replyOp.default = auth.user.id
     form = SQLFORM(db.courseReply)
@@ -28,7 +27,6 @@ def createReply():
 def createReplyReply():
     topic = db.courseReply(request.args(0, cast=int)) or redirect(URL('show', 'showTopic', args=topic.topic_id))
     db.courseTopicReply.topic_id.default = topic.id
-    db.courseTopicReply.board_id.default = topic.board_id
     db.courseTopicReply.replyOp.default = auth.user.id
     form = SQLFORM(db.courseTopicReply)
     form.add_button('back', URL('show', 'showTopic', args=topic.topic_id))

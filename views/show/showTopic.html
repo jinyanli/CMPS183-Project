@@ -2,29 +2,41 @@
 
 {{=A('Back', _href=URL('default', 'viewCourseTopic', args=topic.board_id))}}
 
-<br>
-<br>
-<div style="text-align:center">
-	{{=topic.datePosted.strftime("%d, %b %Y %I:%M %p")}}
-	<br>
-	<i>{{=db.auth_user[topic.op].first_name}}</i> says: {{=topic.body}}
-	{{=A('Reply', _href=URL('create', 'createReply', args=topic.id))}}
-</div>
-
-<br>
-
-{{replies = db(db.courseReply.topic_id==topic.id).select()}}
-<br>
-{{for reply in replies:}}
-	{{=reply.datePosted.strftime("%d, %b %Y %I:%M %p")}}
-	<br>
-	<i>{{=db.auth_user[reply.replyOp].first_name}}</i> says: {{=reply.body}}
-	<br>
-	{{quickReplies = db(db.courseTopicReply.topic_id==reply.id).select()}}
-	{{for qr in quickReplies:}}
-		&nbsp&nbsp&nbsp&nbsp&nbsp<i>{{=db.auth_user[qr.replyOp].first_name}}</i> says: {{=qr.body}}
-		<br>
+<div class="container">
+	<div class="panel-group">
+		<div class="panel panel-default">
+	    	<div class="panel-heading">
+	    		<h2><p class="text-primary text-capitalize">{{=db.auth_user[topic.op].first_name}}: {{=topic.title}}</p></h2>
+	        	{{=topic.datePosted.strftime("%d, %b %Y %I:%M %p")}}
+	        </div>
+	        <div class="panel-body">
+	        	{{=topic.body}}
+	        </div>
+	        <div class="panel-footer">
+	        	<p class="text-capitalize">{{=A('Reply', _href=URL('create', 'createReply', args=topic.id))}}</p>
+	        </div>
+		</div>
+	</div>
+	
+	{{replies = db(db.courseReply.topic_id==topic.id).select()}}
+	{{for reply in replies:}}
+		<div class="panel-group">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					{{=db.auth_user[reply.replyOp].first_name}}<br>
+					{{=reply.datePosted.strftime("%d, %b %Y %I:%M %p")}}
+				</div>
+				<div class="panel-body">
+					{{=reply.body}}
+				</div>
+				<div class="panel-footer">
+					<p class="text-capitalize">{{=A('Quick Reply', _href=URL('create', 'createReplyReply', args=reply.id))}}</p>
+					{{quickReplies = db(db.courseTopicReply.topic_id==reply.id).select()}}
+					{{for qr in quickReplies:}}
+						<p class="text-capitalize">{{=db.auth_user[qr.replyOp].first_name}}: {{=qr.body}}</p>
+					{{pass}}
+				</div>
+			</div>
+		</div>
 	{{pass}}
-	{{=A('Quick Reply', _href=URL('create', 'createReplyReply', args=reply.id))}}
-	<br><br>
-{{pass}}
+</div>

@@ -1,25 +1,22 @@
 {{extend 'layout.html'}}
 
-{{=A('Back', _href=URL('default', 'showClass', args=uCourse.id))}}
-
-<div style="text-align:center">
-	<h1>
-		{{=deslugify(uCourse.name)}}
-	</h1>
-	{{=A('Create New Topic', _href=URL('create','createTopic', args=uCourse.id))}}
+<div class="container">
+  <h2>{{=deslugify(uCourse.name)}}</h2>
+  <p>{{=A('Create New Topic', _href=URL('create','createTopic', args=uCourse.id))}}</p>
+  {{for topic in info:}}
+    <div class="panel-group">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h2><p class="text-primary text-capitalize">{{=db.auth_user[topic.op].first_name}}: {{=topic.quarter}} {{=topic.yr}}</p></h2>
+          {{=topic.datePosted.strftime("%d, %b %Y %I:%M %p")}}
+		  <br>
+          <p class="text-capitalize">
+          	{{=A(topic.title, _href=URL('show','showTopic', args=topic.id))}}
+          	<br>
+         	Replies: {{=topic.replies}}
+         </p>
+        </div> 
+      </div>
+    </div>
+  {{pass}}
 </div>
-
-{{for topic in info:}}
-	{{=db.auth_user[topic.op].first_name}}
-	{{=A(topic.title, _href=URL('show','showTopic', args=topic.id))}}
-	<br>
-	Date posted:
-	{{=topic.datePosted.strftime("%d, %b %Y %I:%M %p")}}
-	<br>
-	Class taken: 
-	{{=topic.quarter}} {{=topic.yr}}
-	<br>
-	Replies: 
-	{{=topic.replies}}
-	<br><br>
-{{pass}}
