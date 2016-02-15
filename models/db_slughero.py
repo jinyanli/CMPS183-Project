@@ -155,5 +155,10 @@ db.define_table('courseTopicReply',
     Field('datePosted', 'datetime', readable=False, writable=False, default=request.now),
     Field('body', 'text'))
 
+db.define_table('privateMessage',
+    Field('sender', 'reference auth_user', readable=False, writable=False),
+    Field('recipient', 'reference auth_user', readable=False, writable=False),
+    Field('posted_on', 'datetime', readable=False, writable=False, default=request.now),
+    Field('body', 'text',requires=IS_NOT_EMPTY()))
 #populate(db.profReview,100)
 #db(db.profReview.rating>5).delete()
