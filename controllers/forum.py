@@ -134,7 +134,7 @@ def addBookItem():
     crud.settings.keepvalues = True
     crud.settings.label_separator = ' :'
     crud.settings.formstyle = 'ul'
-    form = crud.create(db.post)
+    form = crud.create(db.post).process(next='bookExchange')
     return locals()
 
 def manageBookItems():
