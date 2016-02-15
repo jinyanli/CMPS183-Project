@@ -72,7 +72,8 @@ db.define_table('post',
     Field('datetime', 'datetime', readable=False,writable=False,default=request.now),
     Field('image', 'upload'),
     format = '%(title)s')
-
+#db['post'].drop()
+#db.commit()
 #comment is a resevered key word. Can't be used
 db.define_table('comm',
     Field('user_id', 'reference  auth_user', readable=False, writable=False),
