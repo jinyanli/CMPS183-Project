@@ -1,6 +1,8 @@
 from gluon.tools import Crud
+import math
 crud = Crud(db)
 
+POSTS_PER_PAGE = 10
 #add a new comment!
 
 
@@ -52,3 +54,70 @@ def editComment():
     if form.process().accepted:
         redirect(URL('showEachForum', args=forum))
     return locals()
+
+@auth.requires_login()
+def bookExchange():
+    page = request.args(0,cast=int,default=0)
+    start = page*POSTS_PER_PAGE
+    stop = start+POSTS_PER_PAGE
+    #show_all = request.args(0) == 'all'
+    i = 0
+    number = int(math.ceil(db()(db.post.id > 0).count() /10.0))
+    q = db.post
+    listings = db().select(orderby =~ db.post.datetime, limitby=(start,stop))
+    #a = FORM(INPUT(_name='a', requires=IS_INT_IN_RANGE(0, 10)),
+    #   INPUT(_type='submit'), value _action=URL('page_two'))
+
+    #a.add_button('Back', URL('other_page'))
+    #if show_all:
+    #button = A('Show available items', _class="btn btn-info", _href=URL('default', 'bookExchange'))
+    #else:
+    #    button = A('Show all items', _class="btn btn-info", _href=URL('default', 'bookExchange', args=['all']))
+
+    #if show_all:
+    #    q = db.post
+    #    listings = db().select(orderby = db.post.title, limitby=(start,stop))
+    #else:
+    #    q=(db.post.status == True)
+    #    listings = db(db.post.status == True).select(orderby = db.post.title, limitby=(start,stop))
+
+    form = SQLFORM.grid(q,
+        args=request.args[:1],
+        fields=[db.post.title,
+                    db.post.title,
+                    db.post.body,
+               ],
+        editable=False, deletable=False,
+        paginate=10,
+        csv=False,
+        create=False,
+        searchable=False
+        )
+    return locals()
+
+@auth.requires_login()
+def showBook():
+    book = db.post(request.args(0,cast=int)) or redirect(URL('bookExchange'))
+    return locals()
+
+@auth.requires_login()
+def addBookItem():
+    db.post.user_id.default = auth.user.id
+    crud.messages.submit_button = 'Place on market'
+    crud.settings.keepvalues = True
+    crud.settings.label_separator = ' :'
+    crud.settings.formstyle = 'ul'
+    form = crud.create(db.post)
+    return locals()
+
+def manageBookItems():
+    grid = SQLFORM.grid(db.post)
+    return locals()
+
+@cache.action()
+def download():
+    """
+    allows downloading of uploaded files
+    http://..../[app]/default/download/[filename]
+    """
+    return response.download(request, db)
