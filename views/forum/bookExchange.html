@@ -27,18 +27,17 @@
 {{pass}}
 {{pass}}
 
-{{if (page+5)>=(number) and page>2:}}
-{{for showNum in range(page, number):}}
+{{if (page+5)>(number) and page>2:}}
+{{for showNum in range(page-count, number):}}
 {{=A(showNum+1,_class="btn btn-link", _href=(URL(args=(showNum))))}}
 {{pass}}
 {{pass}}
 
-{{if (page >2 and (page+5) < number):}}
+{{if (page >2 and (page+5) <= number):}}
 {{for showNum in range(page-2, page+3) :}}
 {{=A(showNum+1,_class="btn btn-link", _href=(URL(args=(showNum))))}}
 {{pass}}
 {{pass}}
 </p>
-
 {{=A('New post', _class="btn btn-primary", _href=URL('forum', 'addBookItem'))}}
 {{=enterNumber}}
