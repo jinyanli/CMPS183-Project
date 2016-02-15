@@ -1,4 +1,7 @@
 # -*- coding: utf-8 -*-
+from gluon.contrib.populate import populate
+import string
+import math
 
 def deslugify(_slug):
     """
@@ -151,3 +154,6 @@ db.define_table('courseTopicReply',
     Field('replyOp', 'reference auth_user', readable=False, writable=False),
     Field('datePosted', 'datetime', readable=False, writable=False, default=request.now),
     Field('body', 'text'))
+
+#populate(db.profReview,100)
+#db(db.profReview.rating>5).delete()
