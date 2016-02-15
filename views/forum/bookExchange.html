@@ -12,15 +12,17 @@
 {{pass}}
 </ol>
 
+{{if number!=0:}}
 <p>Page of {{=page+1}}/{{=number}}
+{{pass}}
 {{if page>1:}}
 {{=A('<<',_class="btn btn-link", _href=(URL(args=(page-2))))}}
 {{pass}}
 {{if page>0:}}
 {{=A('<',_class="btn btn-link", _href=(URL(args=(page-1))))}}
 {{pass}}
-{{if (page <= 2 and number >= 5):}}
-{{for showNum in range(0, 5):}}
+{{if (page <= 2 and number <= 5):}}
+{{for showNum in range(0, number):}}
 {{=A(showNum+1,_class="btn btn-link", _href=(URL(args=(showNum))))}}
 {{pass}}
 {{pass}}

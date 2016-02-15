@@ -99,3 +99,15 @@ auth.settings.reset_password_requires_verification = True
 
 ## after defining tables, uncomment below to enable auditing
 # auth.enable_record_versioning(db)
+#from gluon.contrib.login_methods.rpx_account import RPXAccount
+#auth.settings.actions_disabled=['register','change_password','request_reset_password']
+#auth.settings.login_form = RPXAccount(request,
+#    api_key='1b950302e619e01d7d9885c73e315f0974aa7ea4',
+#    domain='slughero',
+#    url = "http://127.0.0.1:8000/SlugHero/%s/default/user/login" % request.application)
+
+#auth.settings.login_form.mappings.Facebook = lambda profile:dict(registration_id = profile["identifier"],
+#                 username = profile["preferredUsername"],
+#                 email = profile["email"],
+#                 first_name = profile["name"]["givenName"],
+#                 last_name = profile["name"]["familyName"])

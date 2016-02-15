@@ -99,13 +99,22 @@ def bookExchange():
     if enterNumber.process().accepted:
         redirect(URL(args=(int(request.vars.num) -1)))
     elif enterNumber.errors:
-        response.flash = 'form has errors'
+        response.flash = 'enter a number'
     return locals()
 
 
 @auth.requires_login()
 def showBook():
+    #control the pages
+    page = request.args(1,cast=int,default=0)
+    start = page*POSTS_PER_PAGE
+    stop = start+POSTS_PER_PAGE
+    count = 0
     book = db.post(request.args(0,cast=int)) or redirect(URL('bookExchange'))
+    number = int(math.ceil(db(db.comm.post_id == book.id)(db.comm.id > 0).count() /10.0))
+    if number - page <= 5:
+        count = 5-(number - page)
+    #comms
     db.comm.user_id.default = auth.user.id
     db.comm.post_id.default = book.id
     form=SQLFORM(db.comm, record=None,
@@ -126,7 +135,8 @@ def showBook():
     #form = crud.create(db.comm)
     if form.process().accepted:
         response.flash = 'your comment is posted'
-    comments = db(db.comm.post_id == book.id).select(db.comm.ALL, orderby=~db.comm.datetime)
+        redirect(URL('showBook', args=book.id))
+    comments = db(db.comm.post_id == book.id).select(db.comm.ALL, orderby=~db.comm.datetime, limitby=(start,stop))
     return locals()
 
 @auth.requires_login()
