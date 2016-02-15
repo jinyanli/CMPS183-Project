@@ -2,6 +2,7 @@
 # try something like
 import string
 import math
+from gluon.contrib.populate import populate
 from gluon.tools import Crud
 crud = Crud(db)
 
