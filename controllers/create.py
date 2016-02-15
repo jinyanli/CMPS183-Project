@@ -1,3 +1,4 @@
+@auth.requires_login()
 def createTopic():
     uCourse = db.course(request.args(0, cast=int)) or redirect(URL('default','viewCourseTopic', args=uCourse.id))
     fields = ['yr', 'quarter', 'title', 'body']
@@ -8,9 +9,10 @@ def createTopic():
     form.add_button('Back', URL('default','viewCourseTopic', args=uCourse.id))
     if form.process().accepted:
         response.flash = 'Post added'
-        redirect(URL('default','viewCourseTopic', args=uCourse.id))    
+        redirect(URL('default','viewCourseTopic', args=uCourse.id))
     return locals()
 
+@auth.requires_login()
 def createReply():
     topic = db.courseTopic(request.args(0, cast=int)) or redirect(URL('show', 'showTopic', args=topic.id))
     db.courseReply.topic_id.default = topic.id
@@ -24,6 +26,7 @@ def createReply():
         redirect(URL('show', 'showTopic', args=topic.id))
     return locals()
 
+@auth.requires_login()
 def createReplyReply():
     topic = db.courseReply(request.args(0, cast=int)) or redirect(URL('show', 'showTopic', args=topic.topic_id))
     db.courseTopicReply.topic_id.default = topic.id

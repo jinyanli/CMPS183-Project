@@ -1,6 +1,11 @@
 {{extend 'layout.html'}}
 {{import string}}
-<h1>Show Professor</h1>
+<div >
+    <ul class="breadcrumb" style="background-color:white; border-style: none;">
+        <li class="active"><a href="#">List of Professors</a></li>
+    </ul>
+</div>
+
 <div>
 {{=A('add Professor', _class='btn btn-primary', _href=URL('addProfessor'))}}
 </br>

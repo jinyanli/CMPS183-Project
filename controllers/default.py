@@ -12,50 +12,13 @@ import math
 from gluon.tools import Crud
 crud = Crud(db)
 
-POSTS_PER_PAGE = 10
+
 
 def index():
     response.flash = T("Slug Hero")
     return dict(message=T('Welcome to Slug Hero'))
 
-def bookExchange():
-    page = request.args(0,cast=int,default=0)
-    start = page*POSTS_PER_PAGE
-    stop = start+POSTS_PER_PAGE
-    #show_all = request.args(0) == 'all'
-    i = 0
-    number = int(math.ceil(db()(db.post.id > 0).count() /10.0))
-    q = db.post
-    listings = db().select(orderby = db.post.title, limitby=(start,stop))
-    #a = FORM(INPUT(_name='a', requires=IS_INT_IN_RANGE(0, 10)),
-    #	INPUT(_type='submit'), value _action=URL('page_two'))
 
-    #a.add_button('Back', URL('other_page'))
-    #if show_all:
-    #button = A('Show available items', _class="btn btn-info", _href=URL('default', 'bookExchange'))
-    #else:
-    #    button = A('Show all items', _class="btn btn-info", _href=URL('default', 'bookExchange', args=['all']))
-
-    #if show_all:
-    #    q = db.post
-    #    listings = db().select(orderby = db.post.title, limitby=(start,stop))
-    #else:
-    #    q=(db.post.status == True)
-    #    listings = db(db.post.status == True).select(orderby = db.post.title, limitby=(start,stop))
-
-    form = SQLFORM.grid(q,
-        args=request.args[:1],
-        fields=[db.post.title,
-                    db.post.title,
-                    db.post.body,
-               ],
-        editable=False, deletable=False,
-        paginate=10,
-        csv=False,
-        create=False,
-        searchable=False
-        )
-    return locals()
 
 def showClass():
     ucscClass = db.course(request.args(0, cast=int)) or redirect(URL('index'))
@@ -63,42 +26,21 @@ def showClass():
     return locals()
 
 def classPage():
-    uClass = db.ucscClass(request.args(0, cast=int)) or redirect(URL('index'))
-    info = db(db.ucscClass.course_id==uClass.id).select()
-    professors = db().select(db.professor.ALL, orderby=db.professor.id)
-    profPic = ""
-    prof_id = None
-    for item in info:
-        for prof in professors:
-            if item.professor_id == prof.id:
-                profPic = prof.image
-                prof_id = prof.id
-    classReviews = db(db.profReview.course_id==uClass.id).select()
-    if prof_id == None:
-        prof_id=1
-    profReviews = db(db.profReview.professor_id==prof_id).select()
+    thisClass = db.ucscClass(request.args(0, cast=int)) or redirect(URL('index'))
+    courseInfo = db.course(thisClass.course_id)
+    thisClassProfessor=db.professor(thisClass.professor_id)
+    professors = db(db.professor.department_id==courseInfo.department_id).select(db.professor.ALL, orderby=db.professor.id)
+    classReviews = db(db.classReview.ucscClass_id==thisClass.id).select()
+    profReviews = db(db.profReview.professor_id==thisClass.professor_id).select()
+    """
     reviews = []
     for cRev in classReviews:
         for pRev in profReviews:
             if cRev.id == pRev.id:
                 reviews.append(pRev)
+    """
     return locals()
 
-def showBook():
-    image = db.post(request.args(0,cast=int)) or redirect(URL('bookExchange'))
-    return locals()
-
-def addBookItem():
-    crud.messages.submit_button = 'Place on market'
-    crud.settings.keepvalues = True
-    crud.settings.label_separator = ' :'
-    crud.settings.formstyle = 'ul'
-    form = crud.create(db.post)
-    return locals()
-
-def manageBookItems():
-    grid = SQLFORM.grid(db.post)
-    return locals()
 
 def showDepartment():
     depts = db().select(db.department.ALL, orderby=db.department.name)
@@ -168,9 +110,9 @@ def createClass():
     return dict(form=form)
 
 def editClass():
-    course = db.course(request.args(0,cast=int)) or redirect(URL('showClass',args=request.args(0,cast=int)))
-    classes = db(db.ucscClass.course_id==course.id).select(orderby=db.ucscClass.yr,limitby=(0,100))
-    return locals()
+    aClass = db.ucscClass(request.args(0,cast=int)) or redirect(URL('showClass',args=request.args(0,cast=int)))
+    form = crud.update(db.ucscClass,aClass,next=URL('showClass',args=aClass.course_id))
+    return dict(form=form)
 
 #this function is for adding professor for showProfessor page
 def addProfessor():
@@ -181,9 +123,26 @@ def addProfessor():
     form = crud.create(db.professor, next='showProfessor')
     return locals()
 
-
-
-
+def classPageAddProfessor():
+    thisClass = db.ucscClass(request.args(0,cast=int)) or redirect(URL('showClass',args=request.args(0,cast=int)))
+    course=db.course(thisClass.course_id)
+    db.ucscClass.professor_id.requires = IS_IN_DB(db((db.course.department_id==db.professor.department_id) & (db.course.id==thisClass.course_id)), db.professor.id, '%(first_name)s'+' '+'%(last_name)s', zero=T('choose one'))
+    form=SQLFORM(db.ucscClass, thisClass, ignore_rw=True,
+                 fields=['professor_id'])
+    if form.process().accepted:
+       redirect(URL('classPage',args=request.args(0,cast=int)))
+    #form for creating a new professor
+    db.professor.department_id.default=course.department_id
+    fields = ['first_name', 'last_name', 'image']
+    form2 = SQLFORM(db.professor, fields=fields)
+    if form2.process().accepted:
+       db(db.ucscClass.id == thisClass.id).update(professor_id=form2.vars.id)
+       redirect(URL('classPage',args=request.args(0,cast=int)))
+    elif form2.errors:
+        response.flash = 'form has errors'
+    else:
+        response.flash = 'please fill the form'
+    return dict(form=form,form2=form2)
 
 @cache.action()
 def download():
@@ -192,7 +151,6 @@ def download():
     http://..../[app]/default/download/[filename]
     """
     return response.download(request, db)
-
 
 def call():
     """
@@ -225,14 +183,10 @@ def testpage():
         response.flash = 'form has errors'
     else:
         response.flash = 'please fill the form'
-    return dict(form=form)
+    A=30
+    return dict(form=form, A=A)
 
 def viewCourseTopic():
-    uCourse = db.course(request.args(0, cast=int)) or redirect(URL('index'))
-    info = db(db.courseTopic.board_id==uCourse.id).select()
-    return locals()
-
-def viewCourseTopic2():
     uCourse = db.course(request.args(0, cast=int)) or redirect(URL('index'))
     info = db(db.courseTopic.board_id==uCourse.id).select()
     return locals()

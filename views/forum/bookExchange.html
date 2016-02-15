@@ -1,0 +1,44 @@
+{{left_sidebar_enabled,right_sidebar_enabled=False,('message' in globals())}}
+{{extend 'layout.html'}}
+
+<h1>Sale Textbooks:</h1>
+
+<ol start ="{{=start+1}}">
+{{for book in listings:}}
+    <div class ="page-header">
+       {{=LI(A( book.title, _href=URL("showBook", args=book.id)))}}
+        <img width="40px" height="60"src="{{=URL('download', args=book.image)}}" />
+    </div>
+{{pass}}
+</ol>
+{{if page>0:}}
+{{=A('previous',_class="btn btn-info", _href=(URL(args=(page-1))))}}
+{{pass}}
+
+{{if len(listings)>=10:}}
+{{=A('next',_class="btn btn-info", _href=(URL(args=(page+1))))}}
+{{pass}}
+
+<p>Page of {{=page+1}}/{{=number}}
+
+{{if (page <= 2 and number >= 5):}}
+{{for showNum in range(0, 5):}}
+{{=A(showNum+1,_class="btn btn-link", _href=(URL(args=(showNum))))}}
+{{pass}}
+{{pass}}
+
+{{if (page+5)>=(number):}}
+{{for showNum in range(page, number):}}
+{{=A(showNum+1,_class="btn btn-link", _href=(URL(args=(showNum))))}}
+{{pass}}
+{{pass}}
+
+{{if (page >2 and (page+5) < number):}}
+{{for showNum in range(page-2, page+3) :}}
+{{=A(showNum+1,_class="btn btn-link", _href=(URL(args=(showNum))))}}
+{{pass}}
+{{pass}}
+</p>
+
+{{=A('New post', _class="btn btn-primary", _href=URL('forum', 'addBookItem'))}}
+{{=enterNumber}}

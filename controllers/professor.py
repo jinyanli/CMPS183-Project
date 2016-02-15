@@ -2,6 +2,7 @@
 # try something like
 import string
 import math
+from gluon.contrib.populate import populate
 from gluon.tools import Crud
 crud = Crud(db)
 
@@ -20,6 +21,7 @@ def showProfessor():
     profs = db().select(db.professor.ALL, orderby=db.professor.first_name)
     return locals()
 
+@auth.requires_login()
 def addProfessor():
     crud.messages.submit_button = 'Submit'
     crud.settings.keepvalues = True
@@ -38,6 +40,12 @@ def professorReview():
     deptname=db.department(prof.department_id).short_name
     numOfPage=int(math.ceil(db(db.profReview.professor_id==prof.id).count()/10.0))
     reviews =db(db.profReview.professor_id==prof.id).select(db.profReview.ALL, orderby=~db.profReview.datetime, limitby=(start, stop))
+    avgHelpfulness=db.profReview.helpfulness.avg()
+    helpfulness=db(db.profReview.professor_id==prof.id).select(avgHelpfulness).first()[avgHelpfulness]
+    avgClarity=db.profReview.clarity.avg()
+    clarity=db(db.profReview.professor_id==prof.id).select(avgClarity).first()[avgClarity]
+    avgEasiness=db.profReview.easiness.avg()
+    easiness=db(db.profReview.professor_id==prof.id).select(avgEasiness).first()[avgEasiness]
     return locals()
 
 @auth.requires_login()

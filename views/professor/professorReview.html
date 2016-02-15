@@ -1,4 +1,10 @@
 {{extend 'layout.html'}}
+<div>
+    <ul class="breadcrumb" style="background-color:white; border-style: none;">
+        <li >{{=A('List of Professors', _href=URL('showProfessor'))}}</li>
+        <li class="active"><a href="#">Professor Review</a></li>
+    </ul>
+</div>
 {{import string}}
 {{name="%s %s" % (prof.first_name, prof.last_name)}}
 {{if auth.user:}}
@@ -6,7 +12,7 @@
 {{pass}}
 <table>
    <tr>
-     <td rowspan="3">
+     <td rowspan="4">
       {{if prof.image:}}
          <img width="150px" src="{{=URL('default','download', args=prof.image)}}" />
       {{pass}}
@@ -17,12 +23,32 @@
      <td><h5><b>&nbsp;Department:&nbsp;{{=dept}}</b></h5></td>
    </tr>
    <tr>
-     {{if prof.saltiness:}}
-     {{saltiness="%.1f" % (5-prof.saltiness)}}
-     {{else:}}
-     {{saltiness='None'}}
-     {{pass}}
-     <td><h5><b>&nbsp;Saltiness:&nbsp;{{=saltiness }}/5</b></h5></td>
+     {{if prof.saltiness:
+       saltiness="%.1f" % (5-prof.saltiness)
+       else:
+       saltiness='None'
+       pass}}
+     <td><h5><b>&nbsp;Saltiness:&nbsp;</b>{{=saltiness}}/5</h5></td>
+   </tr>
+   <tr>
+     <td>
+         <h5>
+           {{
+             if helpfulness:
+                helpfulness="%.1f" % (helpfulness)
+             pass
+             if clarity:
+                clarity="%.1f" % (clarity)
+             pass
+             if easiness:
+                easiness="%.1f" % (easiness)
+             pass
+           }}
+            <b>&nbsp;Helpfulness:&nbsp;</b>{{=helpfulness}}
+            <b>&nbsp;Clarity:&nbsp;</b>{{=clarity}}
+            <b>&nbsp;Easiness:&nbsp;</b>{{=easiness}}
+        </h5>
+     </td>
    </tr>
 </table>
 {{if auth.user:}}

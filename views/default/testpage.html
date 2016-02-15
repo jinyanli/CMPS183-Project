@@ -1,9 +1,53 @@
 {{extend 'layout.html'}}
-<h2>Input form</h2>
-{{=form}}
+<html>
+<head>
+<script src="/SlugHero/static/js/canvasjs.min.js"></script>
+<script type="text/javascript">
+
+window.onload = function () {
+	var chart = new CanvasJS.Chart("chartContainer", {
+		theme: "theme2",//theme1
+		title:{
+			text: "Course Grade Distribution"
+		},
+		animationEnabled: true,   // change to true
+		data: [
+		{
+			// Change type to "bar", "area", "spline", "pie",etc.
+			type: "column",
+			dataPoints: [
+				{ label: "A",  y: {{=A}}  },
+				{ label: "B", y: 15  },
+				{ label: "C", y: 25  },
+				{ label: "D",  y: 30  },
+				{ label: "F",  y: 28  }
+			]
+		}
+		]
+	});
+	chart.render();
+}
+</script>
+</head>
+<body>
+<div id="chartContainer" style="height: 300px; width: 25%;"></div>
+
+<form enctype="multipart/form-data"
+      action="{{=URL()}}" method="POST">
+Your name:
+<input name="first_name" />
+<input name="last_name" />
+<input type="submit" />
+</form>
+<form method="GET">
+  <input type="radio" name="gender" value="male" checked> Male<br>
+  <input type="radio" name="gender" value="female"> Female<br>
+  <input type="radio" name="gender" value="other"> Other
+	<input type="submit" />
+</form>
 <h2>Submitted variables</h2>
 {{=BEAUTIFY(request.vars)}}
-<h2>Accepted variables</h2>
-{{=BEAUTIFY(form.vars)}}
-<h2>Errors in form</h2>
-{{=BEAUTIFY(form.errors)}}
+{{=request.vars['first_name']}}
+{{=request.vars['last_name']}}
+</body>
+</html>

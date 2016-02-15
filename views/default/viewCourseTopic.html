@@ -1,4 +1,5 @@
 {{extend 'layout.html'}}
+{{=A('Back', _href=URL('default', 'showClass', args=uCourse.id))}}
 
 <div class="container">
   <h2>{{=deslugify(uCourse.name)}}</h2>
@@ -20,3 +21,4 @@
     </div>
   {{pass}}
 </div>
+
