@@ -1,18 +1,18 @@
 {{extend 'layout.html'}}
-<h2>List of Classes of Course {{=uClass.name}}</h2>
+<h2>List of Classes for {{=deslugify(db.department[uClass.department_id].short_name).upper()}} {{=uClass.course_num}} {{=deslugify(uClass.name)}}</h2>
 
 <table>
   {{for aClass in info:}}
-  {{className=uClass.name+' '+aClass.quarter+' '+str(aClass.yr)}}
+  {{className=deslugify(uClass.name)+' '+deslugify(aClass.quarter)+' '+str(aClass.yr)}}
   <tr>
     <td>{{=A(className, _href=URL('classPage',args=aClass.id))}}</td>
     <td>{{=A('edit', _href=URL('editClass',args=aClass.id))}}</td>
   </tr>
   {{pass}}
   <tr>
-    <td>{{=A('add a class',_href=URL('createClass',args=uClass.id))}}</td>
+    <td>{{=A('Add A Class',_href=URL('createClass',args=uClass.id))}}</td>
     <td></td>
   </tr>
 </table>
 
-<i>See what people are discussing about {{=A(uClass.name, _href=URL('viewCourseTopic', args=uClass.id))}}</i>
+<i>See what people are discussing about {{=A(deslugify(uClass.name), _href=URL('viewCourseTopic', args=uClass.id))}}</i>

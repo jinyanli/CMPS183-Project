@@ -142,7 +142,6 @@ db.define_table('courseTopic',
 
 db.define_table('courseReply',
     Field('topic_id', 'reference courseTopic', readable=False, writable=False),
-    Field('board_id', 'reference courseTopic', readable=False, writable=False),
     Field('op', 'reference auth_user', readable=False, writable=False),
     Field('replyOp', 'reference auth_user', readable=False, writable=False),
     Field('datePosted', 'datetime', readable=False, writable=False, default=request.now),
@@ -150,7 +149,6 @@ db.define_table('courseReply',
 
 db.define_table('courseTopicReply',
     Field('topic_id', 'reference courseReply', readable=False, writable=False),
-    Field('board_id', 'reference courseReply', readable=False, writable=False),
     Field('replyOp', 'reference auth_user', readable=False, writable=False),
     Field('datePosted', 'datetime', readable=False, writable=False, default=request.now),
     Field('body', 'text'))
