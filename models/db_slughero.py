@@ -65,19 +65,20 @@ db.define_table('post',
     Field('ucscClass_id', 'reference ucscClass', readable=False, writable=False),
     Field('user_id', 'reference  auth_user', readable=False, writable=False),
     Field('title', 'string', notnull=True),
-    Field('forumSection', 'string'),#to tell whether the post belong textbookExchange or generalDiscussion
+    Field('forumSection', 'string', readable=False, writable=False),#to tell whether the post belong textbookExchange or generalDiscussion
     Field('body', 'text', notnull=True),
     Field('price', 'integer'), # price is in cents (eg 4000 -> $40)
     Field('status','boolean', default=False),
     Field('datetime', 'datetime', readable=False,writable=False,default=request.now),
     Field('image', 'upload'),
     format = '%(title)s')
-
+#db['post'].drop()
+#db.commit()
 #comment is a resevered key word. Can't be used
 db.define_table('comm',
     Field('user_id', 'reference  auth_user', readable=False, writable=False),
     Field('post_id', 'reference post', readable=False , writable=False),
-    Field('body', 'text'),
+    Field('body', 'text', requires= IS_NOT_EMPTY()),
     Field('datetime', 'datetime', readable=False,writable=False,default=request.now))
 
 
@@ -154,10 +155,10 @@ db.define_table('courseTopicReply',
     Field('body', 'text'))
 
 db.define_table('privateMessage',
-    Field('sender', 'reference auth_user', readable=False, writable=False),
-    Field('recipient', 'reference auth_user', readable=False, writable=False),
+    Field('sender_id', 'reference auth_user', readable=False, writable=False),
+    Field('recipient_id', 'reference auth_user', readable=False, writable=False),
     Field('posted_on', 'datetime', readable=False, writable=False, default=request.now),
     Field('body', 'text',requires=IS_NOT_EMPTY()))
 
-#populate(db.profReview,100)
+#populate(db.post,100)
 #db(db.profReview.rating>5).delete()

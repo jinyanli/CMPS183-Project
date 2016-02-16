@@ -58,12 +58,15 @@ def editComment():
 @auth.requires_login()
 def bookExchange():
     page = request.args(0,cast=int,default=0)
+    count = 0
     start = page*POSTS_PER_PAGE
     stop = start+POSTS_PER_PAGE
     #show_all = request.args(0) == 'all'
-    number = int(math.ceil(db()(db.post.id > 0).count() /10.0))
     q = db.post
-    listings = db().select(orderby =~ db.post.datetime, limitby=(start,stop))
+    listings = db(db.post.forumSection=='bookExchange').select(orderby =~ db.post.datetime, limitby=(start,stop))
+    number = int(math.ceil(db(db.post.forumSection=='bookExchange')(db.post.id > 0).count() /10.0))
+    if number - page <= 5:
+        count = 5-(number - page)
     #a = FORM(INPUT(_name='a', requires=IS_INT_IN_RANGE(0, 10)),
     #   INPUT(_type='submit'), value _action=URL('page_two'))
 
@@ -91,18 +94,27 @@ def bookExchange():
         create=False,
         searchable=False
         )
-    enterNumber= FORM('Go to page:', INPUT(_name='num', requires= IS_INT_IN_RANGE(1,number+1),_size ='1'), 
+    enterNumber= FORM('Go to page:', INPUT(_name='num', requires= IS_INT_IN_RANGE(1,number+1),_size ='1'),
                                INPUT(_type='submit', _value= "Go"))
     if enterNumber.process().accepted:
         redirect(URL(args=(int(request.vars.num) -1)))
     elif enterNumber.errors:
-        response.flash = 'form has errors'
+        response.flash = 'enter a number'
     return locals()
 
 
 @auth.requires_login()
 def showBook():
+    #control the pages
+    page = request.args(1,cast=int,default=0)
+    start = page*POSTS_PER_PAGE
+    stop = start+POSTS_PER_PAGE
+    count = 0
     book = db.post(request.args(0,cast=int)) or redirect(URL('bookExchange'))
+    number = int(math.ceil(db(db.comm.post_id == book.id)(db.comm.id > 0).count() /10.0))
+    if number - page <= 5:
+        count = 5-(number - page)
+    #comms
     db.comm.user_id.default = auth.user.id
     db.comm.post_id.default = book.id
     form=SQLFORM(db.comm, record=None,
@@ -113,7 +125,7 @@ def showBook():
         showid=True, readonly=False,
         comments=True, keepopts=[],
         ignore_rw=False, record_id=None,
-        formstyle='table3cols',
+        formstyle='bootstrap3_stacked',
         buttons=['submit'], separator=': ')
     #crud.settings.captcha = None
     #crud.settings.showid = False
@@ -123,22 +135,38 @@ def showBook():
     #form = crud.create(db.comm)
     if form.process().accepted:
         response.flash = 'your comment is posted'
-    comments = db(db.comm.post_id == book.id).select(db.comm.ALL, orderby=~db.comm.datetime)
+        redirect(URL('showBook', args=book.id))
+    comments = db(db.comm.post_id == book.id).select(db.comm.ALL, orderby=~db.comm.datetime, limitby=(start,stop))
     return locals()
 
 @auth.requires_login()
 def addBookItem():
     db.post.user_id.default = auth.user.id
+    db.post.forumSection.default = 'bookExchange'
     crud.messages.submit_button = 'Place on market'
     crud.settings.keepvalues = True
     crud.settings.label_separator = ' :'
     crud.settings.formstyle = 'ul'
-    form = crud.create(db.post)
+    form = crud.create(db.post).process(next='bookExchange')
     return locals()
 
 def manageBookItems():
     grid = SQLFORM.grid(db.post)
     return locals()
+
+@auth.requires_login()
+def editBookItem():
+    bookItem=db.post(request.args(0,cast=int)) or redirect(URL('showBook'))
+    if auth.user_id == bookItem.user_id:
+       form = crud.update(db.post, bookItem, next=URL('showBook', args=request.args(0,cast=int)))
+    return dict(form=form)
+
+@auth.requires_login()
+def editComment():
+    editComm=db.comm(request.args(0,cast=int)) or redirect(URL('showBook'))
+    if auth.user_id == editComm.user_id:
+       form = crud.update(db.comm, editComm, next=URL('showBook', args=request.args(0,cast=int)))
+    return dict(form=form)
 
 @cache.action()
 def download():
