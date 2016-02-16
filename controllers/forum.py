@@ -141,6 +141,20 @@ def manageBookItems():
     grid = SQLFORM.grid(db.post)
     return locals()
 
+@auth.requires_login()
+def editBookItem():
+    bookItem=db.post(request.args(0,cast=int)) or redirect(URL('showBook'))
+    if auth.user_id == bookItem.user_id:
+       form = crud.update(db.post, bookItem, next=URL('showBook', args=request.args(0,cast=int)))
+    return dict(form=form)
+
+@auth.requires_login()
+def editComment():
+    editComm=db.comm(request.args(0,cast=int)) or redirect(URL('showBook'))
+    if auth.user_id == editComm.user_id:
+       form = crud.update(db.comm, editComm, next=URL('showBook', args=request.args(0,cast=int)))
+    return dict(form=form)
+
 @cache.action()
 def download():
     """
