@@ -1,6 +1,7 @@
 {{extend 'layout.html'}}
 {{import string}}
 {{student=db.auth_user(book.user_id)}}
+
 <h1>Book image:</h1>
 <div style="text-align:center">
     <img
@@ -21,4 +22,31 @@
         <li>Available for sale: {{=book.status}}</li>
         <li>Date: {{=book.datetime}}</li>
     </ul>
+</div>
+
+{{if len(comments):}}
+<h2>Comments:</h2>
+<p>
+{{for comment in comments:}}
+{{commStudent=db.auth_user(comment.user_id)}}
+<div style="text-align:center">
+    <i>User: {{=A(string.capwords(commStudent.first_name+' '+commStudent.last_name), _href=URL('userProfile','showProfile',args=[commStudent.id], vars=dict(controller=request.controller,function=request.function,args=request.args)))}}
+       Time: {{=comment.datetime}}</i>
+</div>
+<div class ="well">
+    <ul style="list-style-type:none">
+        <li>{{=comment.body}}</li>
+    </ul>
+</div>
+{{pass}}
+</p>
+{{else:}}
+  <h4>No comments posted yet</h4>
+{{pass}}
+
+<div style="text-align:justify">
+<h2>New Post:</h2>
+<ul style="list-style-type:none">
+        <li>{{=form}}</li>
+</ul>    
 </div>
