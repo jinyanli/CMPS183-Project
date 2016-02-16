@@ -94,7 +94,7 @@ def bookExchange():
         create=False,
         searchable=False
         )
-    enterNumber= FORM('Go to page:', INPUT(_name='num', requires= IS_INT_IN_RANGE(1,number+1),_size ='1'), 
+    enterNumber= FORM('Go to page:', INPUT(_name='num', requires= IS_INT_IN_RANGE(1,number+1),_size ='1'),
                                INPUT(_type='submit', _value= "Go"))
     if enterNumber.process().accepted:
         redirect(URL(args=(int(request.vars.num) -1)))
