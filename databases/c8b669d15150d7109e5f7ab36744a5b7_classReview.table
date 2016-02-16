@@ -45,7 +45,7 @@ sS'type'
 p20
 S'double'
 p21
-ssS'quarter'
+ssS'yr'
 p22
 (dp23
 g4
@@ -53,7 +53,7 @@ I512
 sg5
 I00
 sg6
-I6
+I7
 sg7
 S'CHAR(512)'
 p24
@@ -163,7 +163,7 @@ I00
 sg10
 S'reference  ucscClass'
 p48
-ssS'yr'
+ssS'quarter'
 p49
 (dp50
 g4
@@ -171,7 +171,7 @@ I512
 sg5
 I00
 sg6
-I7
+I6
 sg7
 S'CHAR(512)'
 p51
