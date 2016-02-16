@@ -58,12 +58,15 @@ def editComment():
 @auth.requires_login()
 def bookExchange():
     page = request.args(0,cast=int,default=0)
+    count = 0
     start = page*POSTS_PER_PAGE
     stop = start+POSTS_PER_PAGE
     #show_all = request.args(0) == 'all'
     q = db.post
     listings = db(db.post.forumSection=='bookExchange').select(orderby =~ db.post.datetime, limitby=(start,stop))
     number = int(math.ceil(db(db.post.forumSection=='bookExchange')(db.post.id > 0).count() /10.0))
+    if number - page <= 5:
+        count = 5-(number - page)
     #a = FORM(INPUT(_name='a', requires=IS_INT_IN_RANGE(0, 10)),
     #   INPUT(_type='submit'), value _action=URL('page_two'))
 
@@ -113,7 +116,7 @@ def showBook():
         showid=True, readonly=False,
         comments=True, keepopts=[],
         ignore_rw=False, record_id=None,
-        formstyle='table3cols',
+        formstyle='bootstrap3_stacked',
         buttons=['submit'], separator=': ')
     #crud.settings.captcha = None
     #crud.settings.showid = False
@@ -134,7 +137,7 @@ def addBookItem():
     crud.settings.keepvalues = True
     crud.settings.label_separator = ' :'
     crud.settings.formstyle = 'ul'
-    form = crud.create(db.post)
+    form = crud.create(db.post).process(next='bookExchange')
     return locals()
 
 def manageBookItems():
