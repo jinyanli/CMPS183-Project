@@ -3,7 +3,7 @@
 
 <table>
   {{for aClass in info:}}
-  {{className=uClass.name+' '+aClass.quarter+' '+str(aClass.yr)}}
+  {{className=deslugify(uClass.name)+' '+deslugify(aClass.quarter)+' '+str(aClass.yr)}}
   <tr>
     <td>{{=A(className, _href=URL('classPage',args=aClass.id))}}</td>
     <td>{{=A('edit', _href=URL('editClass',args=aClass.id))}}</td>
