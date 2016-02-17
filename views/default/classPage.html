@@ -1,35 +1,43 @@
 {{extend 'layout.html'}}
-{{=A('Back To All ' + db.course[uClass.course_id].name, _href=URL('showClass', args=db.course[uClass.course_id].id))}}
+{{=A('Back To All ' + db.course[thisClass.course_id].name, _href=URL('showClass', args=db.course[thisClass.course_id].id))}}
 
 <div style="text-align:center">
-<h1>{{=db.course[uClass.course_id].name}}: {{=uClass.quarter}} {{=uClass.yr}}</h1>
+<h1>{{=db.course[thisClass.course_id].name}}: {{=thisClass.quarter}} {{=thisClass.yr}}</h1>
 </div>
-
+{{if thisClass.professor_id is None:}}
+{{=A('add Professor', _class='btn btn-primary', _href=URL('classPageAddProfessor', args=thisClass.id))}}
+{{pass}}
 <table name="forms" cellpadding="10">
 <tr><td>
-    <form action="{{=URL('professorReview', args=[prof_id])}}" name="classInfo">
-        <img src="{{=profPic}}" alt="Professor's Pic"><br/>
+    <form action="{{=URL('professor','professorReview', args=thisClass.professor_id)}}">
+        {{if thisClass.professor_id != None:}}
+        <img width="100px" src="{{=URL('default','download', args=db.professor(thisClass.professor_id).image)}}" alt="Professor's Pic"><br/>
+        <p>{{=syllabus}}</p>
         <input type="submit" name="view_prof" value="Reviews">
+        {{else:}}
+        <b>Add A Professor For the Class</b>
+        {{pass}}
     </form></td>
     <td>
-    <form action="{{=URL('classPage', args=[uClass.id])}}" method="POST">
-    <table name="post">
+    <form action="{{=URL('classPage', args=[thisClass.id])}}" method="post">
+    <table>
     <tr><td rowspan="3"><textarea name="body" cols="50" rows="5">Enter Your Review Here</textarea></td><td>&nbsp;</td>
         <td>Year:<input type="text" name="yr" value="2016"/></td></tr>
-    <tr><td>&nbsp;</td><td>Term:<select name="quarter"><option>Fall</option><option>Winter</option><option>Spring</option><option>Summer</option></select></td></tr>
-    <tr><td>&nbsp;</td><td>Rating:<input type="text" name="rating"/></td></tr>
-    <td><input type="submit" /></td></tr></table>
-    <input type="hidden" name="ucscClass_id" value="{{=uClass.id}}"/>
-    <input type="hidden" name="professor_id" value="{{=prof_id}}"/>
-    <input type="hidden" name="user_id" value="ptoy"/>
+    <tr><td>&nbsp;</td><td>Term:<select name="quarter">
+        <option>Fall</option><option>Winter</option><option>Spring</option><option>Summer</option>
+        </select></td></tr>
+    <tr><td>&nbsp;</td><td>rating:<input type="text" name="rating" /></td></tr>
+    <tr><td><input type="submit" value="Submit" /></td></tr></table>
     <input type="hidden" name="_formname" value="postReview"/>
-</form>
-{{=uClass.id}}
 {{for review in reviews:}}
-<p>
+<table>
+<tr><td width="30">
 {{=review.quarter}}
+</td><td width="100">
 {{=review.yr}}
-{{=review.body}}
-{{=review.user_id}}
+</td>
+<td width="100">Rating: {{=review.rating}}</td></tr></table>
+<p>{{=review.body}}</p>
 {{pass}}
-</p>
+</form>
+
