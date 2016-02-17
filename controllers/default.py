@@ -63,25 +63,31 @@ def showClass():
     return locals()
 
 def classPage():
-    uClass = db.ucscClass(request.args(0, cast=int)) or redirect(URL('showCourse')) #ucscClass.id is unique
-    course = db(db.ucscClass.course_id==uClass.course_id).select() #selects all
-    professors = db().select(db.professor.ALL, orderby=db.professor.id)
+    thisClass = db.ucscClass(request.args(0, cast=int)) or redirect(URL('showCourse'))
+    courseInfo = db.course(thisClass.course_id)
+    thisClassProfessor=db.professor(thisClass.professor_id)
+    professors = db(db.professor.department_id==courseInfo.department_id).select(db.professor.ALL, orderby=db.professor.id)
+    classReviews = db(db.classReview.ucscClass_id==thisClass.id).select()
+    profReviews = db(db.profReview.professor_id==thisClass.professor_id).select()
+    
     profPic = ""
-    prof_id = uClass.professor_id
-    for item in course:
-        for prof in professors:
-            if item.professor_id == prof.id:
-                profPic = prof.image
-                prof_id = prof.id
-    classReviews = db(db.classReview.professor_id==prof_id).select()
+    prof_id = thisClassProfessor
     reviews = []
     for review in classReviews:
-        if review.ucscClass_id == uClass.id:
+        if review.ucscClass_id == thisClass.id: # review.ucscClass.Professor_id == thisClassProfessor.id:
             reviews.append(review)
+    if session.user == None:
+        user_id = 5
+    else:
+        user_id = session.user
+    syllabus = thisClass.syllabus
+    db.classReview.professor_id.default = thisClassProfessor.id
+    db.classReview.user_id.default = user_id #auth.user.id
+    db.classReview.ucscClass_id.default = thisClass.id
+    db.classReview.professor_id.default = thisClassProfessor.id
     form = SQLFORM(db.classReview)
     if form.process(session=None, formname='postReview').accepted:
         response.flash = 'review accepted'
-        #redirect(URL('varTest'))
     elif form.errors:
         response.flash = 'Error: your submission is incomplete'
     else:
