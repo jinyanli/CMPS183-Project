@@ -13,7 +13,7 @@ def editForum():
     db.post.price.writable = db.post.price.readable = False
     db.post.status.writable = db.post.status.readable = False
     db.post.image.writable = db.post.image.readable = False
-    form = crud.update(db.post, forum, next=URL('showEachForm', args=request.args(0,cast=int)))
+    form = crud.update(db.post, forum, next=URL('showEachForum', args=request.args(0,cast=int)))
     return locals()
 
 def addForum():
@@ -41,15 +41,15 @@ def addComment():
     db.comm.post_id.default = forum.id
     form = crud.create(db.comm)
     if form.process().accepted:
-        redirect(URL('showEachForm', args=request.args(0,cast=int)))
+        redirect(URL('showEachForum', args=request.args(0,cast=int)))
     return locals()
 
 def editComment():
     forum = db.comm(request.args(0,cast=int)).post_id #or redirect(URL('showEachForm', args=request.args(0,cast=int)))
     comm = db.comm(request.args(0,cast=int))
     form = SQLFORM(db.comm, comm)
-    form.add_button('back', URL('showEachForm', args = forum))
+    form.add_button('back', URL('showEachForum', args = forum))
     db.comm.id.writable=db.comm.id.readable=False
     if form.process().accepted:
-        redirect(URL('showEachForm', args=forum))
+        redirect(URL('showEachForum', args=forum))
     return locals()
