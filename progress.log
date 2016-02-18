@@ -970,3 +970,8 @@
 [2016-02-12 17:15:58] EDIT SlugHero/controllers/default.py: 0
 [2016-02-13 21:29:58] CREATE default/classPageaAddProfessor.html: 0
 [2016-02-14 01:33:28] CREATE professor/professorEdit.html: 0
+[2016-02-17 16:03:21] EDIT SlugHero/views/forum/bookExchange.html: 0
+[2016-02-17 16:05:03] EDIT SlugHero/views/forum/bookExchange.html: 6
+[2016-02-17 16:06:07] EDIT SlugHero/views/forum/showBook.html: 5
+[2016-02-17 16:06:50] EDIT SlugHero/views/forum/showBook.html: 0
+[2016-02-17 16:06:55] EDIT SlugHero/views/forum/bookExchange.html: 0
