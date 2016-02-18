@@ -33,7 +33,7 @@ response.menu = [
 ]
 
 if auth.user:
-   response.menu+=[(T('my Profile'), False, URL('SlugHero', 'userProfile', 'showProfile',args=auth.user.id, vars=dict(fromMenu=True)))]
+   response.menu+=[(T('my Profile'), False, URL('SlugHero', 'userProfile', 'showProfile', args=[auth.user.id], vars=dict(fromMenu=True)))]
 
 #DEVEOPMENT_MENU = True
 
