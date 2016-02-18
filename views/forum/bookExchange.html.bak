@@ -34,7 +34,7 @@
 {{pass}}
 {{pass}}
 
-{{if (page+5)>(number) and page>2:}}
+{{if (page+5)>(number) and page>2 and number >5:}}
 {{for showNum in range(page-count, number):}}
 {{=A(showNum+1,_class="btn btn-link", _href=(URL(args=(showNum))))}}
 {{pass}}
