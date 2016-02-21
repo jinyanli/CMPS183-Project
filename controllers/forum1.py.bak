@@ -1,10 +1,38 @@
+# -*- coding: utf-8 -*-
+# try something like
+def index(): return dict(message="hello from forum1.py")
+
+
 from gluon.tools import Crud
 crud = Crud(db)
 import string
 
-# -*- coding: utf-8 -*-
-# try something like
-def index(): return dict(message="hello from forum.py")
+
+
+def addForum():
+    db.post.forumSection.default="forum"
+    db.post.price.writable = db.post.price.readable = False
+    db.post.status.writable = db.post.status.readable = False
+    db.post.image.writable = db.post.image.readable = False
+    form = crud.create(db.post).process(next='generalForum')
+    return locals()
+
+#def showProfessor():
+#    depts = db().select(db.department.ALL, orderby=db.department.name)
+#    for dept in depts:
+#       dept.name=deslugify(dept.name)
+#    profs = db().select(db.professor.ALL, orderby=db.professor.first_name)
+#    return locals()
+
+
+def generalForum():
+    forums = db( db.post.price == None , db.post.status == False).select(db.post.ALL, orderby = db.post.datetime)
+    db.post.status.writable = db.post.status.readable = False
+    db.post.price.writable = db.post.price.readable = False
+    db.post.image.writable = db.post.image.readable = False
+    return locals()
+
+
 
 def editForum():
 
@@ -16,22 +44,7 @@ def editForum():
     form = crud.update(db.post, forum, next=URL('showEachForm', args=request.args(0,cast=int)))
     return locals()
 
-def addForum():
-    db.post.forumSection.default="forum"
-    db.post.price.writable = db.post.price.readable = False
-    db.post.status.writable = db.post.status.readable = False
-    db.post.image.writable = db.post.image.readable = False
-    form = crud.create(db.post).process(next='generalForum')
-    return locals()
-
-def generalForum():
-    forums = db( db.post.price == None , db.post.status == False).select(orderby = db.post.datetime)
-    db.post.status.writable = db.post.status.readable = False
-    db.post.price.writable = db.post.price.readable = False
-    db.post.image.writable = db.post.image.readable = False
-    return locals()
-
-def showEachForum():
+def showEachForm():
     forum = db.post(request.args(0,cast=int)) or redirect(URL('generalForum'))
     comms  = db(db.comm.post_id==forum.id).select(db.comm.ALL, orderby=db.comm.datetime)
     return locals()
