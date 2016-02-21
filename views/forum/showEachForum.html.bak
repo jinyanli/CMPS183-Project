@@ -2,9 +2,10 @@
 <li>Title: {{=forum.title}}</li>
 <li>Content: {{=forum.body}}</li>
 <li>Datatime: {{=forum.datetime}}</li>
+<div class="one" id="one">image here</div>
 {{for image in forumimages:}}
 
-  <img width="60dp"  class="img-thumbnail"   src="{{=URL('download', args=image.image)}}" />
+  <img width="60dp"  class="img-thumbnail" src="{{=URL('download', args=image.image)}}" />
 
     {{pass}}
 {{for comm in comms:}}
@@ -19,14 +20,16 @@
 [{{=A('Add New Comment!', _href=URL('addComment', args=forum.id))}}]
 
 
-<script>
-function bigImg(x) {
-    x.style.height = "300px";
-    x.style.width = "300px";
-}
 
-function normalImg(x) {
-    x.style.height = "100px";
-    x.style.width = "100px";
-}
+<script>
+$(document).ready(function() {
+    $('.img-thumbnail').onmouseover( function() {
+        var img = $('<img />', {src    : this.src,
+                                'class': 'fullImage'
+                  });
+
+        $('DIV.one').html(img).show();
+    });
+});
+
 </script>
