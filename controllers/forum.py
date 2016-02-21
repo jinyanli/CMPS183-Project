@@ -1,7 +1,9 @@
 from gluon.tools import Crud
 import math
 crud = Crud(db)
+import string
 
+<<<<<<< HEAD
 POSTS_PER_PAGE = 10
 #add a new comment!
 
@@ -11,6 +13,20 @@ def generalForum():
     db.post.status.writable = db.post.status.readable = False
     db.post.price.writable = db.post.price.readable = False
     db.post.image.writable = db.post.image.readable = False
+=======
+# -*- coding: utf-8 -*-
+# try something like
+
+
+def editForum():
+
+    forum = db.post(request.args(0,cast=int))
+    #db.post.post_id.default = forum.id
+    db.post.price.writable = db.post.price.readable = False
+    db.post.status.writable = db.post.status.readable = False
+    db.post.image.writable = db.post.image.readable = False
+    form = crud.update(db.post, forum, next=URL('showEachForum', args=request.args(0,cast=int)))
+>>>>>>> d08964575a145780741c6e87d731f883ae83bc6c
     return locals()
 
 def addForum():
@@ -21,6 +37,7 @@ def addForum():
     form = crud.create(db.post).process(next='generalForum')
     return locals()
 
+<<<<<<< HEAD
 def editForum():
 
     forum = db.post(request.args(0,cast=int))
@@ -29,6 +46,13 @@ def editForum():
     db.post.status.writable = db.post.status.readable = False
     db.post.image.writable = db.post.image.readable = False
     form = crud.update(db.post, forum, next=URL('showEachForum', args=request.args(0,cast=int)))
+=======
+def generalForum():
+    forums = db( db.post.price == None , db.post.status == False).select(orderby = db.post.datetime)
+    db.post.status.writable = db.post.status.readable = False
+    db.post.price.writable = db.post.price.readable = False
+    db.post.image.writable = db.post.image.readable = False
+>>>>>>> d08964575a145780741c6e87d731f883ae83bc6c
     return locals()
 
 def showEachForum():
@@ -44,7 +68,10 @@ def addComment():
         redirect(URL('showEachForum', args=request.args(0,cast=int)))
     return locals()
 
+<<<<<<< HEAD
 #still a issue here
+=======
+>>>>>>> d08964575a145780741c6e87d731f883ae83bc6c
 def editComment():
     forum = db.comm(request.args(0,cast=int)).post_id #or redirect(URL('showEachForm', args=request.args(0,cast=int)))
     comm = db.comm(request.args(0,cast=int))
@@ -54,6 +81,7 @@ def editComment():
     if form.process().accepted:
         redirect(URL('showEachForum', args=forum))
     return locals()
+<<<<<<< HEAD
 
 @auth.requires_login()
 def bookExchange():
@@ -175,3 +203,5 @@ def download():
     http://..../[app]/default/download/[filename]
     """
     return response.download(request, db)
+=======
+>>>>>>> d08964575a145780741c6e87d731f883ae83bc6c
