@@ -62,32 +62,24 @@ def showClass():
     info = db(db.ucscClass.course_id==ucscClass.id).select(orderby=db.ucscClass.year | db.ucscClass.quarter)
     return locals()
 
+@auth.requires_login()
 def classPage():
     thisClass = db.ucscClass(request.args(0, cast=int)) or redirect(URL('showCourse'))
     courseInfo = db.course(thisClass.course_id)
     thisClassProfessor=db.professor(thisClass.professor_id)
     professors = db(db.professor.department_id==courseInfo.department_id).select(db.professor.ALL, orderby=db.professor.id)
-    classReviews = db(db.classReview.ucscClass_id==thisClass.id).select()
+    classReviews = db(db.classReview.ucscClass_id==thisClass.id).select(db.classReview.ALL, orderby=~db.classReview.yr|db.classReview.quarter)
     profReviews = db(db.profReview.professor_id==thisClass.professor_id).select()
-    
-    profPic = ""
-    prof_id = thisClassProfessor
+    prof_id = thisClassProfessor.id
     reviews = []
-    for review in classReviews:
-        if review.ucscClass_id == thisClass.id: # review.ucscClass.Professor_id == thisClassProfessor.id:
-            reviews.append(review)
-    if session.user == None:
-        user_id = 5
-    else:
-        user_id = session.user
     syllabus = thisClass.syllabus
-    db.classReview.professor_id.default = thisClassProfessor.id
-    db.classReview.user_id.default = user_id #auth.user.id
+    db.classReview.user_id.default = auth.user.id
     db.classReview.ucscClass_id.default = thisClass.id
-    db.classReview.professor_id.default = thisClassProfessor.id
+    db.classReview.professor.default = thisClassProfessor
     form = SQLFORM(db.classReview)
     if form.process(session=None, formname='postReview').accepted:
         response.flash = 'review accepted'
+        redirect(URL('classPage', args=request.args(0,cast=int)))
     elif form.errors:
         response.flash = 'Error: your submission is incomplete'
     else:
