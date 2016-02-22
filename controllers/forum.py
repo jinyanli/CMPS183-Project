@@ -34,6 +34,7 @@ def editForum():
 def showEachForum():
     forum = db.post(request.args(0,cast=int)) or redirect(URL('generalForum'))
     comms  = db(db.comm.post_id==forum.id).select(db.comm.ALL, orderby=db.comm.datetime)
+    forumimages= db(db.forumImage.post_id==forum.id).select(db.forumImage.ALL, orderby=db.forumImage.title)
     return locals()
 
 def addComment():

@@ -160,5 +160,12 @@ db.define_table('privateMessage',
     Field('posted_on', 'datetime', readable=False, writable=False, default=request.now),
     Field('body', 'text',requires=IS_NOT_EMPTY()))
 
+
+db.define_table('forumImage',
+    Field('post_id', 'reference post', readable=False , writable=False),
+    Field('title', 'string', requires= IS_NOT_EMPTY()),
+    Field('image', 'upload')
+    )
+
 #populate(db.post,100)
 #db(db.profReview.rating>5).delete()
