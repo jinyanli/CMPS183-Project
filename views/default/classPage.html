@@ -7,8 +7,9 @@
 {{if thisClass.professor_id is None:}}
 {{=A('add Professor', _class='btn btn-primary', _href=URL('classPageAddProfessor', args=thisClass.id))}}
 {{pass}}
-<table name="forms" cellpadding="10">
-<tr><td>
+<div>
+<table cellpadding="10" style="float: left">
+<tr><td width="150">
     <form action="{{=URL('professor','professorReview', args=thisClass.professor_id)}}">
         {{if thisClass.professor_id != None:}}
         <img width="100px" src="{{=URL('default','download', args=db.professor(thisClass.professor_id).image)}}" alt="Professor's Pic"><br/>
@@ -18,26 +19,33 @@
         <b>Add A Professor For the Class</b>
         {{pass}}
     </form></td>
-    <td>
-    <form action="{{=URL('classPage', args=[thisClass.id])}}" method="post">
-    <table>
-    <tr><td rowspan="3"><textarea name="body" cols="50" rows="5">Enter Your Review Here</textarea></td><td>&nbsp;</td>
+    </tr>
+    <tr><td>{{=A('Forum',_href=URL('forum', 'generalForum'))}}</td></tr>
+    <tr><td>{{=A('Notes',_href=URL('classPage', args=[thisClass.id]))}}</td></tr>
+    <tr><td>{{=A('Textbook',_href=URL('forum', 'bookExchange', args=[thisClass.textbook_ids]))}}</td></tr>
+    </table></div>
+<form action="{{=URL('classPage', args=[thisClass.id])}}" method="POST">
+    <table style="float: left">
+    <tr><td rowspan="4"><textarea name="body" cols="50" rows="5">Enter Your Review Here</textarea></td><td>&nbsp;</td>
         <td>Year:<input type="text" name="yr" value="2016"/></td></tr>
     <tr><td>&nbsp;</td><td>Term:<select name="quarter">
         <option>Fall</option><option>Winter</option><option>Spring</option><option>Summer</option>
         </select></td></tr>
-    <tr><td>&nbsp;</td><td>rating:<input type="text" name="rating" /></td></tr>
+    <tr><td>&nbsp;</td><td>Difficulty:<input type="text" name="difficulty" /></td></tr>
+    <tr><td>&nbsp;</td><td>Enjoyment:<input type="text" name="enjoyment" /></td></tr>
     <tr><td><input type="submit" value="Submit" /></td></tr></table>
     <input type="hidden" name="_formname" value="postReview"/>
-{{for review in reviews:}}
-<table>
-<tr><td width="30">
-{{=review.quarter}}
-</td><td width="100">
-{{=review.yr}}
-</td>
-<td width="100">Rating: {{=review.rating}}</td></tr></table>
-<p>{{=review.body}}</p>
+    </div>
+<br/>
+<br/><br/><br/>
+{{for review in classReviews:}}
+<table cellpadding="10" >
+    <tr><td width="170">&nbsp;</td><td width="50"><b>{{=review.quarter}}</b></td><td width="100"><b>{{=review.yr}}</b></td>
+        <td width="100"><b>Difficulty: {{=review.difficulty}}</b></td><td><b>Enjoyment: {{=review.enjoyment}}</b></td></tr>
+<tr><td width="170">&nbsp;</td><td colspan="4">{{=review.body}}</td></tr>
+<tr><td>&nbsp;</td></tr>
+</table>
 {{pass}}
 </form>
+
 
