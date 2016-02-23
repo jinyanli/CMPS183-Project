@@ -9,6 +9,7 @@ POSTS_PER_PAGE = 50
 def generalForum():
     page = request.args(0,cast=int,default=0)
     count = 0
+    swithColor = 1
     start = page*POSTS_PER_PAGE
     stop = start+POSTS_PER_PAGE    
     number = int(math.ceil(db(db.post.forumSection=='forum')(db.post.id > 0).count() /50.0))
