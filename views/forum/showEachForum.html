@@ -1,21 +1,39 @@
 {{extend 'layout.html'}}
+{{student = db.auth_user(forum.user_id)}}
+<html lang="en">
 <style>
 table, th, td {
     border: 1px solid gray;
+    border-color: #488084 #0f4645;
     border-collapse: collapse;
 }
 </style>
+<body style="background:#2c2a35">
+<div class ='page'>
+<table style="width:100%">
+    <tr bgcolor="#184343" size="6" style="font-family:verdana;font-size:90%;color:white;height:90px">
+        <th ><div style="font-family:verdana;font-size:200%;color:#ffd9b3;" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{=forum.title}}</div>
+        <div style = "text-align:left;color: #cc6600;font-size:90%;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <i>{{=(student.first_name+' '+student.last_name)}} created by {{=forum.datetime}}</i></div>
+        </th>
+    </tr>
 
-<div style="font-family:verdana;font-size:200%;color:black;" class ="page-header">{{=forum.title}}</div>
-<li>Content: {{=forum.body}}</li>
-<li>Datatime: {{=forum.datetime}}</li>
+    <tr bgcolor="#184343" size="6" style="height:300px">
+        <td style="text-align:char"><div style="font-family:verdana;font-size:100%;color:#ffd9b3;" ><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{=forum.body}}</p></div>
+        </td>
+    </tr>
+    {{forumimages}}
+    <tr bgcolor="#184343" style="height:80px">
+    <td><div class="one" id="one" style = "text-align:center"></div>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        {{for image in forumimages:}}
+          <img width="60dp"  class="img-thumbnail" src="{{=URL('download', args=image.image)}}" />
+        {{pass}}
+    </td>
+    </tr>
+</table>
+</div>
 
-<div class="one" id="one">image here</div>
-{{for image in forumimages:}}
-
-  <img width="60dp"  class="img-thumbnail" src="{{=URL('download', args=image.image)}}" />
-
-    {{pass}}
 {{for comm in comms:}}
 
     <li> <font size="2" color="blue">comment: </font>{{=comm.body}}[{{=A('Edit Comment', _href=URL('editComment', args=comm.id))}}]</li>
@@ -26,8 +44,8 @@ table, th, td {
 [{{=A('goback', _href=URL('generalForum'))}}]
 [{{=A('Edit This Forum!', _href=URL('editForum', args=forum.id))}}]
 [{{=A('Add New Comment!', _href=URL('addComment', args=forum.id))}}]
-
-
+</body>
+</html>
 
 <script>
 $(document).ready(function() {
