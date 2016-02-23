@@ -23,7 +23,11 @@
 
 <script>
 $(document).ready(function() {
+<<<<<<< HEAD
+    $('.img-thumbnail').onmouseover( function() {
+=======
     $('.img-thumbnail').on('click', function() {
+>>>>>>> master
         var img = $('<img />', {src    : this.src,
                                 'class': 'fullImage'
                   });
