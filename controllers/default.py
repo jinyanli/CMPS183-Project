@@ -296,11 +296,17 @@ def courseNotes():
     uCourse = db.course(course_id) or redirect(URL('index'))
     # this may be correct or incorrect
     # need entries in table 'note' to test/determine which.
-    notes = db(db.noteFolder.course_id == course_id).select(db.note.ALL)
+    notes = db(db.note.course_id == course_id).select(db.note.ALL)
     return locals()
 
+@auth.requires_login()
 def uploadNotes():
-    uCourse = db.course(request.args(0, cast=int)) or redirect(URL('index'))
+    courseNum = request.args(0, cast=int)
+    uCourse = db.course(courseNum) or redirect(URL('index'))
+    form = SQLFORM(db.note)
+    db.note.course_id.default = courseNum
+    if form.process().accepted:
+        redirect(URL('courseNotes', args=courseNum))
     return locals()
 
 

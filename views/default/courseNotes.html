@@ -7,16 +7,30 @@
     </span>
 </h2>
 
-<table>
+<table class="table">
+  <tr>
+    <th>Title</th>
+    <th>Type</th>
+    <th>Date Uploaded</th>
+  </tr>
+  
   {{for note in notes:}}
-  {{=note}}
-  <!-- <tr>
-    <td>{{=A(note.title, _href=URL('classPage',args=aClass.id))}}</td>
-    <td>{{=A('edit', _href=URL('editClass',args=aClass.id))}}</td>
-  </tr> -->
+  <tr>
+      <td>
+        {{=A(note.title, _href=URL('download', args=note.notefile))}}
+      </td>
+      <td>
+          {{=note.notetype}}
+      </td>
+      <td>
+          {{=note.datetime}}
+      </td>
+  </tr>
   {{pass}}
+
   <tr>
     <td>{{=A('upload notes', _href=URL('uploadNotes', args=uCourse.id))}}</td>
+    <td></td>
     <td></td>
   </tr>
 </table>
