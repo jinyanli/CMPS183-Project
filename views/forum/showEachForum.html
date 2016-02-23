@@ -1,7 +1,15 @@
 {{extend 'layout.html'}}
-<li>Title: {{=forum.title}}</li>
+<style>
+table, th, td {
+    border: 1px solid gray;
+    border-collapse: collapse;
+}
+</style>
+
+<div style="font-family:verdana;font-size:200%;color:black;" class ="page-header">{{=forum.title}}</div>
 <li>Content: {{=forum.body}}</li>
 <li>Datatime: {{=forum.datetime}}</li>
+
 <div class="one" id="one">image here</div>
 {{for image in forumimages:}}
 

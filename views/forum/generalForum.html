@@ -1,11 +1,98 @@
 {{extend 'layout.html'}}
-<h1>This is the Forum </h1>
-<ul>
+
+<style>
+table, th, td {
+    border: 1px solid gray;
+    border-collapse: collapse;
+}
+</style>
+
+<body>
+<h1>Welcome to UCSC Forum</h1>
+<div class = "well">
+<table style="width:100%">
+	<tr bgcolor="black" size="8" style="font-family:verdana;font-size:120%;color:white;height:70px">
+      <th >Thread</th>
+      <th>Thread Starter</th>
+      <th>Last Post</th>
+      <th>Replies</th>
+   </tr>
     {{for forum in forums:}}
-    <li>[{{=A('Edit', _href=URL('editForum', args=forum.id))}}]{{=(A(forum.title, _href=URL('showEachForum', args=forum.id)))}}
-
-
+    {{student = db.auth_user(forum.user_id)}}
+    <tr style="font-family:verdana;font-size:100%;color:black;height:40px">
+    <td>
+    	{{=(A(forum.title, _href=URL('showEachForum', args=forum.id)))}}
+    </td>
+    <td><div style = "text-align:center">
+    	{{=(student.first_name+' '+student.last_name)}}</div>
+    </td>
+    <td></td>
+    <td></td>
+    </tr>
     {{pass}}
-</ul>
+</table>
+</div>
 <br>
-[{{=A('Add New Post!', _href=URL('addForum'))}}]
+
+{{if (auth.user_id == None):}}
+	<div style = "text-align:right">
+		<font style="font-size:100%;">
+			<i>{{=A('Login to Create A Discussion',_href=URL('default','user'))}}</i>
+		</font>
+	</div>
+{{else:}}
+	<div style = "text-align:right">
+	{{=A('Create A Discussion',  _class="btn btn-primary", _href=URL('addForum'))}}
+	</div>
+{{pass}}
+
+<div style = "text-align:right">
+{{if number!=0:}}
+<p>Page of {{=page+1}}/{{=number}}
+{{pass}}
+{{if page>1:}}
+{{=A('<<',_class="btn btn-link", _href=(URL(args=(page-2))))}}
+{{pass}}
+{{if page>0:}}
+{{=A('<',_class="btn btn-link", _href=(URL(args=(page-1))))}}
+{{pass}}
+{{if (page <= 2 and number <= 5):}}
+{{for showNum in range(0, number):}}
+{{=A(showNum+1,_class="btn btn-link", _href=(URL(args=(showNum))))}}
+{{pass}}
+{{pass}}
+
+{{pass}}
+{{if (page <= 2 and number >= 5):}}
+{{for showNum in range(0, 5):}}
+{{=A(showNum+1,_class="btn btn-link", _href=(URL(args=(showNum))))}}
+{{pass}}
+{{pass}}
+
+{{if (page+5)>(number) and page>2 and number >5:}}
+{{for showNum in range(page-count, number):}}
+{{=A(showNum+1,_class="btn btn-link", _href=(URL(args=(showNum))))}}
+{{pass}}
+{{pass}}
+{{if (page+5)>(number) and page>2 and number <5:}}
+{{for showNum in range(0, number):}}
+{{=A(showNum+1,_class="btn btn-link", _href=(URL(args=(showNum))))}}
+{{pass}}
+{{pass}}
+
+{{if (page >2 and (page+5) <= number):}}
+{{for showNum in range(page-2, page+3) :}}
+{{=A(showNum+1,_class="btn btn-link", _href=(URL(args=(showNum))))}}
+{{pass}}
+{{pass}}
+{{if number -page >=1:}}
+{{=A('>',_class="btn btn-link", _href=(URL(args=(page+1))))}}
+{{pass}}
+{{if number - page >2:}}
+{{=A('>>',_class="btn btn-link", _href=(URL(args=(page+2))))}}
+{{pass}}
+</div>
+
+</body>
+
+[{{=A('Edit', _href=URL('editForum', args=forum.id))}}]
