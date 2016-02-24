@@ -3,42 +3,44 @@
 <style>
 table, th, td {
     border: 1px solid gray;
-    border-color: #e6f3ff #e6f5ff;
+    border-color: #184343 #184340 #f8f6df #184348;
     border-collapse: collapse;
 }
 </style>
 
-<body>
-<h1>Welcome to UCSC Forum</h1>
-<div class = "well">
+<body style="background:#184343">
+<h1 style="font-family:verdana;font-size:300%;color:#ffd9b5;" >&nbsp;Welcome to UCSC Forum</h1>
+<div class = "well"  style="background:#184348">
 <table style="width:100%">
-	<tr bgcolor="#0d0d0d" size="6" style="font-family:verdana;font-size:90%;color:white;height:30px">
-      <th >Thread</th>
-      <th>Thread Starter</th>
-      <th>Last Post</th>
-      <th>Replies</th>
+	<tr bgcolor="#2c2a30" style="font-family:geneva;font-size:120%;color:#ffd9b9;height:50px">
+      <th>&nbsp;&nbsp;&nbsp;Thread</th>
+      <th>&nbsp;&nbsp;&nbsp;Thread Starter</th>
+      <th>&nbsp;&nbsp;&nbsp;Last Post</th>
+      <th>&nbsp;&nbsp;&nbsp;Replies</th>
    </tr>
     {{for forum in forums:}}
     {{student = db.auth_user(forum.user_id)}}
     {{swithColor +=1}}
 
     {{if (swithColor% 2 ==1):}}
-      <tr bgcolor="#e6f3ff" style="font-family:verdana;font-size:100%;color:black;height:40px">
+      <tr bgcolor="#f8f6df" style="font-family:verdana;font-size:100%;color:black;height:40px">
         <td>
-        	&nbsp;&nbsp;{{=(A(forum.title, _href=URL('showEachForum', args=forum.id)))}}
+        	<font style="color:#black;">
+          &nbsp;&nbsp;{{=(A(forum.title, _href=URL('showEachForum', args=forum.id)))}}
+          </font>
         </td>
-        <td><div style = "text-align:center;color: #80b3ff">
+        <td><div style = "text-align:center;color: #e98c3a">
           {{=(student.first_name+' '+student.last_name)}}</div>
         </td>
         <td></td>
         <td></td>
       </tr>
     {{else:}}
-      <tr bgcolor="#e6f8ff" style="font-family:verdana;font-size:100%;color:black;height:40px">
+      <tr bgcolor="#eff5d1" style="font-family:verdana;font-size:100%;color:black;height:40px">
         <td>
           &nbsp;&nbsp;{{=(A(forum.title, _href=URL('showEachForum', args=forum.id)))}}
         </td>
-        <td><div style = "text-align:center;color:#80b3ff">
+        <td><div style = "text-align:center;color:#e98c3a">
           {{=(student.first_name+' '+student.last_name)}}</div>
         </td>
         <td></td>
@@ -114,3 +116,5 @@ table, th, td {
 
 [{{=A('Edit', _href=URL('editForum', args=forum.id))}}]
 {{= 4%2}}
+#e6f3ff
+#e6f8ff
