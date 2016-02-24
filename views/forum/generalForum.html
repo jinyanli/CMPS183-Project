@@ -1,11 +1,38 @@
 {{extend 'layout.html'}}
-<h1>This is the Forum </h1>
-<ul>
+<style>
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+</style>
+
+<body>
+<h1>Welcome to UCSC Forum</h1>
+<div class = "well">
+<table style="width:100%">
+	<tr bgcolor="black" size="8" style="font-family:verdana;font-size:130%;color:white;height:70px">
+      <th >Thread</th>
+      <th>Thread Starter</th>
+      <th>Last Post</th>
+      <th>Replies</th>
+   </tr>
     {{for forum in forums:}}
-    <li>[{{=A('Edit', _href=URL('editForum', args=forum.id))}}]{{=(A(forum.title, _href=URL('showEachForum', args=forum.id)))}}
-
-
+    <tr style="font-family:verdana;font-size:100%;color:white;height:50px">
+    <td>
+    	{{=(A(forum.title, _href=URL('showEachForum', args=forum.id)))}}
+    	<div style = "text-align:right">
+    		
+    	</div>
+    </td>
+    <td></td>
+    <td></td>
+    <td></td>
+    </tr>
     {{pass}}
-</ul>
+</table>
+</div>
 <br>
-[{{=A('Add New Post!', _href=URL('addForum'))}}]
+[{{=A('Create A Discussion', _href=URL('addForum'))}}]
+</body>
+
+[{{=A('Edit', _href=URL('editForum', args=forum.id))}}]
