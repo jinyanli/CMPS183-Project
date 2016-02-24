@@ -7,13 +7,15 @@ POSTS_PER_PAGE = 10
 
 
 def generalForum():
-    forums = db( db.post.price == None , db.post.status == False).select(orderby = db.post.datetime)
     db.post.status.writable = db.post.status.readable = False
     db.post.price.writable = db.post.price.readable = False
     db.post.image.writable = db.post.image.readable = False
+    #forumData = db.post(request.args(0,cast=int)) or redirect(URL('bookExchange'))
+    forums = db( db.post.price == None , db.post.status == False).select(orderby = db.post.datetime)
     return locals()
 
 def addForum():
+    db.post.user_id.default = auth.user.id
     db.post.forumSection.default="forum"
     db.post.price.writable = db.post.price.readable = False
     db.post.status.writable = db.post.status.readable = False
@@ -168,6 +170,11 @@ def editComment():
     if auth.user_id == editComm.user_id:
        form = crud.update(db.comm, editComm, next=URL('showBook', args=request.args(0,cast=int)))
     return dict(form=form)
+
+@auth.requires_login()
+def manageItems():
+    grid = SQLFORM.grid(db.post)
+    return locals()
 
 @cache.action()
 def download():
