@@ -9,10 +9,9 @@ table, th, td {
     margin: 0 auto;
 }
 </style>
-
 <body style="background:#2c2a35; ">
 <div  class ='well' style="background:#2c2a33;">
-<table  style="width:78%; ">
+<table  style="width:88%; ">
     <tr bgcolor="#184343" size="6" style="font-family:verdana;font-size:90%;color:white;height:90px">
         <th ><div style="font-family:verdana;font-size:200%;color:#ffd9b3;" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{=forum.title}}</div>
         <div style = "text-align:left;color: #cc6600;font-size:90%;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -39,12 +38,48 @@ table, th, td {
 </table>
 </div>
 
-{{for comm in comms:}}
+{{if len(comms):}}
+<h2 style = "text-align:left;color: #cc6600;">Comments:</h2>
+<p>
+{{for comment in comms:}}
+{{commStudent=db.auth_user(comment.user_id)}}
+<div style="text-align:center">
+    <i style = "text-align:center;color: #cc6600;">User: {{=A(string.capwords(commStudent.first_name+' '+commStudent.last_name), _href=URL('userProfile','showProfile',args=[commStudent.id], vars=dict(controller=request.controller,function=request.function,args=request.args)))}}
+    Time: {{=comment.datetime}}</i>
+</div>
 
-    <li> <font size="2" color="blue">comment: </font>{{=comm.body}}[{{=A('Edit Comment', _href=URL('editComment', args=comm.id))}}]</li>
-    {{pass}}
+<div class ="well" style="background:#2c2a30;">
+    <table style="width:88%; ">
+        <tr bgcolor="#184343">
+        <td>
+        <ul style="list-style-type:none">
+            <li><div style="font-family:verdana;font-size:100%;color:#ffd9b3;"><p>{{=comment.body}}</p></div></li>
+        </ul>
+        {{if auth.user_id == comment.user_id:}}
+        <div style="text-align:right">
+        <p><b>{{=A('edit', _class='btn btn-link', _href=URL('editForumComment',args=[comment.id,forum.id]))}}</b></p>
+        </div>
+        {{pass}}
+        </td>
+        </tr>
+    </table>
+</div>
+{{pass}}
+</p>
+{{else:}}
+  <h4 style = "text-align:left;color: #cc6600;">No comments posted yet</h4>
+{{pass}}
+
 
 <br>
+
+<div style="text-align:justify">
+<h2 style = "text-align:left;color: #cc6600;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;New Post:</h2>
+<ul style="list-style-type:none">
+        <li>{{=form}}</li>
+</ul>
+</div>
+
 <br>
 [{{=A('goback', _href=URL('generalForum'))}}]
 [{{=A('Edit This Forum!', _href=URL('editForum', args=forum.id))}}]
