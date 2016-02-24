@@ -108,8 +108,8 @@ def editForumComment():
 def bookExchange():
     page = request.args(0,cast=int,default=0)
     count = 0
-    start = page*POSTS_PER_PAGE
-    stop = start+POSTS_PER_PAGE
+    start = page*POSTS_PER_PAGE_COMM
+    stop = start+POSTS_PER_PAGE_COMM
     #show_all = request.args(0) == 'all'
     q = db.post
     listings = db(db.post.forumSection=='bookExchange').select(orderby =~ db.post.datetime, limitby=(start,stop))
