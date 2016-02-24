@@ -3,6 +3,7 @@
 <style>
 table, th, td {
     border: 1px solid gray;
+    border-color: #e6f3ff #e6f5ff;
     border-collapse: collapse;
 }
 </style>
@@ -11,7 +12,7 @@ table, th, td {
 <h1>Welcome to UCSC Forum</h1>
 <div class = "well">
 <table style="width:100%">
-	<tr bgcolor="black" size="8" style="font-family:verdana;font-size:120%;color:white;height:70px">
+	<tr bgcolor="#0d0d0d" size="6" style="font-family:verdana;font-size:90%;color:white;height:30px">
       <th >Thread</th>
       <th>Thread Starter</th>
       <th>Last Post</th>
@@ -19,16 +20,32 @@ table, th, td {
    </tr>
     {{for forum in forums:}}
     {{student = db.auth_user(forum.user_id)}}
-    <tr style="font-family:verdana;font-size:100%;color:black;height:40px">
-    <td>
-    	{{=(A(forum.title, _href=URL('showEachForum', args=forum.id)))}}
-    </td>
-    <td><div style = "text-align:center">
-    	{{=(student.first_name+' '+student.last_name)}}</div>
-    </td>
-    <td></td>
-    <td></td>
-    </tr>
+    {{swithColor +=1}}
+
+    {{if (swithColor% 2 ==1):}}
+      <tr bgcolor="#e6f3ff" style="font-family:verdana;font-size:100%;color:black;height:40px">
+        <td>
+        	&nbsp;&nbsp;{{=(A(forum.title, _href=URL('showEachForum', args=forum.id)))}}
+        </td>
+        <td><div style = "text-align:center;color: #80b3ff">
+          {{=(student.first_name+' '+student.last_name)}}</div>
+        </td>
+        <td></td>
+        <td></td>
+      </tr>
+    {{else:}}
+      <tr bgcolor="#e6f8ff" style="font-family:verdana;font-size:100%;color:black;height:40px">
+        <td>
+          &nbsp;&nbsp;{{=(A(forum.title, _href=URL('showEachForum', args=forum.id)))}}
+        </td>
+        <td><div style = "text-align:center;color:#80b3ff">
+          {{=(student.first_name+' '+student.last_name)}}</div>
+        </td>
+        <td></td>
+        <td></td>
+      </tr>
+    {{pass}}  
+
     {{pass}}
 </table>
 </div>
@@ -96,3 +113,4 @@ table, th, td {
 </body>
 
 [{{=A('Edit', _href=URL('editForum', args=forum.id))}}]
+{{= 4%2}}
