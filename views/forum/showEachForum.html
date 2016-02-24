@@ -31,7 +31,7 @@ table, th, td {
     <td><div class="one" id="one" style = "text-align:center"></div>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         {{for image in forumimages:}}
-          <img width="60dp"  class="img-thumbnail" src="{{=URL('download', args=image.image)}}" />
+          <img style= "width:70px; height:70px;" onmouseover="bigImg(this)" onmouseout="normalImg(this)" class="img-thumbnail" src="{{=URL('download', args=image.image)}}" />
         {{pass}}
     </td>
     </tr>
@@ -53,6 +53,7 @@ table, th, td {
 
 <script>
 $(document).ready(function() {
+    
     $('.img-thumbnail').on('click', function() {
         var img = $('<img />', {src    : this.src,
                                 'class': 'fullImage'
@@ -61,5 +62,14 @@ $(document).ready(function() {
         $('DIV.one').html(img).show();
     });
 });
+function bigImg(x) {
+    x.style.height = "90px";
+    x.style.width = "90px";
+}
+
+function normalImg(x) {
+    x.style.height = "70px";
+    x.style.width = "70px";
+}
 
 </script>
