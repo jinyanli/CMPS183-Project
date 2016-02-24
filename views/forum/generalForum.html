@@ -34,10 +34,6 @@ table, th, td {
 </div>
 <br>
 
-
-
-
-
 {{if (auth.user_id == None):}}
 	<div style = "text-align:right">
 		<font style="font-size:100%;">
@@ -49,6 +45,54 @@ table, th, td {
 	{{=A('Create A Discussion',  _class="btn btn-primary", _href=URL('addForum'))}}
 	</div>
 {{pass}}
+
+<div style = "text-align:right">
+{{if number!=0:}}
+<p>Page of {{=page+1}}/{{=number}}
+{{pass}}
+{{if page>1:}}
+{{=A('<<',_class="btn btn-link", _href=(URL(args=(page-2))))}}
+{{pass}}
+{{if page>0:}}
+{{=A('<',_class="btn btn-link", _href=(URL(args=(page-1))))}}
+{{pass}}
+{{if (page <= 2 and number <= 5):}}
+{{for showNum in range(0, number):}}
+{{=A(showNum+1,_class="btn btn-link", _href=(URL(args=(showNum))))}}
+{{pass}}
+{{pass}}
+
+{{pass}}
+{{if (page <= 2 and number >= 5):}}
+{{for showNum in range(0, 5):}}
+{{=A(showNum+1,_class="btn btn-link", _href=(URL(args=(showNum))))}}
+{{pass}}
+{{pass}}
+
+{{if (page+5)>(number) and page>2 and number >5:}}
+{{for showNum in range(page-count, number):}}
+{{=A(showNum+1,_class="btn btn-link", _href=(URL(args=(showNum))))}}
+{{pass}}
+{{pass}}
+{{if (page+5)>(number) and page>2 and number <5:}}
+{{for showNum in range(0, number):}}
+{{=A(showNum+1,_class="btn btn-link", _href=(URL(args=(showNum))))}}
+{{pass}}
+{{pass}}
+
+{{if (page >2 and (page+5) <= number):}}
+{{for showNum in range(page-2, page+3) :}}
+{{=A(showNum+1,_class="btn btn-link", _href=(URL(args=(showNum))))}}
+{{pass}}
+{{pass}}
+{{if number -page >=1:}}
+{{=A('>',_class="btn btn-link", _href=(URL(args=(page+1))))}}
+{{pass}}
+{{if number - page >2:}}
+{{=A('>>',_class="btn btn-link", _href=(URL(args=(page+2))))}}
+{{pass}}
+</div>
+
 </body>
 
 [{{=A('Edit', _href=URL('editForum', args=forum.id))}}]

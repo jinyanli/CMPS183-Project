@@ -2,16 +2,25 @@ from gluon.tools import Crud
 import math
 crud = Crud(db)
 
-POSTS_PER_PAGE = 10
+POSTS_PER_PAGE = 50
 #add a new comment!
 
 
 def generalForum():
+    page = request.args(0,cast=int,default=0)
+    count = 0
+    start = page*POSTS_PER_PAGE
+    stop = start+POSTS_PER_PAGE    
+    number = int(math.ceil(db(db.post.forumSection=='forum')(db.post.id > 0).count() /50.0))
+    if number - page <= 5:
+        count = 5-(number - page)
+
+
     db.post.status.writable = db.post.status.readable = False
     db.post.price.writable = db.post.price.readable = False
     db.post.image.writable = db.post.image.readable = False
     #forumData = db.post(request.args(0,cast=int)) or redirect(URL('bookExchange'))
-    forums = db( db.post.price == None , db.post.status == False).select(orderby = db.post.datetime)
+    forums = db( db.post.price == None , db.post.status == False).select(orderby = db.post.datetime, limitby=(start,stop))
     return locals()
 
 def addForum():
@@ -20,7 +29,7 @@ def addForum():
     db.post.price.writable = db.post.price.readable = False
     db.post.status.writable = db.post.status.readable = False
     db.post.image.writable = db.post.image.readable = False
-    form = crud.create(db.post).process(next='generalForum')
+    form = crud.create(db.post)
     return locals()
 
 def editForum():
