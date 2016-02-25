@@ -71,6 +71,9 @@ def showEachForum():
         buttons=['submit'], separator=': ')
     if form.process().accepted:
         response.flash = 'your comment is posted'
+        #updateTimer=db(db.comm.post_id==forum.id).select(db.comm.ALL, orderby=~db.comm.datetime).first()
+        #oldTimer = db(db.post.id == forum.id).select().first()
+        #oldTimer.update_record(update_time = updateTimer.datetime)
         redirect(URL('showEachForum', args=forum.id))
     lenComms  = db(db.comm.post_id==forum.id).select(db.comm.ALL)
     comms  = db(db.comm.post_id==forum.id).select(db.comm.ALL, orderby=~db.comm.datetime, limitby=(start,stop))
