@@ -93,8 +93,9 @@ def showEachForum():
         formstyle='bootstrap3_stacked',
         buttons=['submit'], separator=': ')
     if replyForm.process().accepted:
+        commIdreply = db(db.forumCommReply.id == replyForm.vars.id).select().first()
+        commIdreply.update_record(comm_id = session.myCommid)
         redirect(URL('showEachForum', args=request.args(0,cast=int)))
-
     return locals()
 
 @auth.requires_login()

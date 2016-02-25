@@ -87,41 +87,36 @@ h4, h5 {
             {{pass}} 
             </li>
         </ul>
-        hehehheheehe{{=comment.id}}
-        {{db.forumCommReply.comm_id.default = comment.id}}
+        {{=comment.id}}
         <div style="text-align:right">
-        <p><b>{{=A('reply', _class='btn btn-link', _href=URL('replyComment',args=[comment.id, forum.id]))}}
+
+            {{if auth.user_id == comment.user_id:}}
+            {{=A('edit', _class='btn btn-link', _href=URL('editForumComment',args=[comment.id, forum.id]))}}
+            {{pass}}
             
-            <button class="btn btn-primary" data-toggle="modal" data-target="#smallModal">Send message</button>
+            {{=comment.id}}
+            <a class="btn btn-link" data-toggle="modal" data-target="#smallModal">reply</a>
+
             <div id="smallModal" class="modal fade" tabindex="-1" role="dialog">
-                <div class="modal-dialog">
-                    <div class="modal-content">
+                <div class="modal-dialog" >
+                    <div class="modal-content" style="background:#1a3936;">
                         <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×SAdsadaSas</button>
-                            <h4 class="modal-title">Send message to </h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                            <p class="modal-title" style = "text-align:right;color: #cc6600;font-size:100%;">Reply to {{=(commStudent.first_name+' '+commStudent.last_name)}} </p>
                         </div>
 
                         <div class="modal-body">
-                          {{=replyForm}}
-                          
-                          
+                            {{session.myCommid = comment.id}}
+                            {{=replyForm.custom.begin}}
+                            <div style = "text-align:left;color: #cc6600;font-size:220%;">Reply:{{=replyForm.custom.widget.body}}</div>
+                            {{=replyForm.custom.submit}}
+                            {{=replyForm.custom.end}}
                         </div>
                     </div>
                 </div>
             </div>
-
-
-
-
-
-
-
-
-        {{if auth.user_id == comment.user_id:}}
-        {{=A('edit', _class='btn btn-link', _href=URL('editForumComment',args=[comment.id, forum.id]))}}</b>
-        </p>
         </div>
-        {{pass}}
+        
         </td>
         </tr>
     </table>
@@ -136,9 +131,12 @@ h4, h5 {
 <br>
 
 <div style="text-align:justify">
-<h2 style = "text-align:left;color: #cc6600;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;New Post:</h2>
 <ul style="list-style-type:none">
-        <li>{{=form}}</li>
+        <li>{{=form.custom.begin}}
+            <div style = "text-align:left;color: #cc6600;font-size:220%;">New Post:{{=form.custom.widget.body}}</div>
+            {{=form.custom.submit}}
+            {{=form.custom.end}}
+        </li>
 </ul>
 </div>
 
