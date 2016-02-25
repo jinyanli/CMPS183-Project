@@ -4,13 +4,15 @@
 <style>
 table, th, td {
     border: 1px solid gray;
-    border-color: #488084 #0f4645;
+    border-color: #488089 #488089 #3d4b52 #488089;
     border-collapse: collapse;
+    margin: 0 auto;
 }
 </style>
-<body style="background:#2c2a35">
-<div class ='page'>
-<table style="width:100%">
+
+<body style="background:#2c2a35; ">
+<div  class ='well' style="background:#2c2a33;">
+<table  style="width:78%; ">
     <tr bgcolor="#184343" size="6" style="font-family:verdana;font-size:90%;color:white;height:90px">
         <th ><div style="font-family:verdana;font-size:200%;color:#ffd9b3;" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{=forum.title}}</div>
         <div style = "text-align:left;color: #cc6600;font-size:90%;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -18,16 +20,19 @@ table, th, td {
         </th>
     </tr>
 
-    <tr bgcolor="#184343" size="6" style="height:300px">
-        <td style="text-align:char"><div style="font-family:verdana;font-size:100%;color:#ffd9b3;" ><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{=forum.body}}</p></div>
+    <tr bgcolor="#184343" size="6" style="height:250px">
+        <td  valign="top" style="text-align:char;"><div style="font-family:verdana;font-size:100%;color:#ffd9b3;" ><p>
+        <br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{=forum.body}}</p></div>
         </td>
     </tr>
     {{forumimages}}
     <tr bgcolor="#184343" style="height:80px">
     <td><div class="one" id="one" style = "text-align:center"></div>
+        <br>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         {{for image in forumimages:}}
-          <img width="60dp"  class="img-thumbnail" src="{{=URL('download', args=image.image)}}" />
+          <img style= "width:70px; height:70px;" onmouseover="bigImg(this)" onmouseout="normalImg(this)" class="img-thumbnail" src="{{=URL('download', args=image.image)}}" />
         {{pass}}
     </td>
     </tr>
@@ -49,6 +54,7 @@ table, th, td {
 
 <script>
 $(document).ready(function() {
+    
     $('.img-thumbnail').on('click', function() {
         var img = $('<img />', {src    : this.src,
                                 'class': 'fullImage'
@@ -57,5 +63,14 @@ $(document).ready(function() {
         $('DIV.one').html(img).show();
     });
 });
+function bigImg(x) {
+    x.style.height = "90px";
+    x.style.width = "90px";
+}
+
+function normalImg(x) {
+    x.style.height = "70px";
+    x.style.width = "70px";
+}
 
 </script>
