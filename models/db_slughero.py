@@ -70,7 +70,7 @@ db.define_table('post',
     Field('price', 'integer'), # price is in cents (eg 4000 -> $40)
     Field('status','boolean', default=False),
     Field('datetime', 'datetime', readable=False,writable=False,default=request.now),
-    Field('update_time', 'datetime', readable=False,writable=True,default=request.now),
+    Field('update_time', 'datetime', readable=False,writable=False,default=request.now),
     Field('image', 'upload'),
     format = '%(title)s')
 

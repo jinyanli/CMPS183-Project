@@ -67,7 +67,7 @@ h4, h5 {
             <li><div style="font-family:verdana;font-size:100%;color:#ffd9b3;">
                 <p>{{=comment.body}}</p>
                 </div>
-            {{replies = db(db.forumCommReply.comm_id==comment.id).select(db.forumCommReply.ALL, orderby=~db.forumCommReply.datetime)}}
+            {{replies = db(db.forumCommReply.comm_id==comment.id).select(db.forumCommReply.ALL, orderby=db.forumCommReply.datetime)}}
             {{for reply in replies:}}
             {{replyStudent=db.auth_user(reply.user_id)}}
             <table style="width:90%; ">
