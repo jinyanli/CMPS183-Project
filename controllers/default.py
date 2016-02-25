@@ -188,5 +188,15 @@ def testpage():
 
 def viewCourseTopic():
     uCourse = db.course(request.args(0, cast=int)) or redirect(URL('index'))
+    table = db(db.courseTopic.board_id==uCourse.id)
     info = db(db.courseTopic.board_id==uCourse.id).select()
+
+    if len(request.args): 
+        page=int(request.args[0])
+    else: 
+        page=0
+
+    items_per_page=1
+    limitby=(page*items_per_page,(page+1)*items_per_page+1)
+    rows=table.select(db.courseTopic.ALL,limitby=limitby)
     return locals()
