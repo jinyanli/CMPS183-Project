@@ -17,12 +17,11 @@ def generalForum():
     if number - page <= 5:
         count = 5-(number - page)
 
-
     db.post.status.writable = db.post.status.readable = False
     db.post.price.writable = db.post.price.readable = False
     db.post.image.writable = db.post.image.readable = False
     #forumData = db.post(request.args(0,cast=int)) or redirect(URL('bookExchange'))
-    forums = db( db.post.price == None , db.post.status == False).select(orderby =~ db.post.datetime, limitby=(start,stop))
+    forums = db( db.post.price == None , db.post.status == False).select(orderby =~ db.post.update_time, limitby=(start,stop))
     return locals()
 
 def addForum():
@@ -71,9 +70,12 @@ def showEachForum():
         buttons=['submit'], separator=': ')
     if form.process().accepted:
         response.flash = 'your comment is posted'
+        updateTimer=db(db.comm.post_id==forum.id).select(db.comm.ALL, orderby=~db.comm.datetime, limitby=(0,1)).first()
+        oldTimer = db(db.post.id == forum.id).select().first()
+        oldTimer.update_record(update_time = updateTimer.datetime)
         redirect(URL('showEachForum', args=forum.id))
     lenComms  = db(db.comm.post_id==forum.id).select(db.comm.ALL)
-    comms  = db(db.comm.post_id==forum.id).select(db.comm.ALL, orderby=~db.comm.datetime, limitby=(start,stop))
+    comms  = db(db.comm.post_id==forum.id).select(db.comm.ALL, orderby=db.comm.datetime, limitby=(start,stop))
     forumimages= db(db.forumImage.post_id==forum.id).select(db.forumImage.ALL, orderby=db.forumImage.title)
     #replyComments =  db.forumCommReply(request.args(0,cast=int)) or redirect(URL('generalForum')) 
     return locals()
