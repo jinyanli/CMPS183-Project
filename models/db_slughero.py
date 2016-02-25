@@ -72,7 +72,7 @@ db.define_table('post',
     Field('datetime', 'datetime', readable=False,writable=False,default=request.now),
     Field('image', 'upload'),
     format = '%(title)s')
-#db['post'].drop()
+#db['comm'].drop()
 #db.commit()
 #comment is a resevered key word. Can't be used
 db.define_table('comm',
@@ -81,6 +81,11 @@ db.define_table('comm',
     Field('body', 'text', requires= IS_NOT_EMPTY()),
     Field('datetime', 'datetime', readable=False,writable=False,default=request.now))
 
+db.define_table('forumCommReply',
+    Field('user_id', 'reference auth_user', readable=False, writable=False),
+    Field('comm_id', 'reference comm', readable=False, writable=False),
+    Field('datetime', 'datetime', readable=False, writable=False, default=request.now),
+    Field('body', 'text',requires= IS_NOT_EMPTY()))
 
 db.define_table('studentGrade',
     Field('user_id', 'reference auth_user', readable=False, writable=False),
@@ -159,6 +164,13 @@ db.define_table('privateMessage',
     Field('recipient_id', 'reference auth_user', readable=False, writable=False),
     Field('posted_on', 'datetime', readable=False, writable=False, default=request.now),
     Field('body', 'text',requires=IS_NOT_EMPTY()))
+
+
+db.define_table('forumImage',
+    Field('post_id', 'reference post', readable=False , writable=False),
+    Field('title', 'string', requires= IS_NOT_EMPTY()),
+    Field('image', 'upload')
+    )
 
 #populate(db.post,100)
 #db(db.profReview.rating>5).delete()

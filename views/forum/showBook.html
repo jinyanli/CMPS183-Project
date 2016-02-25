@@ -5,7 +5,7 @@
 <h1>Book image:</h1>
 <div style="text-align:center">
     <img
-         width="190px" height="250"src="{{=URL('download', args=book.image)}}" />
+         class="img-thumbnail" width="190px" height="250"src="{{=URL('download', args=book.image)}}" />
 </div>
 <div class ="well">
     <h2>{{=book.title}}</h2>
@@ -42,7 +42,7 @@
     </ul>
     {{if auth.user_id == comment.user_id:}}
     <div style="text-align:right">
-    <p><b>{{=A('edit', _class='btn btn-link', _href=URL('editComment',args=[comment.id]))}}</b></p>
+    <p><b>{{=A('edit', _class='btn btn-link', _href=URL('editComment',args=[comment.id, book.id]))}}</b></p>
     </div>
     {{pass}}
 </div>
