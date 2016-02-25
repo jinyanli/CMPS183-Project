@@ -77,7 +77,24 @@ def showEachForum():
     lenComms  = db(db.comm.post_id==forum.id).select(db.comm.ALL)
     comms  = db(db.comm.post_id==forum.id).select(db.comm.ALL, orderby=db.comm.datetime, limitby=(start,stop))
     forumimages= db(db.forumImage.post_id==forum.id).select(db.forumImage.ALL, orderby=db.forumImage.title)
-    #replyComments =  db.forumCommReply(request.args(0,cast=int)) or redirect(URL('generalForum')) 
+    #replyComments =  db.forumCommReply(request.args(0,cast=int)) or redirect(URL('generalForum'))
+
+    #commTableInf = db.comm(request.args(0,cast=int)) or redirect(URL('generalForum'))
+    #db.forumCommReply.comm_id.default = commTableInf.id
+    db.forumCommReply.user_id.default = auth.user.id
+    replyForm = SQLFORM(db.forumCommReply, record=None,
+        deletable=False, linkto=None,
+        upload=None, fields=None, labels=None,
+        col3={}, submit_button='Reply',
+        delete_label='Check to delete:',
+        showid=True, readonly=False,
+        comments=True, keepopts=[],
+        ignore_rw=False, record_id=None,
+        formstyle='bootstrap3_stacked',
+        buttons=['submit'], separator=': ')
+    if replyForm.process().accepted:
+        redirect(URL('showEachForum', args=request.args(0,cast=int)))
+
     return locals()
 
 @auth.requires_login()
