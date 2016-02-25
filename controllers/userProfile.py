@@ -31,13 +31,29 @@ def showProfile():
     db.privateMessage.recipient_id.default = user.id
     messageForm=SQLFORM(db.privateMessage)
     if messageForm.process().accepted:
-       session.flash = 'record inserted'
+        if auth.user.id != user.id:
+            query1 = db((db.conversation.user1 == auth.user.id) & (db.conversation.user2 == user.id)).count()
+            query2 = db((db.conversation.user1 == user.id) & (db.conversation.user2 == auth.user.id)).count()
+            if query1==0 and query2 == 0:
+               db.conversation.insert(user1=auth.user.id, user2=user.id)
+               conversation=db.conversation(user1=auth.user.id, user2=user.id)
+            else:
+               query1=db((db.conversation.user1 == auth.user.id) & (db.conversation.user2 == user.id)).count()
+               query2=db((db.conversation.user1 == user.id) & (db.conversation.user2 == auth.user.id)).count()
+               if query1==0:
+                   conversation=db.conversation(user1 = user.id,user2 = auth.user.id)
+               else:
+                   conversation=db.conversation(user2 = user.id,user1 = auth.user.id)
+            #redirect(URL('default','testpage', args=db.privateMessage(messageForm.vars.id)))
+            db(db.privateMessage.id==messageForm.vars.id).update(conversation_id=conversation.id)
+        session.flash = 'record inserted'
     elif messageForm.errors:
        session.flash = 'form has errors'
     else:
        session.flash= 'please fill the form'
     return locals()
 
+@auth.requires_login()
 def editProfile():
     user = db.auth_user(request.args(0,cast=int))
     form=SQLFORM(db.auth_user, user, ignore_rw=True,
@@ -46,6 +62,21 @@ def editProfile():
        redirect(URL('showProfile', args=request.args(0,cast=int), vars=dict(edit=True, fromMenu=request.vars['fromMenu'])))
     return dict(form=form)
 
-def inbox():
-    messages = db(db.privateMessage.sender_id==request.args(0,cast=int)).select()
-    return dict(messages=messages)
+@auth.requires_login()
+def messageBox():
+    count = db.privateMessage.body.count()
+    messages = db((db.privateMessage.sender_id==auth.user_id) | (db.privateMessage.recipient_id==auth.user_id)).select(db.privateMessage.ALL, count, groupby=db.privateMessage.conversation_id, orderby=~db.privateMessage.posted_on)
+    return locals()
+
+@auth.requires_login()
+def showMessages():
+    recipient=db.auth_user(request.args(0,cast=int))
+    messages=db(db.privateMessage.conversation_id==request.args(1,cast=int)).select(orderby=~db.privateMessage.posted_on)
+    db.privateMessage.sender_id.default = auth.user.id
+    db.privateMessage.recipient_id.default = recipient.id
+    db.privateMessage.conversation_id.default = request.args(1,cast=int)
+    form=SQLFORM(db.privateMessage)
+    if form.process().accepted:
+       session.flash = 'Message sent'
+       redirect(URL('showMessages', args=[request.args(0,cast=int),request.args(1,cast=int)]))
+    return locals()

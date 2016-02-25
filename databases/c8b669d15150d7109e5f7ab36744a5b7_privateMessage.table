@@ -10,7 +10,7 @@ p5
 I00
 sS'sortable'
 p6
-I5
+I6
 sS'sql'
 p7
 S'TEXT'
@@ -22,7 +22,7 @@ sS'type'
 p10
 S'text'
 p11
-ssS'recipient_id'
+ssS'sender_id'
 p12
 (dp13
 g4
@@ -39,7 +39,7 @@ I00
 sg10
 S'reference auth_user'
 p15
-ssS'sender_id'
+ssS'recipient_id'
 p16
 (dp17
 g4
@@ -47,7 +47,7 @@ I512
 sg5
 I00
 sg6
-I2
+I4
 sg7
 S'INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  '
 p18
@@ -55,9 +55,26 @@ sg9
 I00
 sg10
 g15
-ssS'id'
+ssS'conversation_id'
 p19
 (dp20
+g4
+I512
+sg5
+I00
+sg6
+I2
+sg7
+S'INTEGER REFERENCES conversation (id) ON DELETE CASCADE  '
+p21
+sg9
+I00
+sg10
+S'reference conversation'
+p22
+ssS'id'
+p23
+(dp24
 g4
 I512
 sg5
@@ -66,26 +83,27 @@ sg6
 I1
 sg7
 S'INTEGER PRIMARY KEY AUTOINCREMENT'
-p21
+p25
 sg9
 I00
 sg10
-g19
+S'id'
+p26
 ssS'posted_on'
-p22
-(dp23
+p27
+(dp28
 g4
 I512
 sg5
 I00
 sg6
-I4
+I5
 sg7
 S'TIMESTAMP'
-p24
+p29
 sg9
 I00
 sg10
 S'datetime'
-p25
+p30
 ss.
