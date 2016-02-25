@@ -8,11 +8,19 @@ table, th, td {
     border-collapse: collapse;
     margin: 0 auto;
 }
-</style>
 
+h4, h5 {
+  width: 50%;
+  height: 60px;
+  margin: 0;
+  padding: 0;
+  display: inline;
+}​
+</style>
+{{=len(lenComms)}}
 <body style="background:#2c2a35; ">
-<div  class ='well' style="background:#2c2a33;">
-<table  style="width:78%; ">
+<div  class ='well' style="background:#2c2a35;">
+<table  style="width:88%; ">
     <tr bgcolor="#184343" size="6" style="font-family:verdana;font-size:90%;color:white;height:90px">
         <th ><div style="font-family:verdana;font-size:200%;color:#ffd9b3;" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{=forum.title}}</div>
         <div style = "text-align:left;color: #cc6600;font-size:90%;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -22,7 +30,6 @@ table, th, td {
 
     <tr bgcolor="#184343" size="6" style="height:250px">
         <td  valign="top" style="text-align:char;"><div style="font-family:verdana;font-size:100%;color:#ffd9b3;" ><p>
-        <br>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{=forum.body}}</p></div>
         </td>
     </tr>
@@ -39,16 +46,123 @@ table, th, td {
 </table>
 </div>
 
-{{for comm in comms:}}
+{{if len(comms):}}
+<div class="page-header" >
+<h4 style = "font-family:Courier New;text-align:left;color: #cc6600;font-size:200%;">DISCUSS</h4>   
+<h5 style = "text-align:left;color: #64a3d8;font-size:90%;"> {{=len(lenComms)}} comments</h5>
+</div>
+<p>
+{{for comment in comms:}}
+{{commStudent=db.auth_user(comment.user_id)}}
+<div style="text-align:center">
+    <i style = "text-align:center;color: #cc6600;">User: {{=A(string.capwords(commStudent.first_name+' '+commStudent.last_name), _href=URL('userProfile','showProfile',args=[commStudent.id], vars=dict(controller=request.controller,function=request.function,args=request.args)))}}
+    Time: {{=comment.datetime}}</i>
+</div>
 
-    <li> <font size="2" color="blue">comment: </font>{{=comm.body}}[{{=A('Edit Comment', _href=URL('editComment', args=comm.id))}}]</li>
-    {{pass}}
+<div class ="well" style="background:#2c2a35;">
+    <table style="width:88%; ">
+        <tr bgcolor="#184343">
+        <td>
+        <ul style="list-style-type:none">
+            <li><div style="font-family:verdana;font-size:100%;color:#ffd9b3;">
+                <p>{{=comment.body}}</p>
+                </div>
+            {{replies = db(db.forumCommReply.comm_id==comment.id).select(db.forumCommReply.ALL, orderby=~db.forumCommReply.datetime)}}
+            {{for reply in replies:}}
+            {{replyStudent=db.auth_user(reply.user_id)}}
+            <table style="width:90%; ">
+                <tr bgcolor="#1a3936">
+                <td>
+                        <h4 style = "text-align:left;color: #cc6600;font-size:120%;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{=(replyStudent.first_name+' '+replyStudent.last_name)}}</h4> 
+                        <h5 style = "text-align:left;color: #64a3d8;font-size:80%;">- {{=reply.datetime}}</h5>
+                    <div class="panel-body" style="font-family:verdana;font-size:100%;color:#ffd9b3;">
+                        &nbsp;&nbsp;
+                        {{=reply.body}}
+                    </div>
+                </td>
+                <br>
+                </tr>
+            </table> 
+            {{pass}} 
+            </li>
+        </ul>
+
+        <div style="text-align:right">
+        <p><b>{{=A('reply', _class='btn btn-link', _href=URL('replyComment',args=[comment.id, forum.id]))}}
+        {{if auth.user_id == comment.user_id:}}
+        {{=A('edit', _class='btn btn-link', _href=URL('editForumComment',args=[comment.id, forum.id]))}}</b>
+        </p>
+        </div>
+        {{pass}}
+        </td>
+        </tr>
+    </table>
+</div>
+{{pass}}
+</p>
+{{else:}}
+  <h4 style = "text-align:left;color: #cc6600;">No comments posted yet</h4>
+{{pass}}
+
 
 <br>
-<br>
-[{{=A('goback', _href=URL('generalForum'))}}]
-[{{=A('Edit This Forum!', _href=URL('editForum', args=forum.id))}}]
-[{{=A('Add New Comment!', _href=URL('addComment', args=forum.id))}}]
+
+<div style="text-align:justify">
+<h2 style = "text-align:left;color: #cc6600;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;New Post:</h2>
+<ul style="list-style-type:none">
+        <li>{{=form}}</li>
+</ul>
+</div>
+
+<div style = "text-align:right;color:#e98c3a;">
+{{if number!=0:}}
+<p>Page of {{=page+1}}/{{=number}}
+{{pass}}
+
+{{if page>1:}}
+{{=A('<<',_class="btn btn-link", _href=(URL(args=(forum.id,page-2))))}}
+{{pass}}
+{{if page>0:}}
+{{=A('<',_class="btn btn-link", _href=(URL(args=(forum.id,page-1))))}}
+{{pass}}
+
+{{if (page <= 2 and number <= 5):}}
+{{for showNum in range(0, number):}}
+{{=A(showNum+1,_class="btn btn-link", _href=(URL(args=(forum.id,showNum))))}}
+{{pass}}
+{{pass}}
+{{if (page <= 2 and number >= 5):}}
+{{for showNum in range(0, 5):}}
+{{=A(showNum+1,_class="btn btn-link", _href=(URL(args=(forum.id,showNum))))}}
+{{pass}}
+{{pass}}
+
+{{if (page+5)>(number) and page>2 and number >5:}}
+{{for showNum in range(page-count, number):}}
+{{=A(showNum+1,_class="btn btn-link", _href=(URL(args=(forum.id,showNum))))}}
+{{pass}}
+{{pass}}
+{{if (page+5)>(number) and page>2 and number <5:}}
+{{for showNum in range(0, number):}}
+{{=A(showNum+1,_class="btn btn-link", _href=(URL(args=(forum.id,showNum))))}}
+{{pass}}
+{{pass}}
+
+{{if (page >2 and (page+5) <= number):}}
+{{for showNum in range(page-2, page+3) :}}
+{{=A(showNum+1,_class="btn btn-link", _href=(URL(args=(forum.id,showNum))))}}
+{{pass}}
+{{pass}}
+
+{{if number - page>1:}}
+{{=A('>',_class="btn btn-link", _href=(URL(args=(forum.id,page+1))))}}
+{{pass}}
+{{if number - page >2:}}
+{{=A('>>',_class="btn btn-link", _href=(URL(args=(forum.id,page+2))))}}
+{{pass}}
+</div>
+
+
 </body>
 </html>
 

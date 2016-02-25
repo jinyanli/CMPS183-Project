@@ -11,7 +11,6 @@ table, th, td {
 
 <body style="background:#184343">
 <h1 style="font-family:verdana;font-size:300%;color:#ffd9b5;" >
-  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
   Welcome to UCSC Forum</h1>
 <div class = "well"  style="background:#184348">
 <table style="width:78%">
@@ -24,7 +23,14 @@ table, th, td {
     {{for forum in forums:}}
     {{student = db.auth_user(forum.user_id)}}
     {{swithColor +=1}}
+    {{numOfReplies = db(db.comm.post_id==forum.id).select()}}
+    {{lastPost = db(db.comm.post_id==forum.id).select(db.comm.ALL, orderby=~db.comm.datetime, limitby=(0,1))}}
 
+    {{if (len(lastPost) !=0):}}
+      {{for lastStudent in lastPost:}}
+       {{lastPostStudent = db.auth_user(lastStudent.user_id)}}
+      {{pass}}
+    {{pass}}
     {{if (swithColor% 2 ==1):}}
       <tr bgcolor="#f8f6df" style="font-family:verdana;font-size:100%;color:black;height:40px">
         <td>
@@ -35,8 +41,17 @@ table, th, td {
         <td><div style = "text-align:center;color: #e98c3a">
           {{=(student.first_name+' '+student.last_name)}}</div>
         </td>
-        <td></td>
-        <td></td>
+        <td>
+          {{if (len(lastPost) !=0):}}
+            <div style = "text-align:center;color:#e98c3a">
+            {{=(lastPostStudent.first_name+' '+lastPostStudent.last_name)}}</div>
+          {{else:}}
+            <div style = "text-align:center;color:#e98c3a">---</div>
+          {{pass}}
+        </td>
+        <td><div style = "text-align:center;color: #e98c3a">
+          {{=len(numOfReplies)}}</div>
+        </td>
       </tr>
     {{else:}}
       <tr bgcolor="#eff5d1" style="font-family:verdana;font-size:100%;color:black;height:40px">
@@ -46,8 +61,17 @@ table, th, td {
         <td><div style = "text-align:center;color:#e98c3a">
           {{=(student.first_name+' '+student.last_name)}}</div>
         </td>
-        <td></td>
-        <td></td>
+        <td>
+        {{if (len(lastPost) !=0):}}
+          <div style = "text-align:center;color:#e98c3a">
+          {{=(lastPostStudent.first_name+' '+lastPostStudent.last_name)}}</div>
+        {{else:}}
+          <div style = "text-align:center;color:#e98c3a">---</div>
+        {{pass}}
+        </td>
+        <td><div style = "text-align:center;color: #e98c3a">
+          {{=len(numOfReplies)}}</div>
+        </td>
       </tr>
     {{pass}}  
 
@@ -119,7 +143,3 @@ table, th, td {
 
 </body>
 
-[{{=A('Edit', _href=URL('editForum', args=forum.id))}}]
-{{= 4%2}}
-#e6f3ff
-#e6f8ff

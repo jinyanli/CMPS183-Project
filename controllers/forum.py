@@ -3,6 +3,7 @@ import math
 crud = Crud(db)
 
 POSTS_PER_PAGE = 50
+POSTS_PER_PAGE_COMM = 10
 #add a new comment!
 
 
@@ -21,7 +22,7 @@ def generalForum():
     db.post.price.writable = db.post.price.readable = False
     db.post.image.writable = db.post.image.readable = False
     #forumData = db.post(request.args(0,cast=int)) or redirect(URL('bookExchange'))
-    forums = db( db.post.price == None , db.post.status == False).select(orderby = db.post.datetime, limitby=(start,stop))
+    forums = db( db.post.price == None , db.post.status == False).select(orderby =~ db.post.datetime, limitby=(start,stop))
     return locals()
 
 def addForum():
@@ -43,37 +44,72 @@ def editForum():
     form = crud.update(db.post, forum, next=URL('showEachForum', args=request.args(0,cast=int)))
     return locals()
 
+@auth.requires_login()
 def showEachForum():
-    forum = db.post(request.args(0,cast=int)) or redirect(URL('generalForum'))
-    comms  = db(db.comm.post_id==forum.id).select(db.comm.ALL, orderby=db.comm.datetime)
-    forumimages= db(db.forumImage.post_id==forum.id).select(db.forumImage.ALL, orderby=db.forumImage.title)
-    return locals()
-
-def addComment():
-    forum = db.post(request.args(0,cast=int)) or redirect(URL('generalForum'))
+     #control the pages
+    page = request.args(1,cast=int,default=0)
+    start = page*POSTS_PER_PAGE_COMM
+    stop = start+POSTS_PER_PAGE_COMM
+    count = 0
+    forum = db.post(request.args(0,cast=int)) or redirect(URL('generalForum')) 
+    number = int(math.ceil(db(db.comm.post_id == forum.id)(db.comm.id > 0).count() /10.0))
+    if number - page <= 5:
+        count = 5-(number - page)
+       
+    #comms
+    db.comm.user_id.default = auth.user.id
     db.comm.post_id.default = forum.id
-    form = crud.create(db.comm)
+    form=SQLFORM(db.comm, record=None,
+        deletable=False, linkto=None,
+        upload=None, fields=None, labels=None,
+        col3={}, submit_button='Post comment',
+        delete_label='Check to delete:',
+        showid=True, readonly=False,
+        comments=True, keepopts=[],
+        ignore_rw=False, record_id=None,
+        formstyle='bootstrap3_stacked',
+        buttons=['submit'], separator=': ')
     if form.process().accepted:
-        redirect(URL('showEachForum', args=request.args(0,cast=int)))
+        response.flash = 'your comment is posted'
+        redirect(URL('showEachForum', args=forum.id))
+    lenComms  = db(db.comm.post_id==forum.id).select(db.comm.ALL)
+    comms  = db(db.comm.post_id==forum.id).select(db.comm.ALL, orderby=~db.comm.datetime, limitby=(start,stop))
+    forumimages= db(db.forumImage.post_id==forum.id).select(db.forumImage.ALL, orderby=db.forumImage.title)
+    #replyComments =  db.forumCommReply(request.args(0,cast=int)) or redirect(URL('generalForum')) 
     return locals()
 
-#still a issue here
-def editComment():
-    forum = db.comm(request.args(0,cast=int)).post_id #or redirect(URL('showEachForm', args=request.args(0,cast=int)))
-    comm = db.comm(request.args(0,cast=int))
-    form = SQLFORM(db.comm, comm)
-    form.add_button('back', URL('showEachForum', args = forum))
-    db.comm.id.writable=db.comm.id.readable=False
+@auth.requires_login()
+def replyComment():
+    commTableInf = db.comm(request.args(0,cast=int)) or redirect(URL('generalForum'))
+    db.forumCommReply.comm_id.default = commTableInf.id
+    db.forumCommReply.user_id.default = auth.user.id
+    form = SQLFORM(db.forumCommReply, record=None,
+        deletable=False, linkto=None,
+        upload=None, fields=None, labels=None,
+        col3={}, submit_button='Reply',
+        delete_label='Check to delete:',
+        showid=True, readonly=False,
+        comments=True, keepopts=[],
+        ignore_rw=False, record_id=None,
+        formstyle='bootstrap3_stacked',
+        buttons=['submit'], separator=': ')
     if form.process().accepted:
-        redirect(URL('showEachForum', args=forum))
+        redirect(URL('showEachForum', args=request.args(1,cast=int)))
     return locals()
+
+@auth.requires_login()
+def editForumComment():
+    editComm=db.comm(request.args(0,cast=int)) or redirect(URL('showEachForum'))
+    if auth.user_id == editComm.user_id:
+       form = crud.update(db.comm, editComm, next=URL('showEachForum', args=request.args(1,cast=int)))
+    return dict(form=form)
 
 @auth.requires_login()
 def bookExchange():
     page = request.args(0,cast=int,default=0)
     count = 0
-    start = page*POSTS_PER_PAGE
-    stop = start+POSTS_PER_PAGE
+    start = page*POSTS_PER_PAGE_COMM
+    stop = start+POSTS_PER_PAGE_COMM
     #show_all = request.args(0) == 'all'
     q = db.post
     listings = db(db.post.forumSection=='bookExchange').select(orderby =~ db.post.datetime, limitby=(start,stop))
@@ -178,7 +214,7 @@ def editBookItem():
 def editComment():
     editComm=db.comm(request.args(0,cast=int)) or redirect(URL('showBook'))
     if auth.user_id == editComm.user_id:
-       form = crud.update(db.comm, editComm, next=URL('showBook', args=request.args(0,cast=int)))
+       form = crud.update(db.comm, editComm, next=URL('showBook', args=request.args(1,cast=int)))
     return dict(form=form)
 
 @auth.requires_login()
