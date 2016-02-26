@@ -1,21 +1,34 @@
 {{  extend 'layout.html'}}
 {{import string}}
 <h2>My Messages</h2>
+<hr>
 {{for message in messages:}}
-  {{recipient=db.auth_user(message.privateMessage.recipient_id)}}
-  {{sender=db.auth_user(message.privateMessage.sender_id)}}
-  {{if auth.user_id==message.privateMessage.recipient_id:}}
-  {{username=sender.first_name+' '+sender.last_name}}
-  <p>
-    {{=A(username, _href=URL('showMessages', args=[message.privateMessage.sender_id, message.privateMessage.conversation_id]))}}
-    ({{=str(message[count])}})
-  </p>
-  {{else:}}
-  {{username=recipient.first_name+' '+recipient.last_name}}
-  <p>
-    {{=A(username, _href=URL('showMessages', args=[message.privateMessage.recipient_id, message.privateMessage.conversation_id]))}}
-    ({{=str(message[count])}})
-  </p>
+     {{recipient=db.auth_user(message.privateMessage.recipient_id)}}
+     {{sender=db.auth_user(message.privateMessage.sender_id)}}
+      {{if auth.user_id==message.privateMessage.recipient_id:}}
+      {{username=sender.first_name+' '+sender.last_name}}
+      {{user=sender}}
+       <p>
+         {{=A(username, _href=URL('showMessages', args=[message.privateMessage.sender_id, message.privateMessage.conversation_id]))}}
+         ({{=str(message[count])}})
+       </p>
+      {{else:}}
+      {{user=recipient}}
+      {{username=recipient.first_name+' '+recipient.last_name}}
+      <p>
+        {{if user.image:}}
+          <td rowspan="5"><img width="50px" src="{{=URL('default','download', args=user.image)}}" /></td>
+        {{else:}}
+          <td rowspan="5"><img width="50px" src="/SlugHero/static/images/slug.png" /></td>
+        {{pass}}
+        {{=A(username, _href=URL('showMessages', args=[message.privateMessage.recipient_id, message.privateMessage.conversation_id]))}}
+        <span class="badge">{{=str(message[count])}}</span>
+        {{lastMessage=db(db.privateMessage.conversation_id==message.privateMessage.conversation_id).select(orderby=db.privateMessage.posted_on).first()}}
+        {{whoSay=db.auth_user(lastMessage.sender_id)}}
+        <pre>{{=whoSay.first_name+' '+whoSay.last_name}} Says:{{=lastMessage.body}} </pre>
+        On {{=lastMessage.posted_on}}
+      </p>
+<hr>
 {{pass}}
 
 {{pass}}
