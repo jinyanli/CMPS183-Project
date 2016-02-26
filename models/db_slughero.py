@@ -159,12 +159,16 @@ db.define_table('courseTopicReply',
     Field('datePosted', 'datetime', readable=False, writable=False, default=request.now),
     Field('body', 'text'))
 
+db.define_table('conversation',
+    Field('user1', 'reference auth_user', readable=False, writable=False),
+    Field('user2', 'reference auth_user', readable=False, writable=False))
+
 db.define_table('privateMessage',
+    Field('conversation_id', 'reference conversation', readable=False, writable=False),
     Field('sender_id', 'reference auth_user', readable=False, writable=False),
     Field('recipient_id', 'reference auth_user', readable=False, writable=False),
     Field('posted_on', 'datetime', readable=False, writable=False, default=request.now),
     Field('body', 'text',requires=IS_NOT_EMPTY()))
-
 
 db.define_table('forumImage',
     Field('post_id', 'reference post', readable=False , writable=False),
