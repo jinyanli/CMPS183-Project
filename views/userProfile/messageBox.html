@@ -17,15 +17,19 @@
       {{username=recipient.first_name+' '+recipient.last_name}}
       <p>
         {{if user.image:}}
-          <td rowspan="5"><img width="50px" src="{{=URL('default','download', args=user.image)}}" /></td>
+        <img width="50px" src="{{=URL('default','download', args=user.image)}}" />
         {{else:}}
-          <td rowspan="5"><img width="50px" src="/SlugHero/static/images/slug.png" /></td>
+        <img width="50px" src="/SlugHero/static/images/slug.png" />
         {{pass}}
         {{=A(username, _href=URL('showMessages', args=[message.privateMessage.recipient_id, message.privateMessage.conversation_id]))}}
         <span class="badge">{{=str(message[count])}}</span>
         {{lastMessage=db(db.privateMessage.conversation_id==message.privateMessage.conversation_id).select(orderby=db.privateMessage.posted_on).first()}}
         {{whoSay=db.auth_user(lastMessage.sender_id)}}
+        {{if lastMessage.sender_id==auth.user_id:}}
+        <pre>You Says:{{=lastMessage.body}} </pre>
+        {{else:}}
         <pre>{{=whoSay.first_name+' '+whoSay.last_name}} Says:{{=lastMessage.body}} </pre>
+        {{pass}}
         On {{=lastMessage.posted_on}}
       </p>
 <hr>
