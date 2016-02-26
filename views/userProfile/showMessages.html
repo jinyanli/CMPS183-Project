@@ -1,0 +1,10 @@
+{{extend 'layout.html'}}
+{{=A('back', _class='btn btn-primary', _href=URL('messageBox',args=auth.user_id))}}
+<h1>{{=recipient.first_name+' '+recipient.last_name}}</h1>
+{{for message in messages:}}
+{{sender=db.auth_user(message.sender_id)}}
+<p><b>{{=sender.first_name}}&nbsp Says:&nbsp</b>{{=message.body}}<b>&nbsp On {{=message.posted_on}}</b></p>
+{{pass}}
+<div>
+{{=form}}
+</div>

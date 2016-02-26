@@ -1,0 +1,22 @@
+{{  extend 'layout.html'}}
+{{import string}}
+<h2>My Messages</h2>
+{{for message in messages:}}
+  {{recipient=db.auth_user(message.privateMessage.recipient_id)}}
+  {{sender=db.auth_user(message.privateMessage.sender_id)}}
+  {{if auth.user_id==message.privateMessage.recipient_id:}}
+  {{username=sender.first_name+' '+sender.last_name}}
+  <p>
+    {{=A(username, _href=URL('showMessages', args=[message.privateMessage.sender_id, message.privateMessage.conversation_id]))}}
+    ({{=str(message[count])}})
+  </p>
+  {{else:}}
+  {{username=recipient.first_name+' '+recipient.last_name}}
+  <p>
+    {{=A(username, _href=URL('showMessages', args=[message.privateMessage.recipient_id, message.privateMessage.conversation_id]))}}
+    ({{=str(message[count])}})
+  </p>
+{{pass}}
+
+{{pass}}
+{{#=messages}}
