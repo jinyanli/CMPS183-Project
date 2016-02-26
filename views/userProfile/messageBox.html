@@ -31,7 +31,7 @@
         {{else:}}
         <pre>{{=whoSay.first_name+' '+whoSay.last_name}} Says:{{=lastMessage.body}} </pre>
         {{pass}}
-        On {{=prettydate(lastMessage.posted_on, T)}}
+        {{=prettydate(lastMessage.posted_on, T)}}
       </p>
 <hr>
 {{pass}}
