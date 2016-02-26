@@ -1,4 +1,5 @@
 {{  extend 'layout.html'}}
+{{from gluon.tools import prettydate}}
 {{import string}}
 <h2>My Messages</h2>
 <hr>
@@ -30,7 +31,7 @@
         {{else:}}
         <pre>{{=whoSay.first_name+' '+whoSay.last_name}} Says:{{=lastMessage.body}} </pre>
         {{pass}}
-        On {{=lastMessage.posted_on}}
+        On {{=prettydate(lastMessage.posted_on, T)}}
       </p>
 <hr>
 {{pass}}
