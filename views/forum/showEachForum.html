@@ -54,6 +54,7 @@ h4, h5 {
 <p>
 {{for comment in comms:}}
 {{commStudent=db.auth_user(comment.user_id)}}
+
 <div style="text-align:center">
     <i style = "text-align:center;color: #cc6600;">User: {{=A(string.capwords(commStudent.first_name+' '+commStudent.last_name), _href=URL('userProfile','showProfile',args=[commStudent.id], vars=dict(controller=request.controller,function=request.function,args=request.args)))}}
     Time: {{=comment.datetime}}</i>
@@ -86,9 +87,36 @@ h4, h5 {
             {{pass}} 
             </li>
         </ul>
-
+        hehehheheehe{{=comment.id}}
+        {{db.forumCommReply.comm_id.default = comment.id}}
         <div style="text-align:right">
         <p><b>{{=A('reply', _class='btn btn-link', _href=URL('replyComment',args=[comment.id, forum.id]))}}
+            
+            <button class="btn btn-primary" data-toggle="modal" data-target="#smallModal">Send message</button>
+            <div id="smallModal" class="modal fade" tabindex="-1" role="dialog">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×SAdsadaSas</button>
+                            <h4 class="modal-title">Send message to </h4>
+                        </div>
+
+                        <div class="modal-body">
+                          {{=replyForm}}
+                          
+                          
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+
+
+
         {{if auth.user_id == comment.user_id:}}
         {{=A('edit', _class='btn btn-link', _href=URL('editForumComment',args=[comment.id, forum.id]))}}</b>
         </p>
