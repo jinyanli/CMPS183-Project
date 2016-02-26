@@ -71,7 +71,7 @@ def messageBox():
 @auth.requires_login()
 def showMessages():
     recipient=db.auth_user(request.args(0,cast=int))
-    messages=db(db.privateMessage.conversation_id==request.args(1,cast=int)).select(orderby=db.privateMessage.posted_on)
+    messages=db(db.privateMessage.conversation_id==request.args(1,cast=int)).select(orderby=~db.privateMessage.posted_on)
     db.privateMessage.sender_id.default = auth.user.id
     db.privateMessage.recipient_id.default = recipient.id
     db.privateMessage.conversation_id.default = request.args(1,cast=int)
