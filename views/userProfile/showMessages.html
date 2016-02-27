@@ -1,19 +1,17 @@
 {{extend 'layout.html'}}
+{{from gluon.tools import prettydate}}
 {{=A('back', _class='btn btn-primary', _href=URL('messageBox',args=auth.user_id))}}
 <h2>
 {{=A(string.capwords(recipient.first_name+' '+recipient.last_name), _href=URL('userProfile','showProfile',args=[recipient.id], vars=dict(controller=request.controller,function=request.function,args=request.args)))}}
 </h2>
 {{for message in messages:}}
 {{sender=db.auth_user(message.sender_id)}}
-<div class="container">
-  <div class="panel panel-default">
-    <div class="panel-body" >
+ <div class="well">
      <p><b>{{=sender.first_name}}&nbsp Says:&nbsp</b>
-       <pre>{{=message.body}}</pre>
-       <b>&nbsp On {{=message.posted_on}}</b></p>
-    </div>
+      {{=message.body}}
+       <b>&nbsp {{=prettydate(message.posted_on, T)}}</b></p>
   </div>
-</div>
+
 
 {{pass}}
 <div>
