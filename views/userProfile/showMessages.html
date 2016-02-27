@@ -6,15 +6,12 @@
 </h2>
 {{for message in messages:}}
 {{sender=db.auth_user(message.sender_id)}}
-<div class="container">
-  <div class="panel panel-default">
-    <div class="panel-body" >
+ <div class="well">
      <p><b>{{=sender.first_name}}&nbsp Says:&nbsp</b>
-       <pre>{{=message.body}}</pre>
+      {{=message.body}}
        <b>&nbsp {{=prettydate(message.posted_on, T)}}</b></p>
-    </div>
   </div>
-</div>
+
 
 {{pass}}
 <div>

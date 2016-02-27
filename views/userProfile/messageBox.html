@@ -4,19 +4,16 @@
 <h2>My Messages</h2>
 <hr>
 {{for message in messages:}}
-     {{recipient=db.auth_user(message.privateMessage.recipient_id)}}
-     {{sender=db.auth_user(message.privateMessage.sender_id)}}
+      {{recipient=db.auth_user(message.privateMessage.recipient_id)}}
+      {{sender=db.auth_user(message.privateMessage.sender_id)}}
       {{if auth.user_id==message.privateMessage.recipient_id:}}
       {{username=sender.first_name+' '+sender.last_name}}
       {{user=sender}}
-       <p>
-         {{=A(username, _href=URL('showMessages', args=[message.privateMessage.sender_id, message.privateMessage.conversation_id]))}}
-         ({{=str(message[count])}})
-       </p>
       {{else:}}
       {{user=recipient}}
       {{username=recipient.first_name+' '+recipient.last_name}}
-      <p>
+      {{pass}}
+      <div>
         {{if user.image:}}
         <img width="50px" src="{{=URL('default','download', args=user.image)}}" />
         {{else:}}
@@ -24,15 +21,17 @@
         {{pass}}
         {{=A(username, _href=URL('showMessages', args=[message.privateMessage.recipient_id, message.privateMessage.conversation_id]))}}
         <span class="badge">{{=str(message[count])}}</span>
-        {{lastMessage=db(db.privateMessage.conversation_id==message.privateMessage.conversation_id).select(orderby=db.privateMessage.posted_on).first()}}
+
+        {{lastMessage=db(db.privateMessage.conversation_id==message.privateMessage.conversation_id).select(orderby=~db.privateMessage.posted_on).first()}}
         {{whoSay=db.auth_user(lastMessage.sender_id)}}
         {{if lastMessage.sender_id==auth.user_id:}}
-        <pre>You Says:{{=lastMessage.body}} </pre>
+             <pre>You says:{{=lastMessage.body}} </pre>
         {{else:}}
-        <pre>{{=whoSay.first_name+' '+whoSay.last_name}} Says:{{=lastMessage.body}} </pre>
+             <pre>{{=whoSay.first_name+' '+whoSay.last_name}} says:{{=lastMessage.body}} </pre>
         {{pass}}
+
         {{=prettydate(lastMessage.posted_on, T)}}
-      </p>
+      </div>
 <hr>
 {{pass}}
 
