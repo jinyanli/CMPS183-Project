@@ -1,0 +1,101 @@
+{{extend 'layout.html'}}
+<div>
+    <ul class="breadcrumb" style="background-color:white; border-style: none;">
+        <li >{{=A('List of Professors', _href=URL('showProfessor'))}}</li>
+        <li class="active"><a href="#">Professor Review</a></li>
+    </ul>
+</div>
+{{import string}}
+{{name="%s %s" % (prof.first_name, prof.last_name)}}
+{{if auth.user:}}
+{{=A('edit', _class='btn btn-primary', _href=URL('professorEdit',args=[prof.id], vars=dict(currentPage=request.function)))}}
+{{pass}}
+<table>
+   <tr>
+     <td rowspan="4">
+      {{if prof.image:}}
+         <img width="150px" src="{{=URL('default','download', args=prof.image)}}" />
+      {{pass}}
+   </td>
+     <td><h3><b>&nbsp;{{=string.capwords(name)}}</b></h3><td>
+   </tr>
+   <tr>
+     <td><h5><b>&nbsp;Department:&nbsp;{{=dept}}</b></h5></td>
+   </tr>
+   <tr>
+     {{if prof.saltiness:
+       saltiness="%.1f" % (5-prof.saltiness)
+       else:
+       saltiness='None'
+       pass}}
+     <td><h5><b>&nbsp;Saltiness:&nbsp;</b>{{=saltiness}}/5</h5></td>
+   </tr>
+   <tr>
+     <td>
+         <h5>
+           {{
+             if helpfulness:
+                helpfulness="%.1f" % (helpfulness)
+             pass
+             if clarity:
+                clarity="%.1f" % (clarity)
+             pass
+             if easiness:
+                easiness="%.1f" % (easiness)
+             pass
+           }}
+            <b>&nbsp;Helpfulness:&nbsp;</b>{{=helpfulness}}
+            <b>&nbsp;Clarity:&nbsp;</b>{{=clarity}}
+            <b>&nbsp;Easiness:&nbsp;</b>{{=easiness}}
+        </h5>
+     </td>
+   </tr>
+</table>
+{{if auth.user:}}
+<h2><b>{{=A('Post A Review', _href=URL('postProfessorReview', args=prof.id))}}</b></h2>
+{{#=form}}
+{{else:}}
+<h2><b>{{=A('Log In To Post A review', _href=URL('default', 'user', args='login',vars=dict(_next=URL(args=request.args, vars=request.vars))))}}</b></h2>
+{{pass}}
+<table class = "table table-bordered">
+<tbody>
+  <thead>
+   <tr>
+      <th>Rating</th>
+      <th>Class</th>
+      <th>Comment</th>
+   </tr>
+</thead>
+{{for review in reviews:}}
+{{student=db.auth_user(review.user_id)}}
+     <tr>
+       <td>
+          <p><b>Helpfulness:&nbsp;</b>{{=review.helpfulness}}</p>
+          <p><b>Clarity:&nbsp;</b>{{=review.clarity}}</p>
+          <p><b>Easiness:&nbsp;</b>{{=review.easiness}}</p>
+          <p><b>Overall Rating:&nbsp;</b>{{="%.1f" % review.rating}}/5</p>
+       </td>
+       <td>
+         <p>{{student=db.auth_user(review.user_id)}}</p>
+         <p><b>Cousre:&nbsp;</b>{{=deptname.upper()}}&nbsp;{{=db.course(review.course_id).course_num}}</p><p><b>Term:</b>{{=review.quarter}}{{=review.yr}}</p>
+       </td>
+       <td>
+         <p><b>{{=A(string.capwords(student.first_name+' '+student.last_name), _href=URL('userProfile','showProfile',args=[student.id], vars=dict(controller=request.controller,function=request.function,args=request.args)))}}&nbsp;says:</b></p>
+         {{=review.review}}
+         <p><b>Posted On:&nbsp;</b>{{=review.datetime}}</p>
+         {{if auth.user_id == review.user_id:}}
+         <p><b>{{=A('edit', _class='btn btn-primary', _href=URL('editProfessorReview',args=[review.id, prof.id]))}}</b></p>
+         {{pass}}
+       </td>
+    </tr>
+{{pass}}
+  </tbody>
+</table>
+<p>Page {{=page+1}} of {{=numOfPage}}</p>
+{{if page>0:}}
+{{=A('previous',_class="btn btn-info", _href=(URL(request.function, args=(prof.id, page-1))))}}
+{{pass}}
+
+{{if len(reviews)>=10:}}
+{{=A('next',_class="btn btn-info", _href=(URL(request.function, args=(prof.id, page+1))))}}
+{{pass}}

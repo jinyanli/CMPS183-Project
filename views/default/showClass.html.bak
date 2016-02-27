@@ -1,34 +1,26 @@
 {{extend 'layout.html'}}
-<<<<<<< HEAD
-<h2>List of Classes of Course {{=uClass.name}}</h2>
+<h2>List of Classes for {{=deslugify(db.department[uClass.department_id].short_name).upper()}} {{=uClass.course_num}} {{=deslugify(uClass.name)}}</h2>
 
 <table>
   {{for aClass in info:}}
-  {{className=uClass.name+' '+aClass.quarter+' '+str(aClass.yr)}}
+  {{if aClass.quarter == "1":}}
+  {{className=deslugify(uClass.name)+' '+ fall +' '+str(aClass.yr)}}
+  {{elif aClass.quarter == "2":}}
+  {{className=deslugify(uClass.name)+' '+ winter +' '+str(aClass.yr)}}
+  {{elif aClass.quarter == "3":}}
+  {{className=deslugify(uClass.name)+' '+ spring + ' '+str(aClass.yr)}}
+  {{else:}}
+  {{className=deslugify(uClass.name)+' '+ summer + ' '+str(aClass.yr)}}
+  {{pass}}
   <tr>
-    <td>{{=A(className,_href=URL('classPage',args=aClass.id))}}</td>
-    &nbsp
-    <td>{{=A('edit',_href=URL('editClass',args=aClass.id))}}</td>
+    <td>{{=A(className, _href=URL('classPage',args=aClass.id))}}</td>
+    <td width="50" style="text-align:right">{{=A('edit', _href=URL('editClass',args=aClass.id))}}</td>
   </tr>
   {{pass}}
   <tr>
-    <td>{{=A('add a class',_href=URL('createClass',args=uClass.id))}}</td>
+    <td>{{=A('Add A Class',_href=URL('createClass',args=uClass.id))}}</td>
     <td></td>
   </tr>
 </table>
-=======
-{{classShort = db.department[ucscClass.department_id]}}
-{{=A('Back To Courses', _href=URL('show', args=ucscClass.department_id))}}
-<h1>{{=classShort.short_name}} {{=ucscClass.course_num}}: {{=ucscClass.name}}</h1>
 
-<div style="text-align:center">
-    {{=A('Add Class', _href=URL('addClass', args=ucscClass.id))}}
-</div>
-
-<ul>
-    {{for uclass in info:}}
-    {{term = uclass.quarter + " " + uclass.year}}
-    {{=LI(A(term, _href=URL("class", args=uclass.id)))}}
-    {{pass}}
-</ul>
->>>>>>> bbde310c8a1d249f3facdd19c028b4e1a49b1cf6
+<i>See what people are discussing about {{=A(deslugify(uClass.name), _href=URL('viewCourseTopic', args=uClass.id))}}</i>

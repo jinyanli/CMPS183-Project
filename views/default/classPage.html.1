@@ -1,0 +1,108 @@
+{{extend 'layout.html'}}
+{{=A('Back To All ' + deslugify(db.course[thisClass.course_id].name), _href=URL('showClass', args=db.course[thisClass.course_id].id))}}
+
+<div style="text-align:center">
+{{if thisClass.quarter == "1":}}
+<h1>{{=deslugify(db.course[thisClass.course_id].name)}}: {{=fall}} {{=thisClass.yr}}</h1>
+{{elif thisClass.quarter == "2":}}
+<h1>{{=deslugify(db.course[thisClass.course_id].name)}}: {{=winter}} {{=thisClass.yr}}</h1>
+{{elif thisClass.quarter == "3":}}
+<h1>{{=deslugify(db.course[thisClass.course_id].name)}}: {{=spring}} {{=thisClass.yr}}</h1>
+{{else:}}
+<h1>{{=deslugify(db.course[thisClass.course_id].name)}}: {{=summer}} {{=thisClass.yr}}</h1>
+{{pass}}
+</div>
+{{if thisClass.professor_id is None:}}
+{{=A('add Professor', _class='btn btn-primary', _href=URL('classPageAddProfessor', args=thisClass.id))}}
+{{pass}}
+<div class="col-md-2">
+<table cellpadding="10" style="float: left">
+<tr><td width="150">
+    <form action="{{=URL('professor','professorReview', args=thisClass.professor_id)}}">
+        {{if thisClass.professor_id != None:}}
+        <img width="100px" src="{{=URL('default','download', args=db.professor(thisClass.professor_id).image)}}" alt="Professor's Pic"><br/>
+        <p>{{=syllabus}}</p>
+        <input type="submit" name="view_prof" value="Reviews">
+        {{else:}}
+        <b>Add A Professor For the Class</b>
+        {{pass}}
+    </form></td>
+    </tr>
+    <tr><td>{{=A('Forum',_href=URL('forum', 'generalForum'))}}</td></tr>
+    <tr><td>{{=A('Notes',_href=URL('classPage', args=[thisClass.id]))}}</td></tr>
+    <tr><td>{{=A('Textbook',_href=URL('forum', 'bookExchange', args=[thisClass.textbook_ids]))}}</td></tr>
+    </table></div>
+{{if user is None:}}
+<table>
+<tr><td width="170">&nbsp;</td><td>You must be logged in to post a review</td></tr>
+</table>
+{{else:}}
+<div class="col-md-6">
+<form action="{{=URL('classPage', args=[thisClass.id])}}" method="POST">
+    <table>
+    <tr><td rowspan="5"><textarea name="body" cols="50" rows="6">Enter Your Review Here</textarea></td><td>&nbsp;</td>
+        <td>Year:<input type="text" name="yr" value="2016"/></td></tr>
+    <tr><td>&nbsp;</td><td>Term:<select name="quarter">
+        <option value="1">Fall</option><option value="2">Winter</option><option value="3">Spring</option><option value="4">Summer</option>
+        </select></td></tr>
+    <tr><td>&nbsp;</td><td>Difficulty: <input type="text" name="difficulty" /></td></tr>
+    <tr><td>&nbsp;</td><td>Enjoyment: <input type="text" name="enjoyment" /></td></tr>
+    <tr><td>&nbsp;</td><td>Grade: <select name="grade">
+    <option>A+</option><option>A</option><option>A-</option><option>B+</option><option>B</option><option>B-</option><option>C+</option><option>C</option><option>C-</option><option>D+</option><option>D</option><option>D-</option><option>F</option><option>P</option><option>NP</option>
+    </select></td></tr>
+    <tr><td><input type="submit" value="Submit" /></td></tr></table>
+    <input type="hidden" name="_formname" value="postReview"/>
+    {{if thisClassProfessor != None:}}
+    {{for review in classReviews:}}
+    <table cellpadding="10" >
+    <tr><td width="50"><b>
+        {{if review.quarter == "1":}}
+        {{=fall}}
+        {{elif review.quarter == "2":}}
+        {{=winter}}
+        {{elif review.quarter == "3":}}
+        {{=spring}}
+        {{else:}}
+        {{=summer}}
+        {{pass}}
+        </b></td><td width="100"><b>{{=review.yr}}</b></td>
+        <td width="120"><b>Difficulty: {{=review.difficulty}}</b></td><td><b>Enjoyment: {{=review.enjoyment}}</b></td></tr>
+<tr><td colspan="4">{{=review.body}}</td></tr>
+<tr><td>&nbsp;</td><td>-{{=user.first_name}} {{=user.last_name}}</td></tr>
+<tr><td>&nbsp;</td></tr>
+</table>
+{{pass}}
+{{pass}}
+    </div>
+{{pass}}
+<div class="col-md-4" id="chartContainer" style="height: 300px; width: 25%;"></div>
+</form>
+<script src="/SlugHero/static/js/canvasjs.min.js"></script>
+<script type="text/javascript">
+
+window.onload = function () {
+	var chart = new CanvasJS.Chart("chartContainer", {
+		theme: "theme2",//theme1
+		title:{
+			text: "Course Grade Distribution"
+		},
+		animationEnabled: true,   // change to true
+		data: [
+		{
+			// Change type to "bar", "area", "spline", "pie",etc.
+			type: "column",
+			dataPoints: [
+				{ label: "A",  y: {{=gradeA}}  },
+				{ label: "B", y: {{=gradeB}}  },
+				{ label: "C", y: {{=gradeC}}  },
+				{ label: "D",  y: {{=gradeD}}  },
+				{ label: "F",  y: {{=gradeF}}  },
+                { label: "P", y: {{=gradeP}}  },
+                { label: "NP", y: {{=gradeNP}} }
+			]
+		}
+		]
+	});
+	chart.render();
+}
+</script>
