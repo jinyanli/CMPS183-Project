@@ -50,6 +50,8 @@ def showEachForum():
     start = page*POSTS_PER_PAGE_COMM
     stop = start+POSTS_PER_PAGE_COMM
     count = 0
+    Cid=0
+    commDict={}
     forum = db.post(request.args(0,cast=int)) or redirect(URL('generalForum')) 
     number = int(math.ceil(db(db.comm.post_id == forum.id)(db.comm.id > 0).count() /10.0))
     if number - page <= 5:
@@ -81,6 +83,7 @@ def showEachForum():
 
     #commTableInf = db.comm(request.args(0,cast=int)) or redirect(URL('generalForum'))
     #db.forumCommReply.comm_id.default = commTableInf.id
+
     db.forumCommReply.user_id.default = auth.user.id
     replyForm = SQLFORM(db.forumCommReply, record=None,
         deletable=False, linkto=None,
@@ -94,7 +97,7 @@ def showEachForum():
         buttons=['submit'], separator=': ')
     if replyForm.process().accepted:
         commIdreply = db(db.forumCommReply.id == replyForm.vars.id).select().first()
-        commIdreply.update_record(comm_id = session.myCommid)
+        commIdreply.update_record(comm_id = session.myCommi)
         redirect(URL('showEachForum', args=request.args(0,cast=int)))
     return locals()
 
