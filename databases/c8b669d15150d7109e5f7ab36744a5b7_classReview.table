@@ -94,20 +94,20 @@ p27
 (dp28
 S'sortable'
 p29
-I4
+L4L
 sS'sql'
 p30
 S'INTEGER REFERENCES professor (id) ON DELETE CASCADE  '
 p31
 sS'length'
 p32
-I512
+L512L
 sS'notnull'
 p33
-I00
+L0L
 sS'unique'
 p34
-I00
+L0L
 sS'type'
 p35
 S'reference professor'
