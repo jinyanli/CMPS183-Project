@@ -54,6 +54,9 @@ h4, h5 {
 <p>
 {{for comment in comms:}}
 {{commStudent=db.auth_user(comment.user_id)}}
+{{Cid+=1}}
+{{commDict[Cid]= comment.id}}
+{{=commDict[Cid]}}
 
 <div style="text-align:center">
     <i style = "text-align:center;color: #cc6600;">User: {{=A(string.capwords(commStudent.first_name+' '+commStudent.last_name), _href=URL('userProfile','showProfile',args=[commStudent.id], vars=dict(controller=request.controller,function=request.function,args=request.args)))}}
@@ -87,6 +90,7 @@ h4, h5 {
             {{pass}} 
             </li>
         </ul>
+        {{=Cid}})
         {{=comment.id}}
         <div style="text-align:right">
 
@@ -94,8 +98,7 @@ h4, h5 {
             {{=A('edit', _class='btn btn-link', _href=URL('editForumComment',args=[comment.id, forum.id]))}}
             {{pass}}
             
-            {{=comment.id}}
-            <a class="btn btn-link" data-toggle="modal" data-target="#smallModal">reply</a>
+            <ap id ="{{=comment.id}}" class="btn btn-link" data-toggle="modal" data-target="#smallModal" onclick"">reply</ap>
 
             <div id="smallModal" class="modal fade" tabindex="-1" role="dialog">
                 <div class="modal-dialog" >
@@ -106,7 +109,7 @@ h4, h5 {
                         </div>
 
                         <div class="modal-body">
-                            {{session.myCommid = comment.id}}
+                            
                             {{=replyForm.custom.begin}}
                             <div style = "text-align:left;color: #cc6600;font-size:220%;">Reply:{{=replyForm.custom.widget.body}}</div>
                             {{=replyForm.custom.submit}}
@@ -203,14 +206,29 @@ $(document).ready(function() {
         $('DIV.one').html(img).show();
     });
 });
+
+$(document).ready(function(){
+    $("ap").click(function(){
+        var x= $(this).attr("id")
+        alert(x);
+        return x;        
+        //alert(session.myCommid);  
+    });
+});
+
 function bigImg(x) {
     x.style.height = "90px";
     x.style.width = "90px";
-}
+};
 
 function normalImg(x) {
     x.style.height = "70px";
     x.style.width = "70px";
-}
+};
 
+function getValue()
+  {
+  var x=document.getElementById("1");
+  return x;
+  }
 </script>
