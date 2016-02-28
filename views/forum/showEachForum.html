@@ -60,7 +60,6 @@ h4, h5 {
 {{for comment in comms:}}
 {{commStudent=db.auth_user(comment.user_id)}}
 
-
 <div style="text-align:center">
     <i style = "text-align:center;color: #cc6600;">User: {{=A(string.capwords(commStudent.first_name+' '+commStudent.last_name), _href=URL('userProfile','showProfile',args=[commStudent.id], vars=dict(controller=request.controller,function=request.function,args=request.args)))}}
     Time: {{=comment.datetime}}</i>
@@ -80,11 +79,11 @@ h4, h5 {
             <table style="width:90%; ">
                 <tr bgcolor="#1a3936">
                 <td>
-                        <h4 style = "text-align:left;color: #cc6600;font-size:120%;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{=(replyStudent.first_name+' '+replyStudent.last_name)}}</h4>
-                        <h5 style = "text-align:left;color: #64a3d8;font-size:80%;">- {{=reply.datetime}}</h5>
+                    <h4 style = "text-align:left;color: #cc6600;font-size:120%;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{=(replyStudent.first_name+' '+replyStudent.last_name)}}</h4>
+                    <h5 style = "text-align:left;color: #64a3d8;font-size:80%;">- {{=reply.datetime}}</h5>
                     <div class="panel-body" style="font-family:verdana;font-size:100%;color:#ffd9b3;">
-                        &nbsp;&nbsp;
-                        {{=reply.body}}
+                    &nbsp;&nbsp;
+                    {{=reply.body}}
                     </div>
                 </td>
                 <br>
@@ -99,14 +98,13 @@ h4, h5 {
             {{=A('edit', _class='btn btn-link', _href=URL('editForumComment',args=[comment.id, forum.id]))}}
             {{pass}}
 
-            <ap id ="{{=comment.id}}" method= "set" class="btn btn-link" data-toggle="modal" data-target="#smallModal">reply</ap>
+            <ap id ="{{=comment.id}}" class="btn btn-link" data-toggle="modal" data-target="#smallModal">reply</ap>
 
             <div id="smallModal" class="modal fade" tabindex="-1" role="dialog">
                 <div class="modal-dialog" >
                     <div class="modal-content" style="background:#1a3936;">
                       
                         <div class="modal-body">
-
                             {{=replyForm.custom.begin}}
                             <div style = "text-align:left;color: #cc6600;font-size:220%;">Reply:{{=replyForm.custom.widget.body}}</div>
                             {{=replyForm.custom.submit}}
@@ -116,7 +114,6 @@ h4, h5 {
                 </div>
             </div>
         </div>
-
         </td>
         </tr>
     </table>
@@ -126,7 +123,6 @@ h4, h5 {
 {{else:}}
   <h4 style = "text-align:left;color: #cc6600;">No comments posted yet</h4>
 {{pass}}
-
 
 <br>
 
@@ -163,12 +159,12 @@ h4, h5 {
 {{pass}}
 {{pass}}
 
-{{if (page+5)>(number) and page>2 and number >5:}}
+{{if (page+5)>(number) and page>2 and number > 5:}}
 {{for showNum in range(page-count, number):}}
 {{=A(showNum+1,_class="btn btn-link", _href=(URL(args=(forum.id,showNum))))}}
 {{pass}}
 {{pass}}
-{{if (page+5)>(number) and page>2 and number <5:}}
+{{if (page+5)>(number) and page>2 and number < 5:}}
 {{for showNum in range(0, number):}}
 {{=A(showNum+1,_class="btn btn-link", _href=(URL(args=(forum.id,showNum))))}}
 {{pass}}
