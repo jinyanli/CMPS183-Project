@@ -1,4 +1,5 @@
 {{extend 'layout.html'}}
+{{from gluon.tools import prettydate}}
 <div>
     <ul class="breadcrumb" style="background-color:white; border-style: none;">
         <li >{{=A('List of Professors', _href=URL('showProfessor'))}}</li>
@@ -82,7 +83,7 @@
        <td>
          <p><b>{{=A(string.capwords(student.first_name+' '+student.last_name), _href=URL('userProfile','showProfile',args=[student.id], vars=dict(controller=request.controller,function=request.function,args=request.args)))}}&nbsp;says:</b></p>
          {{=review.review}}
-         <p><b>Posted On:&nbsp;</b>{{=review.datetime}}</p>
+         <p><b>Posted On:&nbsp;</b>{{=prettydate(review.datetime,T)}}</p>
          {{if auth.user_id == review.user_id:}}
          <p><b>{{=A('edit', _class='btn btn-primary', _href=URL('editProfessorReview',args=[review.id, prof.id]))}}</b></p>
          {{pass}}

@@ -173,6 +173,8 @@ def deslugify(_slug):
     return string.capwords(_slug.replace('-', ' '))
 
 def testpage():
+    data=request.args(0)
+    data2=request.args(1)
     form=FORM('Your name:',
               INPUT(_name='name', requires=IS_NOT_EMPTY()),
               INPUT(_type='submit'))
@@ -184,7 +186,7 @@ def testpage():
     else:
         response.flash = 'please fill the form'
     A=30
-    return dict(form=form, A=A)
+    return dict(form=form, A=A,data=data,data2=data2)
 
 def viewCourseTopic():
     uCourse = db.course(request.args(0, cast=int)) or redirect(URL('index'))

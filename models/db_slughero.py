@@ -70,8 +70,12 @@ db.define_table('post',
     Field('price', 'integer'), # price is in cents (eg 4000 -> $40)
     Field('status','boolean', default=False),
     Field('datetime', 'datetime', readable=False,writable=False,default=request.now),
+    Field('update_time', 'datetime', readable=False,writable=False,default=request.now),
     Field('image', 'upload'),
     format = '%(title)s')
+
+#UPDATE db['post'] SET update_time = datetime
+
 #db['comm'].drop()
 #db.commit()
 #comment is a resevered key word. Can't be used
@@ -159,12 +163,16 @@ db.define_table('courseTopicReply',
     Field('datePosted', 'datetime', readable=False, writable=False, default=request.now),
     Field('body', 'text'))
 
+db.define_table('conversation',
+    Field('user1', 'reference auth_user', readable=False, writable=False),
+    Field('user2', 'reference auth_user', readable=False, writable=False))
+
 db.define_table('privateMessage',
+    Field('conversation_id', 'reference conversation', readable=False, writable=False),
     Field('sender_id', 'reference auth_user', readable=False, writable=False),
     Field('recipient_id', 'reference auth_user', readable=False, writable=False),
     Field('posted_on', 'datetime', readable=False, writable=False, default=request.now),
     Field('body', 'text',requires=IS_NOT_EMPTY()))
-
 
 db.define_table('forumImage',
     Field('post_id', 'reference post', readable=False , writable=False),

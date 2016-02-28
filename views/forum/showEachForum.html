@@ -17,7 +17,7 @@ h4, h5 {
   display: inline;
 }​
 </style>
-{{=len(lenComms)}}
+
 <body style="background:#2c2a35; ">
 <div  class ='well' style="background:#2c2a35;">
 <table  style="width:88%; ">
@@ -34,26 +34,34 @@ h4, h5 {
         </td>
     </tr>
     {{forumimages}}
-    <tr bgcolor="#184343" style="height:80px">
-    <td><div class="one" id="one" style = "text-align:center"></div>
+    {{if len(forumimages): }}
+     <tr bgcolor="#184343" style="height:80px">
+     <td><div class="one" id="one" style = "text-align:center"> <img class="fullImage" src="{{=URL('download', args=forumimages[0].image)}}" /></div>
         <br>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         {{for image in forumimages:}}
-          <img style= "width:70px; height:70px;" onmouseover="bigImg(this)" onmouseout="normalImg(this)" class="img-thumbnail" src="{{=URL('download', args=image.image)}}" />
+          <img id="imagesrc" style= "width:70px; height:70px;" onmouseover="bigImg(this)" onmouseout="normalImg(this)" class="img-thumbnail" src="{{=URL('download', args=image.image)}}" />
         {{pass}}
-    </td>
-    </tr>
+        {{=(A("add image", _href=URL('addForumImage', args=image.post_id)))}}
+     </td>
+
+     </tr>
+     {{pass}}
 </table>
 </div>
 
 {{if len(comms):}}
 <div class="page-header" >
-<h4 style = "font-family:Courier New;text-align:left;color: #cc6600;font-size:200%;">DISCUSS</h4>   
+<h4 style = "font-family:Courier New;text-align:left;color: #cc6600;font-size:200%;">DISCUSS</h4>
 <h5 style = "text-align:left;color: #64a3d8;font-size:90%;"> {{=len(lenComms)}} comments</h5>
 </div>
 <p>
 {{for comment in comms:}}
 {{commStudent=db.auth_user(comment.user_id)}}
+{{Cid+=1}}
+{{commDict[Cid]= comment.id}}
+{{=commDict[Cid]}}
+
 <div style="text-align:center">
     <i style = "text-align:center;color: #cc6600;">User: {{=A(string.capwords(commStudent.first_name+' '+commStudent.last_name), _href=URL('userProfile','showProfile',args=[commStudent.id], vars=dict(controller=request.controller,function=request.function,args=request.args)))}}
     Time: {{=comment.datetime}}</i>
@@ -67,13 +75,13 @@ h4, h5 {
             <li><div style="font-family:verdana;font-size:100%;color:#ffd9b3;">
                 <p>{{=comment.body}}</p>
                 </div>
-            {{replies = db(db.forumCommReply.comm_id==comment.id).select(db.forumCommReply.ALL, orderby=~db.forumCommReply.datetime)}}
+            {{replies = db(db.forumCommReply.comm_id==comment.id).select(db.forumCommReply.ALL, orderby=db.forumCommReply.datetime)}}
             {{for reply in replies:}}
             {{replyStudent=db.auth_user(reply.user_id)}}
             <table style="width:90%; ">
                 <tr bgcolor="#1a3936">
                 <td>
-                        <h4 style = "text-align:left;color: #cc6600;font-size:120%;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{=(replyStudent.first_name+' '+replyStudent.last_name)}}</h4> 
+                        <h4 style = "text-align:left;color: #cc6600;font-size:120%;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{=(replyStudent.first_name+' '+replyStudent.last_name)}}</h4>
                         <h5 style = "text-align:left;color: #64a3d8;font-size:80%;">- {{=reply.datetime}}</h5>
                     <div class="panel-body" style="font-family:verdana;font-size:100%;color:#ffd9b3;">
                         &nbsp;&nbsp;
@@ -82,18 +90,40 @@ h4, h5 {
                 </td>
                 <br>
                 </tr>
-            </table> 
-            {{pass}} 
+            </table>
+            {{pass}}
             </li>
         </ul>
-
+        {{=Cid}})
+        {{=comment.id}}
         <div style="text-align:right">
-        <p><b>{{=A('reply', _class='btn btn-link', _href=URL('replyComment',args=[comment.id, forum.id]))}}
-        {{if auth.user_id == comment.user_id:}}
-        {{=A('edit', _class='btn btn-link', _href=URL('editForumComment',args=[comment.id, forum.id]))}}</b>
-        </p>
+
+            {{if auth.user_id == comment.user_id:}}
+            {{=A('edit', _class='btn btn-link', _href=URL('editForumComment',args=[comment.id, forum.id]))}}
+            {{pass}}
+
+            <ap id ="{{=comment.id}}" class="btn btn-link" data-toggle="modal" data-target="#smallModal" onclick"">reply</ap>
+
+            <div id="smallModal" class="modal fade" tabindex="-1" role="dialog">
+                <div class="modal-dialog" >
+                    <div class="modal-content" style="background:#1a3936;">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                            <p class="modal-title" style = "text-align:right;color: #cc6600;font-size:100%;">Reply to {{=(commStudent.first_name+' '+commStudent.last_name)}} </p>
+                        </div>
+
+                        <div class="modal-body">
+
+                            {{=replyForm.custom.begin}}
+                            <div style = "text-align:left;color: #cc6600;font-size:220%;">Reply:{{=replyForm.custom.widget.body}}</div>
+                            {{=replyForm.custom.submit}}
+                            {{=replyForm.custom.end}}
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        {{pass}}
+
         </td>
         </tr>
     </table>
@@ -108,9 +138,12 @@ h4, h5 {
 <br>
 
 <div style="text-align:justify">
-<h2 style = "text-align:left;color: #cc6600;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;New Post:</h2>
 <ul style="list-style-type:none">
-        <li>{{=form}}</li>
+        <li>{{=form.custom.begin}}
+            <div style = "text-align:left;color: #cc6600;font-size:220%;">New Post:{{=form.custom.widget.body}}</div>
+            {{=form.custom.submit}}
+            {{=form.custom.end}}
+        </li>
 </ul>
 </div>
 
@@ -166,9 +199,10 @@ h4, h5 {
 </body>
 </html>
 
+
 <script>
 $(document).ready(function() {
-    
+
     $('.img-thumbnail').on('click', function() {
         var img = $('<img />', {src    : this.src,
                                 'class': 'fullImage'
@@ -177,14 +211,29 @@ $(document).ready(function() {
         $('DIV.one').html(img).show();
     });
 });
+
+$(document).ready(function(){
+    $("ap").click(function(){
+        var x= $(this).attr("id")
+        alert(x);
+        return x;
+        //alert(session.myCommid);
+    });
+});
+
 function bigImg(x) {
     x.style.height = "90px";
     x.style.width = "90px";
-}
+};
 
 function normalImg(x) {
     x.style.height = "70px";
     x.style.width = "70px";
-}
+};
 
+function getValue()
+  {
+  var x=document.getElementById("1");
+  return x;
+  }
 </script>
