@@ -12,7 +12,7 @@ def generalForum():
     count = 0
     swithColor = 1
     start = page*POSTS_PER_PAGE
-    stop = start+POSTS_PER_PAGE    
+    stop = start+POSTS_PER_PAGE
     number = int(math.ceil(db(db.post.forumSection=='forum')(db.post.id > 0).count() /50.0))
     if number - page <= 5:
         count = 5-(number - page)
@@ -43,6 +43,16 @@ def editForum():
     form = crud.update(db.post, forum, next=URL('showEachForum', args=request.args(0,cast=int)))
     return locals()
 
+def addForumImage():
+    post_id= request.args(0,cast=int)
+    db.forumImage.post_id.default=post_id
+    form =SQLFORM(db.forumImage)
+    if form.process().accepted:
+        redirect(URL('showEachForum', args=post_id))
+    return locals()
+
+
+
 @auth.requires_login()
 def showEachForum():
      #control the pages
@@ -52,11 +62,11 @@ def showEachForum():
     count = 0
     Cid=0
     commDict={}
-    forum = db.post(request.args(0,cast=int)) or redirect(URL('generalForum')) 
+    forum = db.post(request.args(0,cast=int)) or redirect(URL('generalForum'))
     number = int(math.ceil(db(db.comm.post_id == forum.id)(db.comm.id > 0).count() /10.0))
     if number - page <= 5:
         count = 5-(number - page)
-       
+
     #comms
     db.comm.user_id.default = auth.user.id
     db.comm.post_id.default = forum.id

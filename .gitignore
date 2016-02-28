@@ -24,3 +24,4 @@ databases/sql.log
 progress.log
 databases/sql.log
 *.log
+*.log
