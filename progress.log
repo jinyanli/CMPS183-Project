@@ -1022,3 +1022,7 @@
 >>>>>>> master
 [2016-02-25 18:30:00] CREATE _userProfile/messages.html: 0
 [2016-02-25 20:03:07] CREATE userProfile/showMessages.html: 0
+[2016-02-27 15:31:46] CREATE forum/addForumImage.html: 0
+[2016-02-27 15:32:19] EDIT SlugHero/views/forum/addForumImage.html: 0
+[2016-02-27 15:32:48] EDIT SlugHero/views/forum/addForumImage.html: 0
+[2016-02-27 15:36:17] EDIT SlugHero/views/forum/addForumImage.html: 0
