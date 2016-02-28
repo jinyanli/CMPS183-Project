@@ -1,7 +1,6 @@
 from gluon.tools import Crud
 import math
-import requests
-import json
+
 crud = Crud(db)
 
 POSTS_PER_PAGE = 50
@@ -22,7 +21,6 @@ def generalForum():
     db.post.status.writable = db.post.status.readable = False
     db.post.price.writable = db.post.price.readable = False
     db.post.image.writable = db.post.image.readable = False
-    #forumData = db.post(request.args(0,cast=int)) or redirect(URL('bookExchange'))
     forums = db( db.post.price == None , db.post.status == False).select(orderby =~ db.post.update_time, limitby=(start,stop))
     return locals()
 
@@ -91,10 +89,6 @@ def showEachForum():
     lenComms  = db(db.comm.post_id==forum.id).select(db.comm.ALL)
     comms  = db(db.comm.post_id==forum.id).select(db.comm.ALL, orderby=db.comm.datetime, limitby=(start,stop))
     forumimages= db(db.forumImage.post_id==forum.id).select(db.forumImage.ALL, orderby=db.forumImage.title)
-    #replyComments =  db.forumCommReply(request.args(0,cast=int)) or redirect(URL('generalForum'))
-
-    #commTableInf = db.comm(request.args(0,cast=int)) or redirect(URL('generalForum'))
-    #db.forumCommReply.comm_id.default = commTableInf.id
 
     db.forumCommReply.user_id.default = auth.user.id
     replyForm = SQLFORM(db.forumCommReply, record=None,
@@ -112,14 +106,9 @@ def showEachForum():
             print request.post_vars
             session.myCommid = int(request.post_vars["x"])
 
-
-
     if replyForm.process().accepted:
         commIdreply = db(db.forumCommReply.id == replyForm.vars.id).select().first()
-        ##print "int:"+ str(intSetId)
         commIdreply.update_record(comm_id = session.myCommid)
-        #commIdreply.update_record(comm_id = session.myCommid) 
-        ##commIdreply.update_record(comm_id = setId)
         redirect(URL('showEachForum', args=request.args(0,cast=int)))
 
     return locals()
