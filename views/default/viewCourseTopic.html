@@ -23,6 +23,7 @@
         <th>&nbsp;&nbsp;&nbsp;OP</th>
         <th>&nbsp;&nbsp;&nbsp;Last Reply</th>
         <th>&nbsp;&nbsp;&nbsp;Replies</th>
+        <th>&nbsp;&nbsp;&nbsp;Course Taken</th>
      </tr> 
     {{for topic in info:}}
       {{op = db.auth_user[topic.op]}}
@@ -34,26 +35,31 @@
           </font>
         </td>
         <td>
-          <p style = "text-align:center;color: #e98c3a">
+          <p style="text-align:center;color: #e98c3a">
             {{=A(name, _href=URL('userProfile','showProfile',args=[op.id], 
             vars=dict(controller=request.controller,function=request.function,args=request.args)))}}
           </p>
         </td>
         <td>
           {{if topic.replies != 0:}}
-            <p style = "text-align:center;color:#e98c3a">
+            <p style="text-align:center;color:#e98c3a">
               {{lastPostedBy=db(db.courseReply.topic_id==topic.id).select(db.courseReply.ALL, orderby=~db.courseReply.datePosted, limitby=(0,1))}}
               {{=db.auth_user[lastPostedBy[0].replyOp].first_name + " " + db.auth_user[lastPostedBy[0].replyOp].last_name}}
             </p>
           {{else:}}
-            <p style = "text-align:center;color:#e98c3a">
+            <p style="text-align:center;color:#e98c3a">
               ---
             </p>
             {{pass}}
         </td>
         <td>
-          <p style = "text-align:center;color: #e98c3a">
+          <p style="text-align:center;color: #e98c3a">
             {{=topic.replies}}
+          </p>
+        </td>
+        <td>
+            <p class="text-capitalize" style="text-align:center;color: #e98c3a">
+            {{=topic.quarter}} {{=topic.yr}}
           </p>
         </td>
       </tr>
