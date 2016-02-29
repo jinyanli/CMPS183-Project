@@ -36,7 +36,12 @@ h4, h5 {
 		        		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		        		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		        		<i>
-		        			{{=name}} Date Posted: {{=topic.datePosted.strftime("%d, %b %Y %I:%M %p")}}
+		        			{{=A(name, _href=URL('userProfile','showProfile',args=[op.id], 
+		    				vars=dict(controller=request.controller,function=request.function,args=request.args)))}}
+		    			 	posted on {{=topic.datePosted.strftime("%d, %b %Y %I:%M %p")}}
+		        		</i>
+		        		<br>
+		        		<i>
 		        		</i>
 		        	</div>
 		        </th>
@@ -69,6 +74,9 @@ h4, h5 {
 		    <i style = "text-align:center;color: #cc6600;">
 		    	Student: {{=A(replyOp, _href=URL('userProfile','showProfile',args=[reply.replyOp], 
 		    			vars=dict(controller=request.controller,function=request.function,args=request.args)))}}
+		    </i>
+		    <br>
+		    <i style = "text-align:center;color: #cc6600;">
 		    	Posted: {{=reply.datePosted.strftime("%d, %b %Y %I:%M %p")}}
 			</i>
 		</div>
