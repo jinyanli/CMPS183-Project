@@ -1,5 +1,7 @@
 from gluon.tools import Crud
 import math
+import requests
+import json
 crud = Crud(db)
 
 POSTS_PER_PAGE = 50
@@ -105,10 +107,21 @@ def showEachForum():
         ignore_rw=False, record_id=None,
         formstyle='bootstrap3_stacked',
         buttons=['submit'], separator=': ')
+    if request.env.request_method == 'POST':
+        if "x" in request.post_vars.keys():
+            print request.post_vars
+            session.myCommid = int(request.post_vars["x"])
+
+
+
     if replyForm.process().accepted:
         commIdreply = db(db.forumCommReply.id == replyForm.vars.id).select().first()
+        ##print "int:"+ str(intSetId)
         commIdreply.update_record(comm_id = session.myCommid)
+        #commIdreply.update_record(comm_id = session.myCommid) 
+        ##commIdreply.update_record(comm_id = setId)
         redirect(URL('showEachForum', args=request.args(0,cast=int)))
+
     return locals()
 
 @auth.requires_login()
