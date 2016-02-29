@@ -106,7 +106,7 @@ h4, h5 {
 					                	</h4>
 		                				<h5 style = "text-align:left;color: #64a3d8;font-size:80%;">
 		                					- {{=qr.datePosted.strftime("%d, %b %Y %I:%M %p")}}
-											{{if op.id==auth.user_id:}}
+											{{if qr.replyOp == auth.user_id:}}
 			        							&nbsp;&nbsp;
 												{{=A('Edit', _href=URL("edit_post", "edit_reply_reply", args=[qr.id, topic.id]))}}
 											{{pass}}
