@@ -1,42 +1,120 @@
 {{extend 'layout.html'}}
 
-{{=A('Back', _href=URL('default', 'viewCourseTopic', args=topic.board_id))}}
+<font style="font-family:verdana;font-size:120%;color:#ffd9b5;height:50px">
+	{{=A('Back', _href=URL('default', 'viewCourseTopic', args=topic.board_id))}}
+</font>
+{{op = db.auth_user[topic.op]}}
+{{name = op.first_name+ " " +op.last_name}}
 
-<div class="container">
-	<div class="panel-group">
-		<div class="panel panel-default">
-	    	<div class="panel-heading">
-	    		<h2><p class="text-primary text-capitalize">{{=db.auth_user[topic.op].first_name}}: {{=topic.title}}</p></h2>
-	        	{{=topic.datePosted.strftime("%d, %b %Y %I:%M %p")}}
-	        </div>
-	        <div class="panel-body">
-	        	{{=topic.body}}
-	        </div>
-	        <div class="panel-footer">
-	        	<p class="text-capitalize">{{=A('Reply', _href=URL('create', 'createReply', args=topic.id))}}</p>
-	        </div>
-		</div>
+<style>
+table, th, td {
+    border: 1px solid gray;
+    border-color: #488089 #488089 #3d4b52 #488089;
+    border-collapse: collapse;
+    margin: 0 auto;
+}
+
+h4, h5 {
+  width: 50%;
+  height: 60px;
+  margin: 0;
+  padding: 0;
+  display: inline;
+}​
+</style>
+
+<body style="background:#2c2a35; ">
+	<div class ='well' style="background:#2c2a35;">
+		<table style="width:88%;">
+			<tr bgcolor="#184343" size="6" style="font-family:verdana;font-size:90%;color:white;height:90px">
+		        <th >
+		        	<div style="font-family:verdana;font-size:200%;color:#ffd9b3;" >
+		        		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		        		{{=topic.title}}
+		        	</div>
+		        	<div style = "text-align:left;color: #cc6600;font-size:90%;">
+		        		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		        		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		        		<i>
+		        			{{=A(name, _href=URL('userProfile','showProfile',args=[op.id], 
+		    				vars=dict(controller=request.controller,function=request.function,args=request.args)))}}
+		    			 	posted on {{=topic.datePosted.strftime("%d, %b %Y %I:%M %p")}}
+		        		</i>
+		        		<br>
+		        		<i>
+		        		</i>
+		        	</div>
+		        </th>
+		    </tr>
+		    <tr bgcolor="#184343" size="6" style="height:250px">
+		        <td  valign="top" style="text-align:char;">
+		        	<div style="font-family:verdana;font-size:100%;color:#ffd9b3;" >
+		        		<p>
+		        			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		        			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		        			{{=topic.body}}
+		        		</p>
+		        	</div>
+		        </td>
+    		</tr>
+    	</table>
 	</div>
-	
+</body>    
+
+{{if topic.replies != 0:}}
+	<div class="page-header" >
+		<h4 style = "font-family:Courier New;text-align:left;color: #cc6600;font-size:200%;">
+			Comments:
+		</h4>
+	</div>
 	{{replies = db(db.courseReply.topic_id==topic.id).select()}}
 	{{for reply in replies:}}
-		<div class="panel-group">
-			<div class="panel panel-default">
-				<div class="panel-heading">
-					{{=db.auth_user[reply.replyOp].first_name}}<br>
-					{{=reply.datePosted.strftime("%d, %b %Y %I:%M %p")}}
-				</div>
-				<div class="panel-body">
-					{{=reply.body}}
-				</div>
-				<div class="panel-footer">
-					<p class="text-capitalize">{{=A('Quick Reply', _href=URL('create', 'createReplyReply', args=reply.id))}}</p>
-					{{quickReplies = db(db.courseTopicReply.topic_id==reply.id).select()}}
-					{{for qr in quickReplies:}}
-						<p class="text-capitalize">{{=db.auth_user[qr.replyOp].first_name}}: {{=qr.body}}</p>
-					{{pass}}
-				</div>
-			</div>
+		{{replyOp = db.auth_user[reply.replyOp].first_name + " " + db.auth_user[reply.replyOp].last_name}}
+		<div style="text-align:center">
+		    <i style = "text-align:center;color: #cc6600;">
+		    	Student: {{=A(replyOp, _href=URL('userProfile','showProfile',args=[reply.replyOp], 
+		    			vars=dict(controller=request.controller,function=request.function,args=request.args)))}}
+		    </i>
+		    <br>
+		    <i style = "text-align:center;color: #cc6600;">
+		    	Posted: {{=reply.datePosted.strftime("%d, %b %Y %I:%M %p")}}
+			</i>
 		</div>
-	{{pass}}
-</div>
+		<div class ="well" style="background:#2c2a35;">
+    		<table style="width:88%; ">
+       			<tr bgcolor="#184343">
+       				<td>
+						<p style="font-family:verdana;font-size:100%;color:#ffd9b3;">
+							{{=reply.body}}
+						</p>
+						{{quickReplies = db(db.courseTopicReply.topic_id==reply.id).select()}}
+						{{for qr in quickReplies:}}
+						{{replyOp = db.auth_user[qr.replyOp].first_name + " " + db.auth_user[qr.replyOp].last_name}}
+						<table style="width:90%; ">
+			                <tr bgcolor="#1a3936">
+				                <td>
+				                	<h4 style = "text-align:left;color: #cc6600;font-size:120%;">
+				                		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				                		{{=A(replyOp, _href=URL('userProfile','showProfile',args=[qr.replyOp], 
+		    								vars=dict(controller=request.controller,function=request.function,args=request.args)))}}
+				                	</h4>
+	                				<h5 style = "text-align:left;color: #64a3d8;font-size:80%;">
+	                					- {{=qr.datePosted.strftime("%d, %b %Y %I:%M %p")}}
+	                				</h5>
+										<div class="panel-body" style="font-family:verdana;font-size:100%;color:#ffd9b3;">
+	               							&nbsp;&nbsp;
+	                						{{=qr.body}}
+	            						</div>
+	        					</td>
+	        				</tr>
+	        			</table>
+						{{pass}}
+						<p style="font-family:verdana;font-size:100%;color:#ffd9b3;" class="text-right">
+							{{=A('Quick Reply', _href=URL('create', 'createReplyReply', args=reply.id))}}
+						</p>
+       				</td>
+       			</tr>
+       		</table>
+       	</div>
+    {{pass}}
+{{pass}}
