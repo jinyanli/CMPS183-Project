@@ -191,7 +191,7 @@ def testpage():
 def viewCourseTopic():
     uCourse = db.course(request.args(0, cast=int)) or redirect(URL('index'))
     table = db(db.courseTopic.board_id==uCourse.id)
-    info = db(db.courseTopic.board_id==uCourse.id).select()
+    info = db(db.courseTopic.board_id==uCourse.id).select(orderby=~db.courseTopic.datePosted)
 
     if len(request.args): 
         page=int(request.args[0])
