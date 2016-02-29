@@ -1,23 +1,76 @@
 {{extend 'layout.html'}}
-{{=A('Back', _href=URL('default', 'showClass', args=uCourse.id))}}
+<font style="font-family:verdana;font-size:120%;color:#ffd9b5;height:50px">
+  {{=A('Back', _href=URL('default', 'showClass', args=uCourse.id))}}
+</font>
 
-<div class="container">
-  <h2>{{=deslugify(uCourse.name)}}</h2>
-  <p>{{=A('Create New Topic', _href=URL('create','createTopic', args=uCourse.id))}}</p>
-  {{for topic in info:}}
-    <div class="panel-group">
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h2><p class="text-primary text-capitalize">{{=db.auth_user[topic.op].first_name}}: {{=topic.quarter}} {{=topic.yr}}</p></h2>
-          {{=topic.datePosted.strftime("%d, %b %Y %I:%M %p")}}
-		  <br>
-          <p class="text-capitalize">
-          	{{=A(topic.title, _href=URL('show','showTopic', args=topic.id))}}
-          	<br>
-         	Replies: {{=topic.replies}}
-         </p>
-        </div> 
-      </div>
-    </div>
-  {{pass}}
-</div>
+<style>
+  table, th, td {
+      border: 1px solid gray;
+      border-color: #184343 #184340 #f8f6df #184348;
+      border-collapse: collapse;
+      margin: 0 auto;
+  }
+</style>
+
+<body style="background:#184343">
+  <div class = "well"  style="background:#184348">
+    <h2 style="font-family:verdana;font-size:300%;color:#ffd9b5;">
+      {{=deslugify(uCourse.name)}}
+    </h2>
+    <table style="width:78%">
+    <tr bgcolor="#2c2a30" style="font-family:geneva;font-size:120%;color:#ffd9b9;height:50px">
+        <th>&nbsp;&nbsp;&nbsp;Thread</th>
+        <th>&nbsp;&nbsp;&nbsp;OP</th>
+        <th>&nbsp;&nbsp;&nbsp;Last Reply</th>
+        <th>&nbsp;&nbsp;&nbsp;Replies</th>
+     </tr> 
+    {{for topic in info:}}
+      {{op = db.auth_user[topic.op]}}
+      {{name = op.first_name+ " " +op.last_name}}
+      <tr bgcolor="#f8f6df" style="font-family:verdana;font-size:100%;color:black;height:40px">
+        <td>
+          <font style="color:#black;">
+            &nbsp;&nbsp;{{=A(topic.title, _href=URL('show','showTopic', args=topic.id))}}
+          </font>
+        </td>
+        <td>
+          <p style = "text-align:center;color: #e98c3a">
+            {{=A(name, _href=URL('userProfile','showProfile',args=[op.id], 
+            vars=dict(controller=request.controller,function=request.function,args=request.args)))}}
+          </p>
+        </td>
+        <td>
+          {{if topic.replies != 0:}}
+            <p style = "text-align:center;color:#e98c3a">
+              {{lastPostedBy=db(db.courseReply.topic_id==topic.id).select(db.courseReply.ALL, orderby=~db.courseReply.datePosted, limitby=(0,1))}}
+              {{=db.auth_user[lastPostedBy[0].replyOp].first_name + " " + db.auth_user[lastPostedBy[0].replyOp].last_name}}
+            </p>
+          {{else:}}
+            <p style = "text-align:center;color:#e98c3a">
+              ---
+            </p>
+            {{pass}}
+        </td>
+        <td>
+          <p style = "text-align:center;color: #e98c3a">
+            {{=topic.replies}}
+          </p>
+        </td>
+      </tr>
+    {{pass}}
+    </table>
+  </div>
+
+{{if (auth.user_id == None):}}
+  <div style = "text-align:right">
+    <font style="font-size:100%;">
+      <i>{{=A('Login to Create A Discussion',_href=URL('default','user'))}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i>
+    </font>
+  </div>
+{{else:}}
+  <div style = "text-align:right">
+  {{=A('Create A Discussion',  _class="btn btn-primary", _href=URL('create', 'createTopic', args=uCourse.id))}}
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  </div>
+{{pass}}
+</body>
