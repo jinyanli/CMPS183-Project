@@ -1,5 +1,6 @@
 {{extend 'layout.html'}}
 {{student = db.auth_user(forum.user_id)}}
+
 <html lang="en">
 <style>
 table, th, td {
@@ -58,9 +59,6 @@ h4, h5 {
 <p>
 {{for comment in comms:}}
 {{commStudent=db.auth_user(comment.user_id)}}
-{{Cid+=1}}
-{{commDict[Cid]= comment.id}}
-{{=commDict[Cid]}}
 
 <div style="text-align:center">
     <i style = "text-align:center;color: #cc6600;">User: {{=A(string.capwords(commStudent.first_name+' '+commStudent.last_name), _href=URL('userProfile','showProfile',args=[commStudent.id], vars=dict(controller=request.controller,function=request.function,args=request.args)))}}
@@ -81,11 +79,11 @@ h4, h5 {
             <table style="width:90%; ">
                 <tr bgcolor="#1a3936">
                 <td>
-                        <h4 style = "text-align:left;color: #cc6600;font-size:120%;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{=(replyStudent.first_name+' '+replyStudent.last_name)}}</h4>
-                        <h5 style = "text-align:left;color: #64a3d8;font-size:80%;">- {{=reply.datetime}}</h5>
+                    <h4 style = "text-align:left;color: #cc6600;font-size:120%;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{=(replyStudent.first_name+' '+replyStudent.last_name)}}</h4>
+                    <h5 style = "text-align:left;color: #64a3d8;font-size:80%;">- {{=reply.datetime}}</h5>
                     <div class="panel-body" style="font-family:verdana;font-size:100%;color:#ffd9b3;">
-                        &nbsp;&nbsp;
-                        {{=reply.body}}
+                    &nbsp;&nbsp;
+                    {{=reply.body}}
                     </div>
                 </td>
                 <br>
@@ -94,26 +92,19 @@ h4, h5 {
             {{pass}}
             </li>
         </ul>
-        {{=Cid}})
-        {{=comment.id}}
         <div style="text-align:right">
 
             {{if auth.user_id == comment.user_id:}}
             {{=A('edit', _class='btn btn-link', _href=URL('editForumComment',args=[comment.id, forum.id]))}}
             {{pass}}
 
-            <ap id ="{{=comment.id}}" class="btn btn-link" data-toggle="modal" data-target="#smallModal" onclick"">reply</ap>
+            <ap id ="{{=comment.id}}" class="btn btn-link" data-toggle="modal" data-target="#smallModal">reply</ap>
 
             <div id="smallModal" class="modal fade" tabindex="-1" role="dialog">
                 <div class="modal-dialog" >
                     <div class="modal-content" style="background:#1a3936;">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                            <p class="modal-title" style = "text-align:right;color: #cc6600;font-size:100%;">Reply to {{=(commStudent.first_name+' '+commStudent.last_name)}} </p>
-                        </div>
-
+                      
                         <div class="modal-body">
-
                             {{=replyForm.custom.begin}}
                             <div style = "text-align:left;color: #cc6600;font-size:220%;">Reply:{{=replyForm.custom.widget.body}}</div>
                             {{=replyForm.custom.submit}}
@@ -123,7 +114,6 @@ h4, h5 {
                 </div>
             </div>
         </div>
-
         </td>
         </tr>
     </table>
@@ -133,7 +123,6 @@ h4, h5 {
 {{else:}}
   <h4 style = "text-align:left;color: #cc6600;">No comments posted yet</h4>
 {{pass}}
-
 
 <br>
 
@@ -170,12 +159,12 @@ h4, h5 {
 {{pass}}
 {{pass}}
 
-{{if (page+5)>(number) and page>2 and number >5:}}
+{{if (page+5)>(number) and page>2 and number > 5:}}
 {{for showNum in range(page-count, number):}}
 {{=A(showNum+1,_class="btn btn-link", _href=(URL(args=(forum.id,showNum))))}}
 {{pass}}
 {{pass}}
-{{if (page+5)>(number) and page>2 and number <5:}}
+{{if (page+5)>(number) and page>2 and number < 5:}}
 {{for showNum in range(0, number):}}
 {{=A(showNum+1,_class="btn btn-link", _href=(URL(args=(forum.id,showNum))))}}
 {{pass}}
@@ -201,6 +190,7 @@ h4, h5 {
 
 
 <script>
+var x ;
 $(document).ready(function() {
 
     $('.img-thumbnail').on('click', function() {
@@ -212,12 +202,28 @@ $(document).ready(function() {
     });
 });
 
+function getValue(){
+    var id = {"x":x};
+    var pathname = window.location.pathname; 
+    $.ajax({
+        type: "POST",
+        url: pathname,
+        data: id,
+        async: false,
+        success: function (data){
+            console.log("ajax in show-resize success");
+        },
+        error: function (data){
+            console.log("ajax in show-resize failed");
+        }
+    });
+    //window.alert(pathname);
+}
+
 $(document).ready(function(){
     $("ap").click(function(){
-        var x= $(this).attr("id")
-        alert(x);
-        return x;
-        //alert(session.myCommid);
+        x = $(this).attr("id")
+        getValue();
     });
 });
 
@@ -230,10 +236,4 @@ function normalImg(x) {
     x.style.height = "70px";
     x.style.width = "70px";
 };
-
-function getValue()
-  {
-  var x=document.getElementById("1");
-  return x;
-  }
 </script>
