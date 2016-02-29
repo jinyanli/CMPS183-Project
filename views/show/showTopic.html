@@ -39,9 +39,12 @@ h4, h5 {
 		        			{{=A(name, _href=URL('userProfile','showProfile',args=[op.id], 
 		    				vars=dict(controller=request.controller,function=request.function,args=request.args)))}}
 		    			 	posted on {{=topic.datePosted.strftime("%d, %b %Y %I:%M %p")}}
-		        		</i>
-		        		<br>
-		        		<i>
+		    			 	{{if op.id==auth.user_id:}}
+			                	<br>
+			                	<p class="text-right">
+			                		{{=A('Edit your post!', _href=URL("edit_post", "edit_post", args=topic.id))}}
+			                	</p>
+			            	{{pass}}
 		        		</i>
 		        	</div>
 		        </th>
@@ -59,62 +62,119 @@ h4, h5 {
     		</tr>
     	</table>
 	</div>
-</body>    
-
-{{if topic.replies != 0:}}
-	<div class="page-header" >
-		<h4 style = "font-family:Courier New;text-align:left;color: #cc6600;font-size:200%;">
-			Comments:
-		</h4>
-	</div>
-	{{replies = db(db.courseReply.topic_id==topic.id).select()}}
-	{{for reply in replies:}}
-		{{replyOp = db.auth_user[reply.replyOp].first_name + " " + db.auth_user[reply.replyOp].last_name}}
-		<div style="text-align:center">
-		    <i style = "text-align:center;color: #cc6600;">
-		    	Student: {{=A(replyOp, _href=URL('userProfile','showProfile',args=[reply.replyOp], 
-		    			vars=dict(controller=request.controller,function=request.function,args=request.args)))}}
-		    </i>
-		    <br>
-		    <i style = "text-align:center;color: #cc6600;">
-		    	Posted: {{=reply.datePosted.strftime("%d, %b %Y %I:%M %p")}}
-			</i>
+   
+	{{if topic.replies != 0:}}
+		<div class="page-header" >
+			<h4 style = "font-family:Courier New;text-align:left;color: #cc6600;font-size:200%;">
+				Comments:
+			</h4>
 		</div>
-		<div class ="well" style="background:#2c2a35;">
-    		<table style="width:88%; ">
-       			<tr bgcolor="#184343">
-       				<td>
-						<p style="font-family:verdana;font-size:100%;color:#ffd9b3;">
-							{{=reply.body}}
-						</p>
-						{{quickReplies = db(db.courseTopicReply.topic_id==reply.id).select()}}
-						{{for qr in quickReplies:}}
-						{{replyOp = db.auth_user[qr.replyOp].first_name + " " + db.auth_user[qr.replyOp].last_name}}
-						<table style="width:90%; ">
-			                <tr bgcolor="#1a3936">
-				                <td>
-				                	<h4 style = "text-align:left;color: #cc6600;font-size:120%;">
-				                		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				                		{{=A(replyOp, _href=URL('userProfile','showProfile',args=[qr.replyOp], 
-		    								vars=dict(controller=request.controller,function=request.function,args=request.args)))}}
-				                	</h4>
-	                				<h5 style = "text-align:left;color: #64a3d8;font-size:80%;">
-	                					- {{=qr.datePosted.strftime("%d, %b %Y %I:%M %p")}}
-	                				</h5>
-										<div class="panel-body" style="font-family:verdana;font-size:100%;color:#ffd9b3;">
-	               							&nbsp;&nbsp;
-	                						{{=qr.body}}
-	            						</div>
-	        					</td>
-	        				</tr>
-	        			</table>
-						{{pass}}
-						<p style="font-family:verdana;font-size:100%;color:#ffd9b3;" class="text-right">
-							{{=A('Quick Reply', _href=URL('create', 'createReplyReply', args=reply.id))}}
-						</p>
-       				</td>
-       			</tr>
-       		</table>
-       	</div>
-    {{pass}}
-{{pass}}
+		{{replies = db(db.courseReply.topic_id==topic.id).select(orderby=~db.courseReply.datePosted)}}
+		{{for reply in replies:}}
+			{{replyOp = db.auth_user[reply.replyOp].first_name + " " + db.auth_user[reply.replyOp].last_name}}
+			<div style="text-align:center">
+			    <i style = "text-align:center;color: #cc6600;">
+			    	Student: {{=A(replyOp, _href=URL('userProfile','showProfile',args=[reply.replyOp], 
+			    			vars=dict(controller=request.controller,function=request.function,args=request.args)))}}
+			    	{{if op.id==auth.user_id:}}
+			        	&nbsp;&nbsp;
+			        	{{=A('Edit', _href=URL("edit_post", "edit_reply", args=[reply.id, topic.id]))}}
+			        {{pass}}
+			    </i>
+			    <br>
+			    <i style = "text-align:center;color: #cc6600;">
+			    	Posted: {{=reply.datePosted.strftime("%d, %b %Y %I:%M %p")}}
+				</i>
+			</div>
+			<div class ="well" style="background:#2c2a35;">
+	    		<table style="width:88%; ">
+	       			<tr bgcolor="#184343">
+	       				<td>
+							<p style="font-family:verdana;font-size:100%;color:#ffd9b3;">
+								{{=reply.body}}
+							</p>
+							{{quickReplies = db(db.courseTopicReply.topic_id==reply.id).select()}}
+							{{for qr in quickReplies:}}
+							{{replyOp = db.auth_user[qr.replyOp].first_name + " " + db.auth_user[qr.replyOp].last_name}}
+							<table style="width:90%; ">
+				                <tr bgcolor="#1a3936">
+					                <td>
+					                	<h4 style = "text-align:left;color: #cc6600;font-size:120%;">
+					                		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					                		{{=A(replyOp, _href=URL('userProfile','showProfile',args=[qr.replyOp], 
+			    								vars=dict(controller=request.controller,function=request.function,args=request.args)))}}
+					                	</h4>
+		                				<h5 style = "text-align:left;color: #64a3d8;font-size:80%;">
+		                					- {{=qr.datePosted.strftime("%d, %b %Y %I:%M %p")}}
+											{{if op.id==auth.user_id:}}
+			        							&nbsp;&nbsp;
+												{{=A('Edit', _href=URL("edit_post", "edit_reply_reply", args=[qr.id, topic.id]))}}
+											{{pass}}
+		                				</h5>
+											<div class="panel-body" style="font-family:verdana;font-size:100%;color:#ffd9b3;">
+		               							&nbsp;&nbsp;
+		                						{{=qr.body}}
+		            						</div>
+		        					</td>
+		        				</tr>
+		        			</table>
+							{{pass}}
+							<p style="font-family:verdana;font-size:100%;color:#ffd9b3;" class="text-right">
+								<ap id ="{{=reply.id}}" class="btn btn-link" data-toggle="modal" data-target="#smallModal">Quick Reply</ap>
+					            <div id="smallModal" class="modal fade" tabindex="-1" role="dialog">
+					                <div class="modal-dialog" >
+					                    <div class="modal-content" style="background:#1a3936;">
+					                        <div class="modal-body">
+					                            {{=replyForm.custom.begin}}
+					                            <div style = "text-align:left;color: #cc6600;font-size:220%;">Reply:{{=replyForm.custom.widget.body}}</div>
+					                            {{=replyForm.custom.submit}}
+					                            {{=replyForm.custom.end}}
+					                        </div>
+					                    </div>
+					                </div>
+					            </div>
+							</p>
+	       				</td>
+	       			</tr>
+	       		</table>
+	       	</div>
+	    {{pass}}
+	{{pass}}
+	<div style="text-align:justify">
+		<ul style="list-style-type:none">
+	        <li>{{=form.custom.begin}}
+	            <div style = "text-align:left;color: #cc6600;font-size:220%;">New Post:{{=form.custom.widget.body}}</div>
+	            {{=form.custom.submit}}
+	            {{=form.custom.end}}
+	        </li>
+		</ul>
+	</div>
+</body> 
+
+
+<script>
+	function getValue(){
+	    var id = {"x":x};
+	    var pathname = window.location.pathname; 
+	    $.ajax({
+	        type: "POST",
+	        url: pathname,
+	        data: id,
+	        async: false,
+	        success: function (data){
+	            console.log("ajax in show-resize success");
+	        },
+	        error: function (data){
+	            console.log("ajax in show-resize failed");
+	        }
+	    });
+	    //window.alert(pathname);
+	}
+
+	$(document).ready(function(){
+    	$("ap").click(function(){
+	        x = $(this).attr("id")
+	        getValue();
+    	});
+	});
+</script>
