@@ -39,9 +39,10 @@ h4, h5 {
 		        			{{=A(name, _href=URL('userProfile','showProfile',args=[op.id], 
 		    				vars=dict(controller=request.controller,function=request.function,args=request.args)))}}
 		    			 	posted on {{=topic.datePosted.strftime("%d, %b %Y %I:%M %p")}}
-		        		</i>
-		        		<br>
-		        		<i>
+		    			 	{{if user.id==auth.user_id:}}
+			                	<br>
+			                	{{=A('Edit your post!', _href=URL("edit_post", args=[listing.id, page]))}}
+			            	{{pass}}
 		        		</i>
 		        	</div>
 		        </th>
