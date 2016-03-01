@@ -90,7 +90,7 @@
         </b></td><td width="100"><b>{{=review.yr}}</b></td>
         <td width="120"><b>Difficulty: {{=review.difficulty}}</b></td><td><b>Enjoyment: {{=review.enjoyment}}</b></td></tr>
 <tr><td colspan="4">{{=review.body}}</td></tr>
-<tr><td>&nbsp;</td><td>{{=A("-" + deslugify(db.auth_user[review.user_id].first_name), _href=URL('#', args=db.auth_user[review.user_id].id))}}
+<tr><td>&nbsp;</td><td>{{=A("-" + deslugify(db.auth_user[review.user_id].first_name), _href=URL('userProfile', 'showProfile', args=db.auth_user[review.user_id].id))}}
 </td></tr>
 <tr><td>&nbsp;</td></tr>
 </table>
