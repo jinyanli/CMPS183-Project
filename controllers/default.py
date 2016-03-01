@@ -26,19 +26,42 @@ def showClass():
     return locals()
 
 def classPage():
-    thisClass = db.ucscClass(request.args(0, cast=int)) or redirect(URL('index'))
+    thisClass = db.ucscClass(request.args(0, cast=int)) or redirect(URL('showCourse'))
     courseInfo = db.course(thisClass.course_id)
     thisClassProfessor=db.professor(thisClass.professor_id)
     professors = db(db.professor.department_id==courseInfo.department_id).select(db.professor.ALL, orderby=db.professor.id)
-    classReviews = db(db.classReview.ucscClass_id==thisClass.id).select()
-    profReviews = db(db.profReview.professor_id==thisClass.professor_id).select()
-    """
-    reviews = []
-    for cRev in classReviews:
-        for pRev in profReviews:
-            if cRev.id == pRev.id:
-                reviews.append(pRev)
-    """
+    classReviews = None
+    if thisClassProfessor != None:
+        db.classReview.professor_id.default = thisClassProfessor
+        classReviews = db(db.classReview.professor_id==thisClassProfessor.id).select(db.classReview.ALL, orderby=~db.classReview.yr|~db.classReview.quarter)
+    if classReviews != None:
+        gradeA = db((db.classReview.ucscClass_id==thisClass.id) & (db.classReview.grade=="A-")|(db.classReview.grade=="A")|(db.classReview.grade=="A+")).count()
+        gradeB = db((db.classReview.ucscClass_id==thisClass.id) & (db.classReview.grade=="B-")|(db.classReview.grade=="B")|(db.classReview.grade=="B+")).count()
+        gradeC = db((db.classReview.ucscClass_id==thisClass.id) & (db.classReview.grade=="C-")|(db.classReview.grade=="C")|(db.classReview.grade=="C+")).count()
+        gradeD = db((db.classReview.ucscClass_id==thisClass.id) & (db.classReview.grade=="D-")|(db.classReview.grade=="D")|(db.classReview.grade=="D+")).count()
+        gradeF = db((db.classReview.ucscClass_id==thisClass.id) & (db.classReview.grade=="F")).count()
+        gradeP = db((db.classReview.ucscClass_id==thisClass.id) & (db.classReview.grade=="P")).count()
+        gradeNP = db((db.classReview.ucscClass_id==thisClass.id) & (db.classReview.grade=="NP")).count()
+    else:
+        gradeA = gradeB = gradeC = gradeD = gradeF = gradeP = gradeNP = 0
+    fall = "Fall"
+    winter = "Winter"
+    spring = "Spring"
+    summer = "Summer"
+    user = auth.user
+    syllabus = thisClass.syllabus
+    if user != None:
+        db.classReview.user_id.default = auth.user.id
+    db.classReview.ucscClass_id.default = thisClass.id
+    form = SQLFORM(db.classReview)
+    if form.process(session=None, formname='postReview').accepted:
+        response.flash = 'review accepted'
+        redirect(URL('classPage', args=request.args(0,cast=int)))
+    elif form.errors:
+        response.flash = 'Error: your submission is incomplete'
+    else:
+        if user != None:
+            response.flash = 'You may fill in the form to post a review'
     return locals()
 
 
@@ -86,6 +109,10 @@ def showCourse():
 def showClass():
     uClass = db.course(request.args(0, cast=int)) or redirect(URL('index'))
     info = db(db.ucscClass.course_id==uClass.id).select(orderby=db.ucscClass.yr | db.ucscClass.quarter)
+    fall = "Fall"
+    winter = "Winter"
+    spring = "Spring"
+    summer = "Summer"
     return locals()
 
 def check_term(form):

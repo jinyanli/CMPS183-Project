@@ -3,10 +3,18 @@
 
 <table>
   {{for aClass in info:}}
-  {{className=deslugify(uClass.name)+' '+deslugify(aClass.quarter)+' '+str(aClass.yr)}}
+  {{if aClass.quarter == "1":}}
+  {{className=deslugify(uClass.name)+' '+ fall +' '+str(aClass.yr)}}
+  {{elif aClass.quarter == "2":}}
+  {{className=deslugify(uClass.name)+' '+ winter +' '+str(aClass.yr)}}
+  {{elif aClass.quarter == "3":}}
+  {{className=deslugify(uClass.name)+' '+ spring + ' '+str(aClass.yr)}}
+  {{else:}}
+  {{className=deslugify(uClass.name)+' '+ summer + ' '+str(aClass.yr)}}
+  {{pass}}
   <tr>
     <td>{{=A(className, _href=URL('classPage',args=aClass.id))}}</td>
-    <td>{{=A('edit', _href=URL('editClass',args=aClass.id))}}</td>
+    <td width="50" style="text-align:right">{{=A('edit', _href=URL('editClass',args=aClass.id))}}</td>
   </tr>
   {{pass}}
   <tr>
