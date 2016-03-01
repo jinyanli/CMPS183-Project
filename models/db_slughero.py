@@ -55,11 +55,14 @@ db.define_table('classReview',
     Field('ucscClass_id', 'reference  ucscClass', readable=False, writable=False),
     Field('professor_id', 'reference professor', readable=False, writable=False),
     Field('body', 'text', update=True),
-    Field('quarter', requires=IS_IN_SET(['Fall', 'Winter', 'Spring', 'Summer'])),
+    Field('quarter', requires=IS_IN_SET([1,2,3,4])),
     Field('yr', requires=IS_INT_IN_RANGE(2000, 2051)),
     Field('difficulty', 'double'),
     Field('enjoyment', 'double'),
+    Field('grade'),
     Field('datetime', 'datetime', readable=False,writable=False, default=request.now))
+gradeRange=['A+', 'A', 'A-', 'B+', 'B', 'B-', 'C+', 'C', 'C-', 'D', 'F', 'P', 'NP']
+db.classReview.grade.requires = IS_IN_SET(gradeRange)
 
 db.define_table('post',
     Field('ucscClass_id', 'reference ucscClass', readable=False, writable=False),
