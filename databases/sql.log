@@ -12819,3 +12819,221 @@ success!
 success!
 success!
 success!
+success!
+timestamp: 2016-03-01T17:23:22.963848
+ALTER TABLE note ADD notetype CHAR(512);
+success!
+timestamp: 2016-03-01T17:25:41.770130
+ALTER TABLE note ADD notetype CHAR(512);
+success!
+timestamp: 2016-03-01T17:26:33.946040
+ALTER TABLE note ADD notetype CHAR(512);
+success!
+timestamp: 2016-03-01T17:27:28.938699
+CREATE TABLE note(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    title CHAR(512),
+    notefile CHAR(512),
+    notetype CHAR(512),
+    user_id INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  ,
+    course_id INTEGER REFERENCES course (id) ON DELETE CASCADE  ,
+    datetime TIMESTAMP
+);
+success!
+timestamp: 2016-03-01T17:29:57.574525
+CREATE TABLE note(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    title CHAR(512),
+    notefile CHAR(512),
+    notetype CHAR(512),
+    user_id INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  ,
+    course_id INTEGER REFERENCES course (id) ON DELETE CASCADE  ,
+    datetime TIMESTAMP
+);
+success!
+timestamp: 2016-03-01T17:30:19.596702
+CREATE TABLE note(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    title CHAR(512),
+    notefile CHAR(512),
+    notetype CHAR(512),
+    user_id INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  ,
+    course_id INTEGER REFERENCES course (id) ON DELETE CASCADE  ,
+    datetime TIMESTAMP
+);
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!

@@ -1,7 +1,12 @@
 {{extend 'layout.html'}}
-<h2>List of Courses in Department {{=dept.name}}</h2>
-
-<table>
+<div class="row">
+    <h2 class="col-md-8 pull-left">List of Courses in Department {{=dept.name}}</h2>
+    <div class="h2 pull-right">
+        {{=A('add course', _class='btn btn-success',
+             _href=URL('createCourse'))}}
+    </div>
+</div>
+<table class="table" style="margin-top: 20px; width: 60%;">
   {{for course in courses:}}
     {{courseName=dept.short_name+course.course_num}}
   <tr>
@@ -10,9 +15,7 @@
   </tr>
   {{pass}}
   <tr>
-    <td>{{=A('add course', _class="btn btn-success", _href=URL('courseCreate', args=dept.id))}}</td>
-  </tr>
-  <tr>
-    <td>{{#=A('add professor', _class="btn btn-success", _href=URL('professorCreate', args=dept.id))}}</td>
+    <td></td>
+    <td></td>
   </tr>
 </table>

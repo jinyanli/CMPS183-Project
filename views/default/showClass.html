@@ -1,8 +1,9 @@
 {{extend 'layout.html'}}
-<<<<<<< HEAD
 {{longname = deslugify(uClass.name)}}
 <div class="row">
-    <h2 class="col-md-8 pull-left">List of Classes for Course {{=EM(longname)}}</h2>
+    <h2 class="col-md-8 pull-left">
+        List of Classes for {{=deslugify(db.department[uClass.department_id].short_name).upper()}} {{=uClass.course_num}} {{=deslugify(uClass.name)}}
+    </h2>
     <div class="h2 pull-right">
         {{=A('add a class', _class='btn btn-success',
              _href=URL('createClass',args=uClass.id))}}
@@ -13,46 +14,23 @@
 
 <table class="table" style="margin-top: 20px; width: 60%;">
     <tr>
-        <th>Quarter offered</th>
-        <th>Professor</th>
-        <th></th>
+      <th>Quarter</th>
+      <th>Professor</th>
+      <th>Edit</th>
     </tr>
-
-  {{for _class in info:}}
-  {{className = "%s %d" % (_class.quarter, _class.yr)}}
-  {{prof = db.professor(_class.professor_id) or redirect(URL('index'))}}
+  {{for aClass in info:}}
+  {{quarter = "%s %d" % (aClass.quarter, aClass.yr)}}
+  {{prof = db.professor(aClass.professor_id) or redirect(URL('index'))}}
   {{prof_name = "%s %s" % (prof.first_name, prof.last_name)}}
   <tr>
-    <td>{{=A(className, _href=URL('classPage', args=_class.id))}}</td>
-    <td>{{=A(prof_name.title(), _href=URL('professorReview', args=_class.professor_id))}}</td>
-    <td>{{=A('edit', _href=URL('editClass', args=_class.id))}}</td>
+    <td>{{=A(quarter.title(), _href=URL('classPage', args=uClass.id))}}</td>
+    <td>{{=A(prof_name.title(), _href=URL('professorReview', args=aClass.professor_id))}}</td>
+    <td>{{=A('edit', _href=URL('editClass', args=uClass.id))}}</td>
   </tr>
   {{pass}}
   <tr>
+    <td>{{=A('Add a class', _href=URL('createClass',args=uClass.id))}}</td>
     <td></td>
-    <td></td>
-=======
-<h2>List of Classes for {{=deslugify(db.department[uClass.department_id].short_name).upper()}} {{=uClass.course_num}} {{=deslugify(uClass.name)}}</h2>
-
-<table>
-  {{for aClass in info:}}
-  {{if aClass.quarter == "1":}}
-  {{className=deslugify(uClass.name)+' '+ fall +' '+str(aClass.yr)}}
-  {{elif aClass.quarter == "2":}}
-  {{className=deslugify(uClass.name)+' '+ winter +' '+str(aClass.yr)}}
-  {{elif aClass.quarter == "3":}}
-  {{className=deslugify(uClass.name)+' '+ spring + ' '+str(aClass.yr)}}
-  {{else:}}
-  {{className=deslugify(uClass.name)+' '+ summer + ' '+str(aClass.yr)}}
-  {{pass}}
-  <tr>
-    <td>{{=A(className, _href=URL('classPage',args=aClass.id))}}</td>
-    <td width="50" style="text-align:right">{{=A('edit', _href=URL('editClass',args=aClass.id))}}</td>
-  </tr>
-  {{pass}}
-  <tr>
-    <td>{{=A('Add A Class',_href=URL('createClass',args=uClass.id))}}</td>
->>>>>>> master
     <td></td>
   </tr>
 </table>

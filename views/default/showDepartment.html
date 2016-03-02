@@ -1,5 +1,5 @@
 {{extend 'layout.html'}}
-<table>
+<table class="table" style="margin-top: 20px; width: 60%;">
   {{for dept in depts:}}
   <tr>
     <td>{{=A(dept.name,_href=URL('showCourse',args=dept.id))}}&nbsp;&nbsp;</td>
@@ -9,5 +9,7 @@
   {{pass}}
   <tr>
     <td>{{=A('add Departments',_href=URL('departmentCreate'))}}</td>
+    <td></td>
+    <td></td>
   </tr>
 </table>
