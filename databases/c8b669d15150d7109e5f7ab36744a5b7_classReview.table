@@ -42,12 +42,42 @@ p15
 ssS'user_id'
 p16
 (dp17
+<<<<<<< HEAD
+S'sortable'
+p18
+L5L
+sS'sql'
+p19
+S'CHAR(512)'
+p20
+sS'length'
+p21
+L512L
+sS'notnull'
+p22
+L0L
+sS'unique'
+p23
+L0L
+sS'type'
+p24
+S'string'
+p25
+ssS'quarter'
+p26
+(dp27
+=======
+>>>>>>> master
 g4
 I512
 sg5
 I00
 sg6
+<<<<<<< HEAD
+I6
+=======
 I2
+>>>>>>> master
 sg7
 S'INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  '
 p18
@@ -155,10 +185,17 @@ sg9
 I00
 sg10
 S'reference  ucscClass'
+<<<<<<< HEAD
+p45
+ssS'yr'
+p46
+(dp47
+=======
 p41
 ssS'yr'
 p42
 (dp43
+>>>>>>> master
 g4
 I512
 sg5
