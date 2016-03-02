@@ -22,7 +22,7 @@ def index():
 
 def showClass():
     ucscClass = db.course(request.args(0, cast=int)) or redirect(URL('index'))
-    info = db(db.ucscClass.course_id==ucscClass.id).select(orderby=db.ucscClass.year | db.ucscClass.quarter)
+    info = db(db.ucscClass.course_id==ucscClass.id).select(orderby=db.ucscClass.year)
     return locals()
 
 def classPage():
@@ -170,6 +170,25 @@ def classPageAddProfessor():
     else:
         response.flash = 'please fill the form'
     return dict(form=form,form2=form2)
+
+def courseNotes():
+    course_id = request.args(0, cast=int)
+    uCourse = db.course(course_id) or redirect(URL('index'))
+    # this may be correct or incorrect
+    # need entries in table 'note' to test/determine which.
+    notes = db(db.note.course_id == course_id).select(db.note.ALL)
+    return locals()
+
+@auth.requires_login()
+def uploadNotes():
+    courseNum = request.args(0, cast=int)
+    uCourse = db.course(courseNum) or redirect(URL('index'))
+    form = SQLFORM(db.note)
+    db.note.course_id.default = courseNum
+    if form.process().accepted:
+        redirect(URL('courseNotes', args=courseNum))
+    return locals()
+
 
 @cache.action()
 def download():
