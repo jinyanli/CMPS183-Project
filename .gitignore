@@ -1,7 +1,7 @@
-databases/sql.log
+databases/*
 errors/*
-sessions/
-sessions/*.log
+sessions/*
 *.log
 *.pyc
-
+*.1
+*.bak
