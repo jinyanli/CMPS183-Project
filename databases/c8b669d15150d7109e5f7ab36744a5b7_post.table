@@ -154,36 +154,15 @@ p40
 sg9
 I00
 sg10
-<<<<<<< HEAD
-g23
-ssS'id'
-p39
-(dp40
-=======
 g27
 ssS'image'
 p41
 (dp42
->>>>>>> master
 g4
 I512
 sg5
 I00
 sg6
-<<<<<<< HEAD
-I1
-sg7
-S'INTEGER PRIMARY KEY AUTOINCREMENT'
-p41
-sg9
-I00
-sg10
-S'id'
-p42
-ssS'image'
-p43
-(dp44
-=======
 I11
 sg7
 S'CHAR(512)'
@@ -196,28 +175,17 @@ p44
 ssS'id'
 p45
 (dp46
->>>>>>> master
 g4
 I512
 sg5
 I00
 sg6
-I10
+I1
 sg7
-<<<<<<< HEAD
-S'CHAR(512)'
-p45
-sg9
-I00
-sg10
-S'upload'
-p46
-=======
 S'INTEGER PRIMARY KEY AUTOINCREMENT'
 p47
 sg9
 I00
 sg10
 g45
->>>>>>> master
 ss.

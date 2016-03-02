@@ -71,40 +71,10 @@ sg9
 I00
 sg10
 S'double'
-<<<<<<< HEAD
-p28
-ssS'name'
-p29
-(dp30
-S'sortable'
-p31
-L2L
-sS'sql'
-p32
-S'CHAR(512) UNIQUE'
-p33
-sS'length'
-p34
-L512L
-sS'notnull'
-p35
-L0L
-sS'unique'
-p36
-L1L
-sS'type'
-p37
-S'string'
-p38
-ssS'image'
-p39
-(dp40
-=======
 p22
 ssS'image'
 p23
 (dp24
->>>>>>> master
 g4
 I512
 sg5
@@ -113,59 +83,15 @@ sg6
 I4
 sg7
 S'CHAR(512)'
-<<<<<<< HEAD
-p41
-=======
 p25
->>>>>>> master
 sg9
 I00
 sg10
 S'upload'
-<<<<<<< HEAD
-p42
-ssS'is_active'
-p43
-(dp44
-g17
-L5L
-sg18
-S'CHAR(1)'
-p45
-sg20
-L512L
-sg21
-L0L
-sg22
-L0L
-sg23
-S'boolean'
-p46
-ssS'created_by'
-p47
-(dp48
-g17
-L7L
-sg18
-S'INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  '
-p49
-sg20
-L512L
-sg21
-L0L
-sg22
-L0L
-sg23
-g24
-ssS'datetime'
-p50
-(dp51
-=======
 p26
 ssS'datetime'
 p27
 (dp28
->>>>>>> master
 g4
 I512
 sg5
@@ -174,50 +100,6 @@ sg6
 I8
 sg7
 S'TIMESTAMP'
-<<<<<<< HEAD
-p52
-sg9
-I00
-sg10
-S'datetime'
-p53
-ssS'created_on'
-p54
-(dp55
-g17
-L6L
-sg18
-S'TIMESTAMP'
-p56
-sg20
-L512L
-sg21
-L0L
-sg22
-L0L
-sg23
-S'datetime'
-p57
-ssS'modified_on'
-p58
-(dp59
-g17
-L8L
-sg18
-S'TIMESTAMP'
-p60
-sg20
-L512L
-sg21
-L0L
-sg22
-L0L
-sg23
-g57
-ssS'user_id'
-p61
-(dp62
-=======
 p29
 sg9
 I00
@@ -226,7 +108,6 @@ g27
 ssS'id'
 p30
 (dp31
->>>>>>> master
 g4
 I512
 sg5
@@ -234,18 +115,6 @@ I00
 sg6
 I1
 sg7
-<<<<<<< HEAD
-S'INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  '
-p63
-sg9
-I00
-sg10
-S'reference auth_user'
-p64
-ssS'id'
-p65
-(dp66
-=======
 S'INTEGER PRIMARY KEY AUTOINCREMENT'
 p32
 sg9
@@ -255,25 +124,6 @@ g30
 ssS'department_id'
 p33
 (dp34
->>>>>>> master
-g4
-I512
-sg5
-I00
-sg6
-I1
-sg7
-<<<<<<< HEAD
-S'INTEGER PRIMARY KEY AUTOINCREMENT'
-p67
-sg9
-I00
-sg10
-S'id'
-p68
-ssS'department_id'
-p69
-(dp70
 g4
 I512
 sg5
@@ -282,19 +132,10 @@ sg6
 I5
 sg7
 S'INTEGER REFERENCES department (id) ON DELETE CASCADE  '
-p71
-sg9
-I00
-sg10
-S'reference department'
-p72
-=======
-S'INTEGER REFERENCES department (id) ON DELETE CASCADE  '
 p35
 sg9
 I00
 sg10
 S'reference department'
 p36
->>>>>>> master
 ss.
