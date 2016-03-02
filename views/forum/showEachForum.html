@@ -1,0 +1,239 @@
+{{extend 'layout.html'}}
+{{student = db.auth_user(forum.user_id)}}
+
+<html lang="en">
+<style>
+table, th, td {
+    border: 1px solid gray;
+    border-color: #488089 #488089 #3d4b52 #488089;
+    border-collapse: collapse;
+    margin: 0 auto;
+}
+
+h4, h5 {
+  width: 50%;
+  height: 60px;
+  margin: 0;
+  padding: 0;
+  display: inline;
+}​
+</style>
+
+<body style="background:#2c2a35; ">
+<div  class ='well' style="background:#2c2a35;">
+<table  style="width:88%; ">
+    <tr bgcolor="#184343" size="6" style="font-family:verdana;font-size:90%;color:white;height:90px">
+        <th ><div style="font-family:verdana;font-size:200%;color:#ffd9b3;" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{=forum.title}}</div>
+        <div style = "text-align:left;color: #cc6600;font-size:90%;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <i>{{=(student.first_name+' '+student.last_name)}} created by {{=forum.datetime}}</i></div>
+        </th>
+    </tr>
+
+    <tr bgcolor="#184343" size="6" style="height:250px">
+        <td  valign="top" style="text-align:char;"><div style="font-family:verdana;font-size:100%;color:#ffd9b3;" ><p>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{=forum.body}}</p></div>
+        </td>
+    </tr>
+    {{forumimages}}
+    {{if len(forumimages): }}
+     <tr bgcolor="#184343" style="height:80px">
+     <td><div class="one" id="one" style = "text-align:center"> <img class="fullImage" src="{{=URL('download', args=forumimages[0].image)}}" /></div>
+        <br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        {{for image in forumimages:}}
+          <img id="imagesrc" style= "width:70px; height:70px;" onmouseover="bigImg(this)" onmouseout="normalImg(this)" class="img-thumbnail" src="{{=URL('download', args=image.image)}}" />
+        {{pass}}
+        {{=(A("add image", _href=URL('addForumImage', args=image.post_id)))}}
+     </td>
+
+     </tr>
+     {{pass}}
+</table>
+</div>
+
+{{if len(comms):}}
+<div class="page-header" >
+<h4 style = "font-family:Courier New;text-align:left;color: #cc6600;font-size:200%;">DISCUSS</h4>
+<h5 style = "text-align:left;color: #64a3d8;font-size:90%;"> {{=len(lenComms)}} comments</h5>
+</div>
+<p>
+{{for comment in comms:}}
+{{commStudent=db.auth_user(comment.user_id)}}
+
+<div style="text-align:center">
+    <i style = "text-align:center;color: #cc6600;">User: {{=A(string.capwords(commStudent.first_name+' '+commStudent.last_name), _href=URL('userProfile','showProfile',args=[commStudent.id], vars=dict(controller=request.controller,function=request.function,args=request.args)))}}
+    Time: {{=comment.datetime}}</i>
+</div>
+
+<div class ="well" style="background:#2c2a35;">
+    <table style="width:88%; ">
+        <tr bgcolor="#184343">
+        <td>
+        <ul style="list-style-type:none">
+            <li><div style="font-family:verdana;font-size:100%;color:#ffd9b3;">
+                <p>{{=comment.body}}</p>
+                </div>
+            {{replies = db(db.forumCommReply.comm_id==comment.id).select(db.forumCommReply.ALL, orderby=db.forumCommReply.datetime)}}
+            {{for reply in replies:}}
+            {{replyStudent=db.auth_user(reply.user_id)}}
+            <table style="width:90%; ">
+                <tr bgcolor="#1a3936">
+                <td>
+                    <h4 style = "text-align:left;color: #cc6600;font-size:120%;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{=(replyStudent.first_name+' '+replyStudent.last_name)}}</h4>
+                    <h5 style = "text-align:left;color: #64a3d8;font-size:80%;">- {{=reply.datetime}}</h5>
+                    <div class="panel-body" style="font-family:verdana;font-size:100%;color:#ffd9b3;">
+                    &nbsp;&nbsp;
+                    {{=reply.body}}
+                    </div>
+                </td>
+                <br>
+                </tr>
+            </table>
+            {{pass}}
+            </li>
+        </ul>
+        <div style="text-align:right">
+
+            {{if auth.user_id == comment.user_id:}}
+            {{=A('edit', _class='btn btn-link', _href=URL('editForumComment',args=[comment.id, forum.id]))}}
+            {{pass}}
+
+            <ap id ="{{=comment.id}}" class="btn btn-link" data-toggle="modal" data-target="#smallModal">reply</ap>
+
+            <div id="smallModal" class="modal fade" tabindex="-1" role="dialog">
+                <div class="modal-dialog" >
+                    <div class="modal-content" style="background:#1a3936;">
+                      
+                        <div class="modal-body">
+                            {{=replyForm.custom.begin}}
+                            <div style = "text-align:left;color: #cc6600;font-size:220%;">Reply:{{=replyForm.custom.widget.body}}</div>
+                            {{=replyForm.custom.submit}}
+                            {{=replyForm.custom.end}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </td>
+        </tr>
+    </table>
+</div>
+{{pass}}
+</p>
+{{else:}}
+  <h4 style = "text-align:left;color: #cc6600;">No comments posted yet</h4>
+{{pass}}
+
+<br>
+
+<div style="text-align:justify">
+<ul style="list-style-type:none">
+        <li>{{=form.custom.begin}}
+            <div style = "text-align:left;color: #cc6600;font-size:220%;">New Post:{{=form.custom.widget.body}}</div>
+            {{=form.custom.submit}}
+            {{=form.custom.end}}
+        </li>
+</ul>
+</div>
+
+<div style = "text-align:right;color:#e98c3a;">
+{{if number!=0:}}
+<p>Page of {{=page+1}}/{{=number}}
+{{pass}}
+
+{{if page>1:}}
+{{=A('<<',_class="btn btn-link", _href=(URL(args=(forum.id,page-2))))}}
+{{pass}}
+{{if page>0:}}
+{{=A('<',_class="btn btn-link", _href=(URL(args=(forum.id,page-1))))}}
+{{pass}}
+
+{{if (page <= 2 and number <= 5):}}
+{{for showNum in range(0, number):}}
+{{=A(showNum+1,_class="btn btn-link", _href=(URL(args=(forum.id,showNum))))}}
+{{pass}}
+{{pass}}
+{{if (page <= 2 and number >= 5):}}
+{{for showNum in range(0, 5):}}
+{{=A(showNum+1,_class="btn btn-link", _href=(URL(args=(forum.id,showNum))))}}
+{{pass}}
+{{pass}}
+
+{{if (page+5)>(number) and page>2 and number > 5:}}
+{{for showNum in range(page-count, number):}}
+{{=A(showNum+1,_class="btn btn-link", _href=(URL(args=(forum.id,showNum))))}}
+{{pass}}
+{{pass}}
+{{if (page+5)>(number) and page>2 and number < 5:}}
+{{for showNum in range(0, number):}}
+{{=A(showNum+1,_class="btn btn-link", _href=(URL(args=(forum.id,showNum))))}}
+{{pass}}
+{{pass}}
+
+{{if (page >2 and (page+5) <= number):}}
+{{for showNum in range(page-2, page+3) :}}
+{{=A(showNum+1,_class="btn btn-link", _href=(URL(args=(forum.id,showNum))))}}
+{{pass}}
+{{pass}}
+
+{{if number - page>1:}}
+{{=A('>',_class="btn btn-link", _href=(URL(args=(forum.id,page+1))))}}
+{{pass}}
+{{if number - page >2:}}
+{{=A('>>',_class="btn btn-link", _href=(URL(args=(forum.id,page+2))))}}
+{{pass}}
+</div>
+
+
+</body>
+</html>
+
+
+<script>
+var x ;
+$(document).ready(function() {
+
+    $('.img-thumbnail').on('click', function() {
+        var img = $('<img />', {src    : this.src,
+                                'class': 'fullImage'
+                  });
+
+        $('DIV.one').html(img).show();
+    });
+});
+
+function getValue(){
+    var id = {"x":x};
+    var pathname = window.location.pathname; 
+    $.ajax({
+        type: "POST",
+        url: pathname,
+        data: id,
+        async: false,
+        success: function (data){
+            console.log("ajax in show-resize success");
+        },
+        error: function (data){
+            console.log("ajax in show-resize failed");
+        }
+    });
+    //window.alert(pathname);
+}
+
+$(document).ready(function(){
+    $("ap").click(function(){
+        x = $(this).attr("id")
+        getValue();
+    });
+});
+
+function bigImg(x) {
+    x.style.height = "90px";
+    x.style.width = "90px";
+};
+
+function normalImg(x) {
+    x.style.height = "70px";
+    x.style.width = "70px";
+};
+</script>

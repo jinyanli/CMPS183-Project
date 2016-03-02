@@ -38,32 +38,26 @@ sg9
 I00
 sg10
 g11
-ssS'modified_by'
+ssS'user_id'
 p15
 (dp16
-S'sortable'
-p17
-L9L
-sS'sql'
-p18
+g4
+I512
+sg5
+I00
+sg6
+I7
+sg7
 S'INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  '
-p19
-sS'length'
-p20
-L512L
-sS'notnull'
-p21
-L0L
-sS'unique'
-p22
-L0L
-sS'type'
-p23
+p17
+sg9
+I00
+sg10
 S'reference auth_user'
-p24
+p18
 ssS'saltiness'
-p25
-(dp26
+p19
+(dp20
 g4
 I512
 sg5
@@ -72,11 +66,12 @@ sg6
 I6
 sg7
 S'DOUBLE'
-p27
+p21
 sg9
 I00
 sg10
 S'double'
+<<<<<<< HEAD
 p28
 ssS'name'
 p29
@@ -104,6 +99,12 @@ p38
 ssS'image'
 p39
 (dp40
+=======
+p22
+ssS'image'
+p23
+(dp24
+>>>>>>> master
 g4
 I512
 sg5
@@ -112,11 +113,16 @@ sg6
 I4
 sg7
 S'CHAR(512)'
+<<<<<<< HEAD
 p41
+=======
+p25
+>>>>>>> master
 sg9
 I00
 sg10
 S'upload'
+<<<<<<< HEAD
 p42
 ssS'is_active'
 p43
@@ -154,6 +160,12 @@ g24
 ssS'datetime'
 p50
 (dp51
+=======
+p26
+ssS'datetime'
+p27
+(dp28
+>>>>>>> master
 g4
 I512
 sg5
@@ -162,6 +174,7 @@ sg6
 I8
 sg7
 S'TIMESTAMP'
+<<<<<<< HEAD
 p52
 sg9
 I00
@@ -204,13 +217,24 @@ g57
 ssS'user_id'
 p61
 (dp62
+=======
+p29
+sg9
+I00
+sg10
+g27
+ssS'id'
+p30
+(dp31
+>>>>>>> master
 g4
 I512
 sg5
 I00
 sg6
-I7
+I1
 sg7
+<<<<<<< HEAD
 S'INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  '
 p63
 sg9
@@ -221,6 +245,17 @@ p64
 ssS'id'
 p65
 (dp66
+=======
+S'INTEGER PRIMARY KEY AUTOINCREMENT'
+p32
+sg9
+I00
+sg10
+g30
+ssS'department_id'
+p33
+(dp34
+>>>>>>> master
 g4
 I512
 sg5
@@ -228,6 +263,7 @@ I00
 sg6
 I1
 sg7
+<<<<<<< HEAD
 S'INTEGER PRIMARY KEY AUTOINCREMENT'
 p67
 sg9
@@ -252,4 +288,13 @@ I00
 sg10
 S'reference department'
 p72
+=======
+S'INTEGER REFERENCES department (id) ON DELETE CASCADE  '
+p35
+sg9
+I00
+sg10
+S'reference department'
+p36
+>>>>>>> master
 ss.

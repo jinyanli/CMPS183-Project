@@ -22,32 +22,25 @@ sS'type'
 p10
 S'string'
 p11
-ssS'year_'
+ssS'quarter'
 p12
 (dp13
-S'sortable'
+g4
+I512
+sg5
+I00
+sg6
+I4
+sg7
+S'CHAR(512)'
 p14
-L5L
-sS'sql'
-p15
-S'INTEGER'
-p16
-sS'length'
-p17
-L512L
-sS'notnull'
-p18
-L0L
-sS'unique'
-p19
-L0L
-sS'type'
-p20
-S'integer'
-p21
+sg9
+I00
+sg10
+g11
 ssS'user_id'
-p22
-(dp23
+p15
+(dp16
 g4
 I512
 sg5
@@ -56,11 +49,12 @@ sg6
 I11
 sg7
 S'INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  '
-p24
+p17
 sg9
 I00
 sg10
 S'reference auth_user'
+<<<<<<< HEAD
 p25
 ssS'description'
 p26
@@ -88,6 +82,12 @@ p35
 ssS'syllabus'
 p36
 (dp37
+=======
+p18
+ssS'difficulty'
+p19
+(dp20
+>>>>>>> master
 g4
 I32768
 sg5
@@ -95,6 +95,7 @@ I00
 sg6
 I3
 sg7
+<<<<<<< HEAD
 S'TEXT'
 p38
 sg9
@@ -102,9 +103,18 @@ I00
 sg10
 S'text'
 p39
+=======
+S'DOUBLE'
+p21
+sg9
+I00
+sg10
+S'double'
+p22
+>>>>>>> master
 ssS'enjoyment'
-p40
-(dp41
+p23
+(dp24
 g4
 I512
 sg5
@@ -113,15 +123,22 @@ sg6
 I8
 sg7
 S'DOUBLE'
-p42
+p25
 sg9
 I00
 sg10
+<<<<<<< HEAD
 S'double'
 p43
 ssS'professor_id'
 p44
 (dp45
+=======
+g22
+ssS'professor_id'
+p26
+(dp27
+>>>>>>> master
 g4
 I512
 sg5
@@ -130,15 +147,26 @@ sg6
 I10
 sg7
 S'INTEGER REFERENCES professor (id) ON DELETE CASCADE  '
+<<<<<<< HEAD
 p46
+=======
+p28
+>>>>>>> master
 sg9
 I00
 sg10
 S'reference professor'
+<<<<<<< HEAD
 p47
 ssS'datetime'
 p48
 (dp49
+=======
+p29
+ssS'datetime'
+p30
+(dp31
+>>>>>>> master
 g4
 I512
 sg5
@@ -147,6 +175,7 @@ sg6
 I12
 sg7
 S'TIMESTAMP'
+<<<<<<< HEAD
 p50
 sg9
 I00
@@ -156,6 +185,16 @@ p51
 ssS'difficulty'
 p52
 (dp53
+=======
+p32
+sg9
+I00
+sg10
+g30
+ssS'syllabus'
+p33
+(dp34
+>>>>>>> master
 g4
 I512
 sg5
@@ -163,6 +202,7 @@ I00
 sg6
 I7
 sg7
+<<<<<<< HEAD
 S'DOUBLE'
 p54
 sg9
@@ -189,6 +229,18 @@ p58
 ssS'yr'
 p59
 (dp60
+=======
+S'TEXT'
+p35
+sg9
+I00
+sg10
+S'text'
+p36
+ssS'textbook_ids'
+p37
+(dp38
+>>>>>>> master
 g4
 I512
 sg5
@@ -196,6 +248,7 @@ I00
 sg6
 I5
 sg7
+<<<<<<< HEAD
 S'INTEGER'
 p61
 sg9
@@ -206,6 +259,18 @@ p62
 ssS'course_id'
 p63
 (dp64
+=======
+S'TEXT'
+p39
+sg9
+I00
+sg10
+S'list:reference textbook'
+p40
+ssS'course_id'
+p41
+(dp42
+>>>>>>> master
 g4
 I512
 sg5
@@ -214,15 +279,26 @@ sg6
 I2
 sg7
 S'INTEGER REFERENCES course (id) ON DELETE CASCADE  '
+<<<<<<< HEAD
 p65
+=======
+p43
+>>>>>>> master
 sg9
 I00
 sg10
 S'reference course'
+<<<<<<< HEAD
 p66
 ssS'quarter'
 p67
 (dp68
+=======
+p44
+ssS'yr'
+p45
+(dp46
+>>>>>>> master
 g4
 I512
 sg5
@@ -230,15 +306,25 @@ I00
 sg6
 I4
 sg7
+<<<<<<< HEAD
 S'CHAR(512)'
 p69
 sg9
 I00
 sg10
 g11
+=======
+S'INTEGER'
+p47
+sg9
+I00
+sg10
+S'integer'
+p48
+>>>>>>> master
 ssS'id'
-p70
-(dp71
+p49
+(dp50
 g4
 I512
 sg5
@@ -247,10 +333,9 @@ sg6
 I1
 sg7
 S'INTEGER PRIMARY KEY AUTOINCREMENT'
-p72
+p51
 sg9
 I00
 sg10
-S'id'
-p73
+g49
 ss.

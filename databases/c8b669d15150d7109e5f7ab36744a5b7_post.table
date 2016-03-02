@@ -39,9 +39,26 @@ I00
 sg10
 S'boolean'
 p15
-ssS'user_id'
+ssS'update_time'
 p16
 (dp17
+g4
+I512
+sg5
+I00
+sg6
+I10
+sg7
+S'TIMESTAMP'
+p18
+sg9
+I00
+sg10
+S'datetime'
+p19
+ssS'user_id'
+p20
+(dp21
 g4
 I512
 sg5
@@ -50,15 +67,15 @@ sg6
 I3
 sg7
 S'INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  '
-p18
+p22
 sg9
 I00
 sg10
 S'reference  auth_user'
-p19
+p23
 ssS'title'
-p20
-(dp21
+p24
+(dp25
 g4
 I512
 sg5
@@ -67,15 +84,15 @@ sg6
 I4
 sg7
 S'CHAR(512) NOT NULL'
-p22
+p26
 sg9
 I01
 sg10
 S'string'
-p23
+p27
 ssS'price'
-p24
-(dp25
+p28
+(dp29
 g4
 I512
 sg5
@@ -84,15 +101,14 @@ sg6
 I7
 sg7
 S'INTEGER'
-p26
+p30
 sg9
 I00
 sg10
 S'integer'
-p27
-ssS'datetime'
-p28
-(dp29
+p31
+ssg19
+(dp32
 g4
 I512
 sg5
@@ -101,15 +117,14 @@ sg6
 I9
 sg7
 S'TIMESTAMP'
-p30
+p33
 sg9
 I00
 sg10
-S'datetime'
-p31
-ssS'ucscclass_id'
-p32
-(dp33
+g19
+ssS'ucscClass_id'
+p34
+(dp35
 g4
 I512
 sg5
@@ -118,15 +133,15 @@ sg6
 I2
 sg7
 S'INTEGER REFERENCES ucscClass (id) ON DELETE CASCADE  '
-p34
+p36
 sg9
 I00
 sg10
 S'reference ucscClass'
-p35
-ssS'forumsection'
-p36
-(dp37
+p37
+ssS'forumSection'
+p38
+(dp39
 g4
 I512
 sg5
@@ -135,19 +150,27 @@ sg6
 I5
 sg7
 S'CHAR(512)'
-p38
+p40
 sg9
 I00
 sg10
+<<<<<<< HEAD
 g23
 ssS'id'
 p39
 (dp40
+=======
+g27
+ssS'image'
+p41
+(dp42
+>>>>>>> master
 g4
 I512
 sg5
 I00
 sg6
+<<<<<<< HEAD
 I1
 sg7
 S'INTEGER PRIMARY KEY AUTOINCREMENT'
@@ -160,6 +183,20 @@ p42
 ssS'image'
 p43
 (dp44
+=======
+I11
+sg7
+S'CHAR(512)'
+p43
+sg9
+I00
+sg10
+S'upload'
+p44
+ssS'id'
+p45
+(dp46
+>>>>>>> master
 g4
 I512
 sg5
@@ -167,6 +204,7 @@ I00
 sg6
 I10
 sg7
+<<<<<<< HEAD
 S'CHAR(512)'
 p45
 sg9
@@ -174,4 +212,12 @@ I00
 sg10
 S'upload'
 p46
+=======
+S'INTEGER PRIMARY KEY AUTOINCREMENT'
+p47
+sg9
+I00
+sg10
+g45
+>>>>>>> master
 ss.

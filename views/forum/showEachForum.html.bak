@@ -1,0 +1,39 @@
+{{extend 'layout.html'}}
+<li>Title: {{=forum.title}}</li>
+<li>Content: {{=forum.body}}</li>
+<li>Datatime: {{=forum.datetime}}</li>
+<div class="one" id="one">image here</div>
+{{for image in forumimages:}}
+
+  <img width="60dp"  class="img-thumbnail" src="{{=URL('download', args=image.image)}}" />
+
+    {{pass}}
+{{for comm in comms:}}
+
+    <li> <font size="2" color="blue">comment: </font>{{=comm.body}}[{{=A('Edit Comment', _href=URL('editComment', args=comm.id))}}]</li>
+    {{pass}}
+
+<br>
+<br>
+[{{=A('goback', _href=URL('generalForum'))}}]
+[{{=A('Edit This Forum!', _href=URL('editForum', args=forum.id))}}]
+[{{=A('Add New Comment!', _href=URL('addComment', args=forum.id))}}]
+
+
+
+<script>
+$(document).ready(function() {
+<<<<<<< HEAD
+    $('.img-thumbnail').onmouseover( function() {
+=======
+    $('.img-thumbnail').on('click', function() {
+>>>>>>> master
+        var img = $('<img />', {src    : this.src,
+                                'class': 'fullImage'
+                  });
+
+        $('DIV.one').html(img).show();
+    });
+});
+
+</script>

@@ -1,0 +1,39 @@
+{{  extend 'layout.html'}}
+{{from gluon.tools import prettydate}}
+{{import string}}
+<h2>My Messages</h2>
+<hr>
+{{for message in messages:}}
+      {{recipient=db.auth_user(message.privateMessage.recipient_id)}}
+      {{sender=db.auth_user(message.privateMessage.sender_id)}}
+      {{if auth.user_id==message.privateMessage.recipient_id:}}
+      {{username=sender.first_name+' '+sender.last_name}}
+      {{user=sender}}
+      {{else:}}
+      {{user=recipient}}
+      {{username=recipient.first_name+' '+recipient.last_name}}
+      {{pass}}
+      <div>
+        {{if user.image:}}
+        <img width="50px" src="{{=URL('default','download', args=user.image)}}" />
+        {{else:}}
+        <img width="50px" src="/SlugHero/static/images/slug.png" />
+        {{pass}}
+        {{=A(username, _href=URL('showMessages', args=[message.privateMessage.recipient_id, message.privateMessage.conversation_id]))}}
+        <span class="badge">{{=str(message[count])}}</span>
+
+        {{lastMessage=db(db.privateMessage.conversation_id==message.privateMessage.conversation_id).select(orderby=~db.privateMessage.posted_on).first()}}
+        {{whoSay=db.auth_user(lastMessage.sender_id)}}
+        {{if lastMessage.sender_id==auth.user_id:}}
+             <pre>You says:{{=lastMessage.body}} </pre>
+        {{else:}}
+             <pre>{{=whoSay.first_name+' '+whoSay.last_name}} says:{{=lastMessage.body}} </pre>
+        {{pass}}
+
+        {{=prettydate(lastMessage.posted_on, T)}}
+      </div>
+<hr>
+{{pass}}
+
+{{pass}}
+{{#=messages}}

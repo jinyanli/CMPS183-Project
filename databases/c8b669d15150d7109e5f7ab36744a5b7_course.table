@@ -22,26 +22,9 @@ sS'type'
 p10
 S'string'
 p11
-ssS'id'
+ssS'description'
 p12
 (dp13
-g4
-I512
-sg5
-I00
-sg6
-I1
-sg7
-S'INTEGER PRIMARY KEY AUTOINCREMENT'
-p14
-sg9
-I00
-sg10
-S'id'
-p15
-ssS'description'
-p16
-(dp17
 g4
 I32768
 sg5
@@ -50,15 +33,31 @@ sg6
 I5
 sg7
 S'TEXT'
-p18
+p14
 sg9
 I00
 sg10
 S'text'
-p19
+p15
+ssS'id'
+p16
+(dp17
+g4
+I512
+sg5
+I00
+sg6
+I1
+sg7
+S'INTEGER PRIMARY KEY AUTOINCREMENT'
+p18
+sg9
+I00
+sg10
+g16
 ssS'name'
-p20
-(dp21
+p19
+(dp20
 g4
 I512
 sg5
@@ -67,14 +66,14 @@ sg6
 I4
 sg7
 S'CHAR(512) UNIQUE'
-p22
+p21
 sg9
 I00
 sg10
 g11
 ssS'department_id'
-p23
-(dp24
+p22
+(dp23
 g4
 I512
 sg5
@@ -83,10 +82,10 @@ sg6
 I2
 sg7
 S'INTEGER REFERENCES department (id) ON DELETE CASCADE  '
-p25
+p24
 sg9
 I00
 sg10
 S'reference department'
-p26
+p25
 ss.

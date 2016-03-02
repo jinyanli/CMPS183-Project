@@ -1,0 +1,29 @@
+{{extend 'layout.html'}}
+{{import string}}
+<div >
+    <ul class="breadcrumb" style="background-color:white; border-style: none;">
+        <li class="active"><a href="#">List of Professors</a></li>
+    </ul>
+</div>
+
+<div>
+{{=A('add Professor', _class='btn btn-primary', _href=URL('addProfessor'))}}
+</br>
+</div>
+  {{for dept in depts:}}
+      <div class="container">
+        <a  data-toggle="collapse" href="#{{=dept.short_name}}"><b>{{=dept.name}}</b></a>
+          <div id="{{=dept.short_name}}" class="collapse">
+          {{for prof in profs:}}
+          <table>
+              {{if prof.department_id==dept.id:}}
+                  {{name="%s %s" % (prof.first_name, prof.last_name)}}
+                    <tr>
+                      <td>&nbsp;{{=A(string.capwords(name), _href=URL('professorReview', args=prof.id))}}</td>
+                    </tr>
+              {{pass}}
+          </table>
+          {{pass}}
+          </div>
+        </div>
+  {{pass}}

@@ -1,0 +1,160 @@
+{{extend 'layout.html'}}
+{{import string}}
+{{if fromMenu==False:}}
+{{=A('back', _class='btn btn-primary', _href=URL(session.controller,session.function,args=session.args))}}
+{{pass}}
+{{if auth.user_id == user.id:}}
+<b>{{=A('edit', _class='btn btn-primary', _href=URL('editProfile',args=[user.id], vars=dict(fromMenu=fromMenu)))}}</b>
+{{pass}}
+<script>
+function validateForm() {
+    var x = document.forms["myForm"]["fname"].value;
+    if (x == null || x == "") {
+        alert("Name must be filled out");
+        return false;
+    }
+}
+</script>
+
+<table>
+   <tr>
+     {{if user.image:}}
+       <td rowspan="5"><img width="150px" src="{{=URL('default','download', args=user.image)}}" /></td>
+     {{else:}}
+       <td rowspan="5"><img width="150px" src="/SlugHero/static/images/slug.png" /></td>
+     {{pass}}
+       <td><h4><b>&nbsp;{{=string.capwords(user.first_name+' '+user.last_name)}}</b></h4><td>
+   </tr>
+      <td><h4><b>&nbsp;{{=user.term}}</b></h4><td>
+   <tr>
+      <td>
+        <h4>
+            <b>&nbsp;Major:&nbsp;</b>{{=user.major}}
+            {{if user.second_major:}}
+            <b>&nbsp;Second Major:&nbsp;</b>{{=user.second_major}}
+            {{pass}}
+            {{if user.minor:}}
+            <b>&nbsp;Minor:&nbsp;</b>{{=user.minor}}
+            {{pass}}
+        </h4>
+      <td>
+   </tr>
+   <tr>
+    {{if user.show_email:}}
+       <td><h4><b>&nbsp;{{=user.email}}</b></h4><td>
+    {{pass}}
+   </tr>
+   <tr>
+       <td><h4><b>
+         {{if auth.user_id == user.id:}}
+          &nbsp;{{=A('My Messages', _href=URL('messageBox',args=auth.user_id))}}
+         {{else:}}
+            <button class="btn btn-primary" data-toggle="modal" data-target="#smallModal">Send message</button>
+            <div id="smallModal" class="modal fade" tabindex="-1" role="dialog">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                          {{username=string.capwords(user.first_name+' '+user.last_name)}}
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            <h4 class="modal-title">Send message to {{=username}}</h4>
+                        </div>
+                        <div class="modal-body">
+                          {{=messageForm}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+           {{pass}}
+       </b></h4><td>
+   </tr>
+</table>
+
+<div class="container">
+  <h2>Ativities</h2>
+  <ul class="nav nav-tabs">
+    <li class="active"><a data-toggle="tab" href="#profreview">Professor Review</a></li>
+    <li><a data-toggle="tab" href="#menu1">Menu 1</a></li>
+    <li><a data-toggle="tab" href="#menu2">Menu 2</a></li>
+    <li><a data-toggle="tab" href="#menu3">Menu 3</a></li>
+  </ul>
+
+  <div class="tab-content">
+    <div id="profreview" class="tab-pane fade in active">
+      <h3>Professor Reviews</h3>
+
+      <table class = "table table-bordered">
+      <tbody>
+        {{for review in reviews:}}
+            {{prof= db.professor(review.professor_id)}}
+            {{dept=deslugify(db.department(prof.department_id).name)}}
+            {{deptname=db.department(prof.department_id).short_name}}
+            {{name="%s %s" % (prof.first_name, prof.last_name)}}
+            <tr>
+               <td>
+                 <table>
+                    <tr>
+                      <td rowspan="3">
+                        {{if prof.image:}}
+                           <img width="100px" src="{{=URL('default','download', args=prof.image)}}" />
+                        {{pass}}
+                    </td>
+                      <td><b>&nbsp;{{=string.capwords(name)}}</b><td>
+                    </tr>
+                    <tr>
+                      <td><b>&nbsp;Department:&nbsp;{{=dept}}</b></td>
+                    </tr>
+                    <tr>
+                      {{if prof.saltiness:}}
+                      {{saltiness="%.1f" % (5-prof.saltiness)}}
+                      {{else:}}
+                      {{saltiness='None'}}
+                      {{pass}}
+                      <td><b>&nbsp;Saltiness:&nbsp;{{=saltiness }}/5</b></td>
+                    </tr>
+                 </table>
+                  <p>
+                    <b>Helpfulness:&nbsp;</b>{{=review.helpfulness}}
+                    <b>Clarity:&nbsp;</b>{{=review.clarity}}
+                    <b>Easiness:&nbsp;</b>{{=review.easiness}}
+                    <b>Overall Rating:&nbsp;</b>{{="%.1f" % review.rating}}/5
+                  </p>
+                 <p>
+                    <b>Cousre:&nbsp;</b>{{=deptname.upper()}}&nbsp;{{=db.course(review.course_id).course_num}}
+                    <b>&nbsp;Term:</b>{{=review.quarter}}{{=review.yr}}
+                    <b>&nbsp;Posted On:&nbsp;</b>{{=review.datetime}}
+                  </p>
+                 {{=review.review}}
+
+                 {{if auth.user_id == review.user_id:}}
+                 <p><b>{{=A('edit', _class='btn btn-primary', _href=URL('editProfessorReview',args=[review.id, prof.id]))}}</b></p>
+                 {{pass}}
+               </td>
+            </tr>
+        {{pass}}
+      </tbody>
+    </table>
+    <p>Page {{=page+1}} of {{=numOfPage}}</p>
+    {{if page>0:}}
+    {{=A('previous',_class="btn btn-info", _href=(URL(request.function, args=(user.id, page-1), vars=dict(pageButton=True))))}}
+    {{pass}}
+
+    {{if len(reviews)>=10:}}
+    {{=A('next',_class="btn btn-info", _href=(URL(request.function, args=(user.id, page+1), vars=dict(pageButton=True))))}}
+    {{pass}}
+    </div>
+    <div id="menu1" class="tab-pane fade">
+      <h3>Menu 1</h3>
+      <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+    </div>
+    <div id="menu2" class="tab-pane fade">
+      <h3>Menu 2</h3>
+      <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
+    </div>
+    <div id="menu3" class="tab-pane fade">
+      <h3>Menu 3</h3>
+      <p>Eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
+    </div>
+  </div>
+</div>
+
+</body>
