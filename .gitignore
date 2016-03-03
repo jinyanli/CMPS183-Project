@@ -7,3 +7,4 @@ sessions/*
 *.bak
 *.log
 databases/sql.log
+databases/sql.log
