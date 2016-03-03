@@ -12,9 +12,6 @@
 <h1>{{=deslugify(db.course[thisClass.course_id].name)}}: {{=summer}} {{=thisClass.yr}}</h1>
 {{pass}}
 </div>
-{{if thisClass.professor_id is None:}}
-{{=A('add Professor', _class='btn btn-primary', _href=URL('classPageAddProfessor', args=thisClass.id))}}
-{{pass}}
 <div class="col-md-2">
 <table cellpadding="10" style="float: left">
 <tr><td width="15%">
@@ -24,6 +21,7 @@
         <p>{{=syllabus}}</p>
         <input type="submit" name="view_prof" value="Reviews">
         {{else:}}
+        {{=A('add Professor', _class='btn btn-primary', _href=URL('classPageAddProfessor', args=thisClass.id))}}
         <b>Add A Professor For the Class</b>
         {{pass}}
     </form></td>
