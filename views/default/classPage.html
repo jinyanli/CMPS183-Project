@@ -14,7 +14,7 @@
 </div>
 <div class="col-md-2">
 <table cellpadding="10" style="float: left">
-<tr><td width="150">
+<tr><td width="15%">
     <form action="{{=URL('professor','professorReview', args=thisClass.professor_id)}}">
         {{if thisClass.professor_id != None:}}
         <img width="100px" src="{{=URL('default','download', args=db.professor(thisClass.professor_id).image)}}" alt="Professor's Pic"><br/>
@@ -22,6 +22,7 @@
         <input type="submit" name="view_prof" value="Reviews">
         {{else:}}
         {{=A('add Professor', _class='btn btn-primary', _href=URL('classPageAddProfessor', args=thisClass.id))}}
+        <b>Add A Professor For the Class</b>
         {{pass}}
     </form></td>
     </tr>
@@ -32,13 +33,13 @@
 {{if user is None:}}
 <div class="col-md-6">
 <table>
-<tr><td width="170">&nbsp;</td><td>You must be logged in to post a review</td></tr>
+<tr><td style="width: 15%;">&nbsp;</td><td>You must be logged in to post a review</td></tr>
 </table>
     <br/><br/>
     {{if thisClassProfessor != None:}}
     {{for review in classReviews:}}
     <table cellpadding="10" >
-    <tr><td width="50"><b>
+    <tr><td style="width: 35%;"><b>
         {{if review.quarter == "1":}}
         {{=fall}}
         {{elif review.quarter == "2":}}
@@ -48,8 +49,8 @@
         {{else:}}
         {{=summer}}
         {{pass}}
-        </b></td><td width="100"><b>{{=review.yr}}</b></td>
-        <td width="120"><b>Difficulty: {{=review.difficulty}}</b></td><td><b>Enjoyment: {{=review.enjoyment}}</b></td></tr>
+       {{=review.yr}}</b></td>
+        <td style="width: 35%;"><b>Difficulty: {{=review.difficulty}}</b></td><td><b>Enjoyment: {{=review.enjoyment}}</b></td></tr>
 <tr><td colspan="4">{{=review.body}}</td></tr>
 <tr><td>&nbsp;</td><td></td></tr>
 <tr><td>&nbsp;</td></tr>
@@ -77,7 +78,7 @@
     {{if thisClassProfessor != None:}}
     {{for review in classReviews:}}
     <table cellpadding="10" >
-    <tr><td width="50"><b>
+    <tr><td style="width: 35%;"><b>
         {{if review.quarter == "1":}}
         {{=fall}}
         {{elif review.quarter == "2":}}
@@ -87,10 +88,10 @@
         {{else:}}
         {{=summer}}
         {{pass}}
-        </b></td><td width="100"><b>{{=review.yr}}</b></td>
-        <td width="120"><b>Difficulty: {{=review.difficulty}}</b></td><td><b>Enjoyment: {{=review.enjoyment}}</b></td></tr>
+        {{=review.yr}}</b></td>
+        <td style="width: 35%;"><b>Difficulty: {{=review.difficulty}}</b></td><td><b>Enjoyment: {{=review.enjoyment}}</b></td></tr>
 <tr><td colspan="4">{{=review.body}}</td></tr>
-<tr><td>&nbsp;</td><td>{{=A("-" + deslugify(db.auth_user[review.user_id].first_name), _href=URL('#', args=db.auth_user[review.user_id].id))}}
+<tr><td>&nbsp;&nbsp;&nbsp;{{=A("-" + deslugify(db.auth_user[review.user_id].first_name), _href=URL('userProfile', 'showProfile', args=db.auth_user[review.user_id].id))}}
 </td></tr>
 <tr><td>&nbsp;</td></tr>
 </table>
@@ -102,6 +103,7 @@
 </form>
 <script src="/SlugHero/static/js/canvasjs.min.js"></script>
 <script type="text/javascript">
+
 window.onload = function () {
 	var chart = new CanvasJS.Chart("chartContainer", {
 		theme: "theme2",//theme1
