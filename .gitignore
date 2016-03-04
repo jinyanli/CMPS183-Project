@@ -6,3 +6,4 @@ sessions/*
 *.1
 *.bak
 *.log
+databases/sql.log
