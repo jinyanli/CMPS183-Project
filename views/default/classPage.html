@@ -26,8 +26,8 @@
         {{pass}}
     </form></td>
     </tr>
-    <tr><td>{{=A('Forum',_href=URL('forum', 'generalForum'))}}</td></tr>
-    <tr><td>{{=A('Notes',_href=URL('classPage', args=[thisClass.id]))}}</td></tr>
+    <tr><td>{{=A('Forum',_href=URL('viewCourseTopic', args=[courseInfo.id]))}}</td></tr>
+    <tr><td>{{=A('Notes',_href=URL('courseNotes', args=[courseInfo.id]))}}</td></tr>
     <tr><td>{{=A('Textbook',_href=URL('forum', 'bookExchange', args=[thisClass.textbook_ids]))}}</td></tr>
     </table></div>
 {{if user is None:}}

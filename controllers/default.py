@@ -20,10 +20,10 @@ def index():
 
 
 
-def showClass():
-    ucscClass = db.course(request.args(0, cast=int)) or redirect(URL('index'))
-    info = db(db.ucscClass.course_id==ucscClass.id).select(orderby=db.ucscClass.year)
-    return locals()
+#def showClass():
+#    ucscClass = db.course(request.args(0, cast=int)) or redirect(URL('index'))
+#    info = db(db.ucscClass.course_id==ucscClass.id).select(orderby=~db.ucscClass.yr|~db.ucscClass.quarter)
+#    return locals()
 
 def classPage():
     thisClass = db.ucscClass(request.args(0, cast=int)) or redirect(URL('showCourse'))
@@ -108,11 +108,7 @@ def showCourse():
 
 def showClass():
     uClass = db.course(request.args(0, cast=int)) or redirect(URL('index'))
-    info = db(db.ucscClass.course_id==uClass.id).select(orderby=db.ucscClass.yr | db.ucscClass.quarter)
-    fall = "Fall"
-    winter = "Winter"
-    spring = "Spring"
-    summer = "Summer"
+    info = db(db.ucscClass.course_id==uClass.id).select(orderby=~db.ucscClass.yr | ~db.ucscClass.quarter)
     return locals()
 
 def check_term(form):
@@ -126,15 +122,20 @@ def check_term(form):
 def createClass():
     ucscClass = db.course(request.args(0, cast=int)) or redirect(URL('index'))
     db.ucscClass.course_id.default = ucscClass.id
-    fields = ['syllabus', 'quarter', 'yr', 'difficulty']
+    db.ucscClass.user_id.default = auth.user.id
+    fields = ['syllabus', 'quarter', 'yr']
     #labels = {'name':'Professor Name'}
     form = SQLFORM(db.ucscClass, fields=fields)
     form.add_button('Back', URL('showClass', args=ucscClass.id))
-    if form.process(onvalidation=check_term).accepted:
+    if form.process(session=None, formname='addClass', onvalidation=check_term).accepted:
         response.flash = 'Class added'
-        redirect(URL('showClass', args=ucscClass.id))
-    info = db(db.ucscClass.course_id==ucscClass.id).select()
-    return dict(form=form)
+        #redirect(URL('showClass', args=ucscClass.id))
+    elif form.errors:
+        response.flash = 'Error: your submission is incomplete'
+    else:
+        response.flash = 'Complete the form to add a class'
+    info = db(db.ucscClass.course_id==ucscClass.id).select()    
+    return locals()
 
 def editClass():
     aClass = db.ucscClass(request.args(0,cast=int)) or redirect(URL('showClass',args=request.args(0,cast=int)))
