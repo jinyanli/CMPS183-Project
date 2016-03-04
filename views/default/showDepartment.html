@@ -1,5 +1,10 @@
 {{extend 'layout.html'}}
 <table class="table" style="margin-top: 20px; width: 60%;">
+  <tr>
+      <th>Department</th>
+      <th></th>
+      <th></th>
+  </tr>
   {{for dept in depts:}}
   <tr>
     <td>{{=A(dept.name,_href=URL('showCourse',args=dept.id))}}&nbsp;&nbsp;</td>
