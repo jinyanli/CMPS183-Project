@@ -19,7 +19,16 @@
       <th>Edit</th>
     </tr>
   {{for aClass in info:}}
-  {{quarter = "%s %d" % (aClass.quarter, aClass.yr)}}
+  {{if aClass.quarter == "1":}}
+  {{term = "Fall"}}
+  {{elif aClass.quarter == "2":}}
+  {{term = "Winter"}}
+  {{elif aClass.quarter == "3":}}
+  {{term = "Spring"}}
+  {{else:}}
+  {{term = "Summer"}}
+  {{pass}}
+  {{quarter = "%s %d" % (term, aClass.yr)}}
   {{prof = db.professor(aClass.professor_id) or redirect(URL('index'))}}
   {{prof_name = "%s %s" % (prof.first_name, prof.last_name)}}
   <tr>
