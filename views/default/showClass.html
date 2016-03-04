@@ -19,11 +19,20 @@
       <th>Edit</th>
     </tr>
   {{for aClass in info:}}
-  {{quarter = "%s %d" % (aClass.quarter, aClass.yr)}}
+  {{if aClass.quarter == "1":}}
+  {{term = "Fall"}}
+  {{elif aClass.quarter == "2":}}
+  {{term = "Winter"}}
+  {{elif aClass.quarter == "3":}}
+  {{term = "Spring"}}
+  {{else:}}
+  {{term = "Summer"}}
+  {{pass}}
+  {{quarter = "%s %d" % (term, aClass.yr)}}
   {{prof = db.professor(aClass.professor_id) or redirect(URL('index'))}}
   {{prof_name = "%s %s" % (prof.first_name, prof.last_name)}}
   <tr>
-    <td>{{=A(quarter.title(), _href=URL('classPage', args=uClass.id))}}</td>
+    <td>{{=A(quarter.title(), _href=URL('classPage', args=aClass.id))}}</td>
     <td>{{=A(prof_name.title(), _href=URL('professorReview', args=aClass.professor_id))}}</td>
     <td>{{=A('edit', _href=URL('editClass', args=uClass.id))}}</td>
   </tr>

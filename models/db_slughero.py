@@ -36,11 +36,11 @@ db.define_table('professor',
 
 db.professor.department_id.requires = IS_IN_DB(db, db.department.id, '%(name)s')
 
-quarter=['fall', 'winter', 'spring', 'summer']
+quarter=["Fall", "Winter", "Spring", "Summer"]
 db.define_table('ucscClass', # 'class' is a python reserved word
     Field('course_id', 'reference course', readable=False, writable=False),
     Field('syllabus', 'text'),
-    Field('quarter', 'string', requires=IS_IN_SET(quarter)),
+    Field('quarter', requires=IS_IN_SET([1,2,3,4])),
     Field('yr', 'integer', requires=IS_IN_SET(range(2000, 2101))), # year is a keyword in SQL
     Field('term', 'string'),
     Field('difficulty', 'double', readable=False, writable=False),
