@@ -1,7 +1,7 @@
 {{extend 'layout.html'}}
 {{longname = deslugify(uClass.name)}}
 <div class="row">
-    <h2 class="col-md-8 pull-left">
+    <h2 class="col-md-10 pull-left">
         List of Classes for {{=deslugify(db.department[uClass.department_id].short_name).upper()}} {{=uClass.course_num}} {{=deslugify(uClass.name)}}
     </h2>
     <div class="h2 pull-right">
@@ -11,11 +11,16 @@
              _href=URL('courseNotes', args=uClass.id))}}
     </div>
 </div>
-
+<h4>Select Quarter or Professor to change the order of the classes</h4>
 <table class="table" style="margin-top: 20px; width: 60%;">
     <tr>
-      <th>Quarter</th>
+    {{if sort == None:}}
+      <th>{{=A('Quarter', _href=URL('showClass',args=[uClass.id,"quarter"]))}}</th>
       <th>Professor</th>
+    {{else:}}
+      <th>Quarter</th>
+      <th>{{=A('Professor', _href=URL('showClass',args=[uClass.id]))}}</th>
+    {{pass}}  
       <th>Edit</th>
     </tr>
   {{for aClass in info:}}
@@ -29,11 +34,19 @@
   {{term = "Summer"}}
   {{pass}}
   {{quarter = "%s %d" % (term, aClass.yr)}}
-  {{prof = db.professor(aClass.professor_id) or redirect(URL('index'))}}
+  {{prof = db.professor(aClass.professor_id)}}
+  {{if prof == None:}}
+  {{prof_name = 'Add Professor'}}
+  {{else:}}
   {{prof_name = "%s %s" % (prof.first_name, prof.last_name)}}
+  {{pass}}
   <tr>
     <td>{{=A(quarter.title(), _href=URL('classPage', args=aClass.id))}}</td>
+    {{if prof != None:}}
     <td>{{=A(prof_name.title(), _href=URL('professorReview', args=aClass.professor_id))}}</td>
+    {{else:}}
+    <td>{{=A(prof_name.title(), _href=URL('classPage', args=aClass.id))}}</td>
+    {{pass}}
     <td>{{=A('edit', _href=URL('editClass', args=uClass.id))}}</td>
   </tr>
   {{pass}}

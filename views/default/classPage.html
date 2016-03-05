@@ -22,13 +22,12 @@
         <input type="submit" name="view_prof" value="Reviews">
         {{else:}}
         {{=A('add Professor', _class='btn btn-primary', _href=URL('classPageAddProfessor', args=thisClass.id))}}
-        <b>Add A Professor For the Class</b>
         {{pass}}
     </form></td>
     </tr>
     <tr><td>{{=A('Forum',_href=URL('viewCourseTopic', args=[courseInfo.id]))}}</td></tr>
     <tr><td>{{=A('Notes',_href=URL('courseNotes', args=[courseInfo.id]))}}</td></tr>
-    <tr><td>{{=A('Textbook',_href=URL('forum', 'bookExchange', args=[thisClass.textbook_ids]))}}</td></tr>
+    <tr><td>{{=A('Textbooks',_href=URL('forum', 'bookExchange'))}}</td></tr>
     </table></div>
 {{if user is None:}}
 <div class="col-md-6">
@@ -54,15 +53,16 @@
 <tr><td colspan="4">{{=review.body}}</td></tr>
 <tr><td>&nbsp;</td><td></td></tr>
 <tr><td>&nbsp;</td></tr>
-</table>>
+</table>
 {{pass}}
 {{pass}}
 </div>
 {{else:}}
+{{if thisClassProfessor != None:}}
 <div class="col-md-6">
 <form action="{{=URL('classPage', args=[thisClass.id])}}" method="POST">
     <table>
-    <tr><td rowspan="5"><textarea name="body" cols="50" rows="6">Enter Your Review Here</textarea></td><td>&nbsp;</td>
+    <tr><td rowspan="5"><textarea name="body" cols="50" rows="6" placeholder="Enter Your Review Here"></textarea></td><td>&nbsp;</td>
         <td>Year:<input type="text" name="yr" value="2016"/></td></tr>
     <tr><td>&nbsp;</td><td>Term:<select name="quarter">
         <option value="1">Fall</option><option value="2">Winter</option><option value="3">Spring</option><option value="4">Summer</option>
@@ -75,6 +75,7 @@
     <tr><td><input type="submit" value="Submit" /></td></tr></table>
     <input type="hidden" name="_formname" value="postReview"/>
     <br/><br/>
+    {{pass}}
     {{if thisClassProfessor != None:}}
     {{for review in classReviews:}}
     <table cellpadding="10" >

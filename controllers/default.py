@@ -107,8 +107,12 @@ def showCourse():
     return locals()
 
 def showClass():
-    uClass = db.course(request.args(0, cast=int)) or redirect(URL('index'))
-    info = db(db.ucscClass.course_id==uClass.id).select(orderby=~db.ucscClass.yr | ~db.ucscClass.quarter)
+    uClass = db.course(request.args(0, cast=int)) or redirect(URL('showCourse'))
+    sort = request.args(1)
+    if sort==None:
+        info = db(db.ucscClass.course_id==uClass.id).select(orderby=~db.ucscClass.professor_id| ~db.ucscClass.yr | ~db.ucscClass.quarter)
+    else:
+        info = db(db.ucscClass.course_id==uClass.id).select(orderby=~db.ucscClass.yr | ~db.ucscClass.quarter)
     return locals()
 
 def check_term(form):
@@ -119,22 +123,24 @@ def check_term(form):
         form.errors.query = 'Term already exists'
         response.flash = 'Term already exists'
 
+@auth.requires_login()
 def createClass():
     ucscClass = db.course(request.args(0, cast=int)) or redirect(URL('index'))
     db.ucscClass.course_id.default = ucscClass.id
     db.ucscClass.user_id.default = auth.user.id
+    #db.ucscClass.professor_id.default = None
     fields = ['syllabus', 'quarter', 'yr']
     #labels = {'name':'Professor Name'}
     form = SQLFORM(db.ucscClass, fields=fields)
-    form.add_button('Back', URL('showClass', args=ucscClass.id))
-    if form.process(session=None, formname='addClass', onvalidation=check_term).accepted:
+    
+    if form.process(session=None, formname='newClass', onvalidation=check_term).accepted:
         response.flash = 'Class added'
-        #redirect(URL('showClass', args=ucscClass.id))
+        redirect(URL('showClass', args=ucscClass.id))
     elif form.errors:
         response.flash = 'Error: your submission is incomplete'
     else:
         response.flash = 'Complete the form to add a class'
-    info = db(db.ucscClass.course_id==ucscClass.id).select()    
+    #info = db(db.ucscClass.course_id==ucscClass.id).select()    
     return locals()
 
 def editClass():
