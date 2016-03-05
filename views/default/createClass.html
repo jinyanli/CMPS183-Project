@@ -1,0 +1,23 @@
+{{extend 'layout.html'}}
+<body style="background:#184343">
+	<font style="font-family:geneva;font-size:120%;color:#ffd9b9;height:50px">
+        <form action="{{=URL('createClass', args=[ucscClass.id])}}" method="POST">
+            <table><tr>
+            <td>Syllabus &nbsp;</td><td><textarea name="syllabus" cols="50" rows="6" font style="font-family:geneva;color:black;"></textarea></td>
+            </tr><tr>
+            <td>Quarter</td><td><select name="quarter" font style="font-family:geneva;color:black;height:50px">
+            <option value="1">Fall</option>
+            <option value="2">Winter</option>
+            <option value="3">Spring</option>
+            <option value="4">Summer</option>
+            </select></td>
+            </tr><tr>
+            <td>Year</td><td><input type="text" name="yr" placeholder="2016" font style="font-family:geneva;color:black;height:50px;width:100px;"/></td>
+            </tr><tr>
+            <td>&nbsp;</td><td><input type="submit" value="Submit" font style="font-family:geneva;color:#ffd9b9;height:50px"/></td>
+            </tr></table>
+            <input type="hidden" name="_formname" value="newClass" />
+        </form>
+        <br/><br/>
+    </font>
+</body>
