@@ -133,7 +133,7 @@ def createClass():
     #labels = {'name':'Professor Name'}
     form = SQLFORM(db.ucscClass, fields=fields)
     
-    if form.process(session=None, formname='newClass').accepted:#, onvalidation=check_term).accepted:
+    if form.process(session=None, formname='newClass', onvalidation=check_term).accepted:
         response.flash = 'Class added'
         redirect(URL('showClass', args=ucscClass.id))
     elif form.errors:
