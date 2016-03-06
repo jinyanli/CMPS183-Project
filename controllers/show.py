@@ -1,6 +1,7 @@
 @auth.requires_login()
 def showTopic():
 	topic = db.courseTopic(request.args(0, cast=int)) or redirect(URL('default','viewCourseTopic', args=uCourse.id))
+	page = request.args(1, cast=int)
 	db.courseReply.topic_id.default = topic.id
 	db.courseReply.op.default = topic.op
 	db.courseReply.replyOp.default = auth.user.id
