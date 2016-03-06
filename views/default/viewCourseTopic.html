@@ -33,7 +33,7 @@
       <tr bgcolor="#f8f6df" style="font-family:verdana;font-size:100%;color:black;height:40px">
         <td>
           <font style="color:#black;">
-            &nbsp;&nbsp;{{=A(row.title, _href=URL('show','showTopic', args=row.id))}}
+            &nbsp;&nbsp;{{=A(row.title, _href=URL('show','showTopic', args=[row.id, page]))}}
           </font>
         </td>
         <td>

@@ -1,7 +1,7 @@
 {{extend 'layout.html'}}
 
 <font style="font-family:verdana;font-size:120%;color:#ffd9b5;height:50px">
-	{{=A('Back', _href=URL('default', 'viewCourseTopic', args=topic.board_id))}}
+	{{=A('Back', _href=URL('default', 'viewCourseTopic', args=[topic.board_id, page]))}}
 </font>
 {{op = db.auth_user[topic.op]}}
 {{name = op.first_name+ " " +op.last_name}}
