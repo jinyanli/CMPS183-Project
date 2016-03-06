@@ -9,7 +9,7 @@ def showTopic():
 	if form.process().accepted:
 	    response.flash = "Post added"
 	    db(db.courseTopic.id == topic.id).update(replies=topic.replies+1)
-	    redirect(URL('show', 'showTopic', args=topic.id))
+	    redirect(URL('show', 'showTopic', args=[topic.id, page]))
 
 	db.courseTopicReply.replyOp.default = auth.user.id
 	replyForm = SQLFORM(db.courseTopicReply)
