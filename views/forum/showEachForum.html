@@ -49,12 +49,12 @@ h4, h5 {
      </tr>
      {{pass}}
 
-     {{if len(forumVedios):}}
-         {{for vedio in forumVedios:}}
+     {{if len(forumVideos):}}
+         {{for video in forumVideos:}}
          <video width="320" height="200" controls>
-         <source src="{{=URL('download', args=vedio.vedio)}}" type="video/mp4">
+         <source src="{{=URL('download', args=video.video)}}" type="video/mp4">
          </video>
-           
+
            <br>
            {{pass}}
      {{pass}}
