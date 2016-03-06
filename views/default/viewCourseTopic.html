@@ -1,7 +1,11 @@
 {{extend 'layout.html'}}
-<font style="font-family:verdana;font-size:120%;color:#ffd9b5;height:50px">
-  {{=A('Back', _href=URL('default', 'showClass', args=uCourse.id))}}
-</font>
+
+ <ol class="breadcrumb">
+  <li>{{=A('Department', _href=URL('showDepartment'))}}</li>
+  <li>{{=A('Classes', _href=URL('showClass', args=uCourse.id))}}</li>
+  <li class="active">Course Forum</li>
+</ol>
+
 
 <style>
   table, th, td {
@@ -77,7 +81,7 @@
     </div>
   {{else:}}
     <div style = "text-align:right">
-    {{=A('Create A Discussion',  _class="btn btn-primary", _href=URL('create', 'createTopic', args=uCourse.id))}}
+    {{=A('Create A Discussion',  _class="btn btn-primary", _href=URL('create', 'createTopic', args=[uCourse.id, page]))}}
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     </div>
   {{pass}}

@@ -1,5 +1,11 @@
 {{extend 'layout.html'}}
-{{=A('Back To All ' + deslugify(db.course[thisClass.course_id].name), _href=URL('showClass', args=db.course[thisClass.course_id].id))}}
+
+<ol class="breadcrumb" style="background-color:white; border-style: none;">
+  <li>{{=A('Department', _href=URL('showDepartment'))}}</li>
+  <li>{{=A('Course', _href=URL('showCourse', args=thisClass.course_id))}}</li>
+  <li>{{=A('Classes', _href=URL('showClass', args=courseInfo.id))}}</li>
+  <li class="active">Class</li>
+</ol>
 
 <div style="text-align:center">
 {{if thisClass.quarter == "1":}}
