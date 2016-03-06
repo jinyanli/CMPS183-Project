@@ -175,10 +175,10 @@ db.define_table('forumImage',
     Field('image', 'upload')
     )
 
-db.define_table('forumVedio',
+db.define_table('forumVideo',
     Field('post_id', 'reference post', readable=False , writable=False),
     Field('title', 'string', requires= IS_NOT_EMPTY()),
-    Field('vedio', 'upload')
+    Field('video', 'upload')
 )
 #populate(db.post,100)
 #db(db.profReview.rating>5).delete()
