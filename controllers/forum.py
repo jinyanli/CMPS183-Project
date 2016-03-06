@@ -89,6 +89,7 @@ def showEachForum():
     lenComms  = db(db.comm.post_id==forum.id).select(db.comm.ALL)
     comms  = db(db.comm.post_id==forum.id).select(db.comm.ALL, orderby=db.comm.datetime, limitby=(start,stop))
     forumimages= db(db.forumImage.post_id==forum.id).select(db.forumImage.ALL, orderby=db.forumImage.title)
+    forumVedios= db(db.forumVedio.post_id ==forum.id).select(db.forumVedio.ALL, orderby=db.forumVedio.title)
 
     db.forumCommReply.user_id.default = auth.user.id
     replyForm = SQLFORM(db.forumCommReply, record=None,
