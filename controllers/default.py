@@ -255,6 +255,5 @@ def viewCourseTopic():
     limitby=(page*items_per_page,(page+1)*items_per_page+1)
     rows=table.select(limitby=limitby)
     howManyPages = table.count()/items_per_page
-    i = 0
 
     return locals()
