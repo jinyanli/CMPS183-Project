@@ -1,5 +1,11 @@
 {{extend 'layout.html'}}
 {{longname = deslugify(uClass.name)}}
+
+<ol class="breadcrumb" style="background-color:white; border-style: none;">
+  <li>{{=A('Department', _href=URL('showDepartment'))}}</li>
+  <li>{{=A('Course', _href=URL('showCourse', args=uClass.id))}}</li>
+  <li class="active">Classes</li>
+</ol>
 <div class="row">
     <h2 class="col-md-10 pull-left">
         List of Classes for {{=deslugify(db.department[uClass.department_id].short_name).upper()}} {{=uClass.course_num}} {{=deslugify(uClass.name)}}

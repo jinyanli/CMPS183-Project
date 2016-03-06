@@ -1,4 +1,10 @@
 {{extend 'layout.html'}}
+
+<ol class="breadcrumb" style="background-color:white; border-style: none;">
+  <li>{{=A('Department', _href=URL('showDepartment'))}}</li>
+  <li class="active">Course</li>
+</ol>
+
 <div class="row">
     <h2 class="col-md-8 pull-left">List of Courses in Department {{=dept.name}}</h2>
     <div class="h2 pull-right">
