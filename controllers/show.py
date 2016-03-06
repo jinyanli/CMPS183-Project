@@ -1,6 +1,7 @@
 @auth.requires_login()
 def showTopic():
 	topic = db.courseTopic(request.args(0, cast=int)) or redirect(URL('default','viewCourseTopic', args=uCourse.id))
+	page = request.args(1, cast=int)
 	db.courseReply.topic_id.default = topic.id
 	db.courseReply.op.default = topic.op
 	db.courseReply.replyOp.default = auth.user.id
@@ -8,7 +9,7 @@ def showTopic():
 	if form.process().accepted:
 	    response.flash = "Post added"
 	    db(db.courseTopic.id == topic.id).update(replies=topic.replies+1)
-	    redirect(URL('show', 'showTopic', args=topic.id))
+	    redirect(URL('show', 'showTopic', args=[topic.id, page]))
 
 	db.courseTopicReply.replyOp.default = auth.user.id
 	replyForm = SQLFORM(db.courseTopicReply)

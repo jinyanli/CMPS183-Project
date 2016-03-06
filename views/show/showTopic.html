@@ -1,8 +1,12 @@
 {{extend 'layout.html'}}
 
-<font style="font-family:verdana;font-size:120%;color:#ffd9b5;height:50px">
-	{{=A('Back', _href=URL('default', 'viewCourseTopic', args=topic.board_id))}}
-</font>
+ <ol class="breadcrumb">
+  <li>{{=A('Department', _href=URL('showDepartment'))}}</li>
+  <li>{{=A('Course', _href=URL('default', 'showClass', args=topic.board_id))}}</li>
+  <li>{{=A('Course Forum', _href=URL('default', 'viewCourseTopic', args=[topic.board_id, page]))}}</li>
+  <li class="active">Topic</li>
+</ol>
+
 {{op = db.auth_user[topic.op]}}
 {{name = op.first_name+ " " +op.last_name}}
 
@@ -37,12 +41,12 @@ h4, h5 {
 		        		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		        		<i>
 		        			{{=A(name, _href=URL('userProfile','showProfile',args=[op.id], 
-		    				vars=dict(controller=request.controller,function=request.function,args=request.args)))}}
+		    				vars=dict(controller=request.controller,function=request.function,args=[request.args])))}}
 		    			 	posted on {{=topic.datePosted.strftime("%d, %b %Y %I:%M %p")}}
 		    			 	{{if op.id==auth.user_id:}}
 			                	<br>
 			                	<p class="text-right">
-			                		{{=A('Edit your post!', _href=URL("edit_post", "edit_post", args=topic.id))}}
+			                		{{=A('Edit your post!', _href=URL("edit_post", "edit_post", args=[topic.id, page]))}}
 			                	</p>
 			            	{{pass}}
 		        		</i>
@@ -78,7 +82,7 @@ h4, h5 {
 			    			vars=dict(controller=request.controller,function=request.function,args=request.args)))}}
 			    	{{if op.id==auth.user_id:}}
 			        	&nbsp;&nbsp;
-			        	{{=A('Edit', _href=URL("edit_post", "edit_reply", args=[reply.id, topic.id]))}}
+			        	{{=A('Edit', _href=URL("edit_post", "edit_reply", args=[reply.id, topic.id, page]))}}
 			        {{pass}}
 			    </i>
 			    <br>
@@ -108,7 +112,7 @@ h4, h5 {
 		                					- {{=qr.datePosted.strftime("%d, %b %Y %I:%M %p")}}
 											{{if qr.replyOp == auth.user_id:}}
 			        							&nbsp;&nbsp;
-												{{=A('Edit', _href=URL("edit_post", "edit_reply_reply", args=[qr.id, topic.id]))}}
+												{{=A('Edit', _href=URL("edit_post", "edit_reply_reply", args=[qr.id, topic.id, page]))}}
 											{{pass}}
 		                				</h5>
 											<div class="panel-body" style="font-family:verdana;font-size:100%;color:#ffd9b3;">
