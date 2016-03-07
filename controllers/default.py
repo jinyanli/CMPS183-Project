@@ -247,11 +247,13 @@ def viewCourseTopic():
     info = db(db.courseTopic.board_id==uCourse.id).select(orderby=~db.courseTopic.replies)
 
     if len(request.args): 
-        page=int(request.args[0])
+        page=request.args(1, cast=int)
     else: 
         page=0
 
-    items_per_page=1
+    items_per_page = 10
     limitby=(page*items_per_page,(page+1)*items_per_page+1)
-    rows=table.select(db.courseTopic.ALL,limitby=limitby)
+    rows=table.select(limitby=limitby)
+    howManyPages = table.count()/items_per_page
+
     return locals()

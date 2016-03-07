@@ -25,13 +25,15 @@
         <th>&nbsp;&nbsp;&nbsp;Replies</th>
         <th>&nbsp;&nbsp;&nbsp;Course Taken</th>
      </tr> 
-    {{for topic in info:}}
-      {{op = db.auth_user[topic.op]}}
+    {{for i,row in enumerate(rows):}}
+      {{if i==items_per_page:}}
+          {{break}}
+      {{op = db.auth_user[row.op]}}
       {{name = op.first_name+ " " +op.last_name}}
       <tr bgcolor="#f8f6df" style="font-family:verdana;font-size:100%;color:black;height:40px">
         <td>
           <font style="color:#black;">
-            &nbsp;&nbsp;{{=A(topic.title, _href=URL('show','showTopic', args=topic.id))}}
+            &nbsp;&nbsp;{{=A(row.title, _href=URL('show','showTopic', args=row.id))}}
           </font>
         </td>
         <td>
@@ -41,9 +43,9 @@
           </p>
         </td>
         <td>
-          {{if topic.replies != 0:}}
+          {{if row.replies != 0:}}
             <p style="text-align:center;color:#e98c3a">
-              {{lastPostedBy=db(db.courseReply.topic_id==topic.id).select(db.courseReply.ALL, orderby=~db.courseReply.datePosted, limitby=(0,1))}}
+              {{lastPostedBy=db(db.courseReply.topic_id==row.id).select(db.courseReply.ALL, orderby=~db.courseReply.datePosted, limitby=(0,1))}}
               {{=db.auth_user[lastPostedBy[0].replyOp].first_name + " " + db.auth_user[lastPostedBy[0].replyOp].last_name}}
             </p>
           {{else:}}
@@ -54,12 +56,12 @@
         </td>
         <td>
           <p style="text-align:center;color: #e98c3a">
-            {{=topic.replies}}
+            {{=row.replies}}
           </p>
         </td>
         <td>
             <p class="text-capitalize" style="text-align:center;color: #e98c3a">
-            {{=topic.quarter}} {{=topic.yr}}
+            {{=row.quarter}} {{=row.yr}}
           </p>
         </td>
       </tr>
@@ -67,16 +69,27 @@
     </table>
   </div>
 
-{{if (auth.user_id == None):}}
-  <div style = "text-align:right">
-    <font style="font-size:100%;">
-      <i>{{=A('Login to Create A Discussion',_href=URL('default','user'))}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i>
-    </font>
-  </div>
-{{else:}}
-  <div style = "text-align:right">
-  {{=A('Create A Discussion',  _class="btn btn-primary", _href=URL('create', 'createTopic', args=uCourse.id))}}
-  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-  </div>
-{{pass}}
+  {{if (auth.user_id == None):}}
+    <div style = "text-align:right">
+      <font style="font-size:100%;">
+        <i>{{=A('Login to Create A Discussion',_href=URL('default','user'))}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i>
+      </font>
+    </div>
+  {{else:}}
+    <div style = "text-align:right">
+    {{=A('Create A Discussion',  _class="btn btn-primary", _href=URL('create', 'createTopic', args=uCourse.id))}}
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    </div>
+  {{pass}}
+  {{if howManyPages != 0:}}
+    <br>
+    <div style = "text-align:right">
+      <p style="color:#e98c3a;">Page of {{=page+1}}/{{=howManyPages}}
+      {{for x in range(0, howManyPages):}}
+          <a href="{{=URL(args=[uCourse.id, x])}}">{{=x+1}}</a>
+      {{pass}}
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      </p>      
+    </div>
+  {{pass}}
 </body>
