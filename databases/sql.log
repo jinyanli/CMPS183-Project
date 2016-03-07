@@ -19263,3 +19263,219 @@ CREATE TABLE forumVideo(
     title CHAR(512),
     video CHAR(512)
 );
+success!
+success!
+success!
+success!
+timestamp: 2016-03-07T11:30:30.264247
+CREATE TABLE forumVideo(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    post_id INTEGER REFERENCES post (id) ON DELETE CASCADE  ,
+    title CHAR(512),
+    video CHAR(512)
+);
+success!
+success!
+success!
+success!
+timestamp: 2016-03-07T11:30:33.218140
+CREATE TABLE forumVideo(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    post_id INTEGER REFERENCES post (id) ON DELETE CASCADE  ,
+    title CHAR(512),
+    video CHAR(512)
+);
+success!
+success!
+success!
+success!
+timestamp: 2016-03-07T11:37:36.715476
+CREATE TABLE forumVideo(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    post_id INTEGER REFERENCES post (id) ON DELETE CASCADE  ,
+    title CHAR(512),
+    video CHAR(512)
+);
+success!
+success!
+success!
+success!
+timestamp: 2016-03-07T11:38:11.646302
+CREATE TABLE forumVideo(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    post_id INTEGER REFERENCES post (id) ON DELETE CASCADE  ,
+    title CHAR(512),
+    video CHAR(512)
+);
+success!
+success!
+success!
+success!
+timestamp: 2016-03-07T11:38:25.272510
+CREATE TABLE forumVideo(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    post_id INTEGER REFERENCES post (id) ON DELETE CASCADE  ,
+    title CHAR(512),
+    video CHAR(512)
+);
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+timestamp: 2016-03-07T11:39:38.226298
+CREATE TABLE forumVideo(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    post_id INTEGER REFERENCES post (id) ON DELETE CASCADE  ,
+    title CHAR(512),
+    video CHAR(512)
+);
+success!
+success!
+success!
+success!
+timestamp: 2016-03-07T11:39:59.343119
+CREATE TABLE forumVideo(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    post_id INTEGER REFERENCES post (id) ON DELETE CASCADE  ,
+    title CHAR(512),
+    video CHAR(512)
+);
+success!
+success!
+success!
+success!
+timestamp: 2016-03-07T11:49:50.346816
+CREATE TABLE forumVideo(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    post_id INTEGER REFERENCES post (id) ON DELETE CASCADE  ,
+    title CHAR(512),
+    video CHAR(512)
+);
+success!
+success!
+success!
+success!
+timestamp: 2016-03-07T11:50:02.692465
+CREATE TABLE forumVideo(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    post_id INTEGER REFERENCES post (id) ON DELETE CASCADE  ,
+    title CHAR(512),
+    video CHAR(512)
+);
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+timestamp: 2016-03-07T11:52:19.695729
+CREATE TABLE forumVideo(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    post_id INTEGER REFERENCES post (id) ON DELETE CASCADE  ,
+    title CHAR(512),
+    video CHAR(512)
+);
+success!
+success!
+success!
+success!
+timestamp: 2016-03-07T11:53:22.235994
+CREATE TABLE forumVideo(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    post_id INTEGER REFERENCES post (id) ON DELETE CASCADE  ,
+    title CHAR(512),
+    video CHAR(512)
+);
+success!
+success!
+success!
+success!
+timestamp: 2016-03-07T11:53:40.546874
+CREATE TABLE forumVio(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    post_id INTEGER REFERENCES post (id) ON DELETE CASCADE  ,
+    title CHAR(512),
+    video CHAR(512)
+);
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+timestamp: 2016-03-07T11:54:09.241659
+CREATE TABLE forumVideo(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    post_id INTEGER REFERENCES post (id) ON DELETE CASCADE  ,
+    title CHAR(512),
+    video CHAR(512)
+);
+success!
+success!
+success!
+success!
+timestamp: 2016-03-07T12:03:59.897152
+CREATE TABLE forumVideo(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    post_id INTEGER REFERENCES post (id) ON DELETE CASCADE  ,
+    title CHAR(512),
+    video CHAR(512)
+);
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
