@@ -19230,3 +19230,36 @@ success!
 success!
 success!
 success!
+success!
+success!
+success!
+success!
+timestamp: 2016-03-07T11:24:27.572424
+CREATE TABLE forumVideo(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    post_id INTEGER REFERENCES post (id) ON DELETE CASCADE  ,
+    title CHAR(512),
+    video CHAR(512)
+);
+success!
+success!
+success!
+success!
+timestamp: 2016-03-07T11:26:45.977791
+CREATE TABLE forumVideo(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    post_id INTEGER REFERENCES post (id) ON DELETE CASCADE  ,
+    title CHAR(512),
+    video CHAR(512)
+);
+success!
+success!
+success!
+success!
+timestamp: 2016-03-07T11:29:33.306658
+CREATE TABLE forumVideo(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    post_id INTEGER REFERENCES post (id) ON DELETE CASCADE  ,
+    title CHAR(512),
+    video CHAR(512)
+);
