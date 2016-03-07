@@ -48,6 +48,16 @@ h4, h5 {
 
      </tr>
      {{pass}}
+
+     {{if len(forumVideos):}}
+         {{for video in forumVideos:}}
+         <video width="320" height="200" controls>
+         <source src="{{=URL('download', args=video.video)}}" type="video/mp4">
+         </video>
+
+           <br>
+           {{pass}}
+     {{pass}}
 </table>
 </div>
 
@@ -103,7 +113,7 @@ h4, h5 {
             <div id="smallModal" class="modal fade" tabindex="-1" role="dialog">
                 <div class="modal-dialog" >
                     <div class="modal-content" style="background:#1a3936;">
-                      
+
                         <div class="modal-body">
                             {{=replyForm.custom.begin}}
                             <div style = "text-align:left;color: #cc6600;font-size:220%;">Reply:{{=replyForm.custom.widget.body}}</div>
@@ -204,7 +214,7 @@ $(document).ready(function() {
 
 function getValue(){
     var id = {"x":x};
-    var pathname = window.location.pathname; 
+    var pathname = window.location.pathname;
     $.ajax({
         type: "POST",
         url: pathname,
