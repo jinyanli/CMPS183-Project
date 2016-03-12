@@ -1,7 +1,12 @@
 {{left_sidebar_enabled,right_sidebar_enabled=False,('message' in globals())}}
 {{extend 'layout.html'}}
-
-<h1>Sale Textbooks:</h1>
+<style>
+div {
+    border-radius: 5px;
+}
+</style>
+<body  style="background:#fff7e6">
+<h1 style = "text-align:left;color: #cc6600">Textbooks Exchange</h1>
 
 <ol start ="{{=start+1}}">
 {{for book in listings:}}
@@ -59,3 +64,4 @@
 </p>
 {{=A('New post', _class="btn btn-primary", _href=URL('forum', 'addBookItem'))}}
 {{=enterNumber}}
+</body>
