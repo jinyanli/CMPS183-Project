@@ -1,0 +1,70 @@
+
+<!DOCTYPE html>
+<html>
+
+<style>
+input[type=text], select {
+    width: 20%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+input[type=submit] {
+    width: 10%;
+    background-color: #4CAF50;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+input[type=submit]:hover {
+    background-color: #45a049;
+}
+
+div {
+    border-radius: 5px;
+    background-color: #f2f2f2;
+    padding: 40px;
+}
+</style>
+<body style="background:#184343; ">
+
+<h1 style="text-align:center; color:#cc6600"><i>Sale bookes</i></h1>
+
+<div style="text-align:justify">
+{{=form.custom.begin}}
+  <form action="action_page.php">
+    <label for="Title">Title:</label>
+    <br>
+    {{=form.custom.widget.title}}
+    <br>
+    <label for="Price">Price:</label>
+    <br>
+    {{=form.custom.widget.price}}
+    <br>
+    <label for="Description">Description:</label>
+    <br>
+    {{=form.custom.widget.body}}
+    <br>
+    <label for="Description">Photo:</label>
+    <br>
+    {{=form.custom.widget.image}}
+    <br>
+    {{=form.custom.submit}}
+    {{=form.custom.end}}
+  </form>
+  <br><br><br><br>
+ <form method="get" action="/SlugHero/forum/bookExchange">
+ <button class="btn btn-info" type="submit">< back</button>
+ </form>
+</div>
+
+</body>
+</html>

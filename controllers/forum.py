@@ -30,7 +30,7 @@ def addForum():
     db.post.price.writable = db.post.price.readable = False
     db.post.status.writable = db.post.status.readable = False
     db.post.image.writable = db.post.image.readable = False
-    form = crud.create(db.post)
+    form = crud.create(db.post).process(next='generalForum')
     return locals()
 
 def editForum():
@@ -229,10 +229,18 @@ def addBookItem():
     db.post.user_id.default = auth.user.id
     db.post.forumSection.default = 'bookExchange'
     crud.messages.submit_button = 'Place on market'
-    crud.settings.keepvalues = True
-    crud.settings.label_separator = ' :'
     crud.settings.formstyle = 'ul'
-    form = crud.create(db.post).process(next='bookExchange')
+    #form = crud.create(db.post).process(next='bookExchange')
+    form = SQLFORM(db.post, record=None,
+        deletable=False, linkto=None,
+        upload=None, fields=None, labels=None,
+        col3={}, submit_button='Place on market',
+        delete_label='Check to delete:',
+        showid=True, readonly=False,
+        comments=True, keepopts=[],
+        ignore_rw=False, record_id=None,
+        formstyle='bootstrap3_stacked',
+        buttons=['submit'], separator=': ').process(next='bookExchange')
     return locals()
 
 def manageBookItems():
