@@ -1,6 +1,7 @@
 {{extend 'layout.html'}}
 {{import string}}
-
+<html>
+<body style="background:#fff7e6;">
 <div class="row">
     <ul class="breadcrumb" style="background-color:white; border-style: none;">
         <li class="active">
@@ -29,9 +30,7 @@
         </div>
     </td></tr>
     {{pass}}
-    <tr><td></td></tr>
+    <tr><td style= "text-align:right">{{=A('add professor', _class='btn btn-primary', _href=URL('addProfessor'))}}</td></tr>
 </table>
-
-<div class="row">
-    {{=A('add professor', _class='btn btn-primary', _href=URL('addProfessor'))}}
-</div>
+</body>
+</html>

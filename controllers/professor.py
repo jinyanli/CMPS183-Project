@@ -75,5 +75,6 @@ def professorEdit():
 def editProfessorReview():
     profreview=db.profReview(request.args(0,cast=int)) or redirect(URL('professorReview', args=request.args(1,cast=int)))
     if auth.user_id == profreview.user_id:
+       crud.settings.formstyle='bootstrap3_stacked'
        form = crud.update(db.profReview, profreview, next=URL('professorReview', args=request.args(1,cast=int)))
     return dict(form=form)

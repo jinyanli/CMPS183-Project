@@ -1,7 +1,7 @@
 {{extend 'layout.html'}}
 <!DOCTYPE html>
-
 <html>
+
 <style>
 input[type=text], select {
     width: 100%;
@@ -22,13 +22,6 @@ input[type=submit] {
 </style>
 <body style="background:#fff7e6; ">
 
-<div>
-    <ul class="breadcrumb" style="background-color:white; border-style: none;">
-        <li >{{=A('List of Professors', _href=URL('showProfessor'))}}</li>
-        <li >{{=A('Professor Review', _href=URL('professorReview', args=prof.id))}}</li>
-        <li class="active"><a href="#">Edit Professor</a></li>
-    </ul>
-</div>
 <h1 style="text-align:center; color:#cc6600"><i></i></h1>
 
 <div style="text-align:justify">
@@ -58,12 +51,13 @@ input[type=submit] {
     <br>
     <br>
     <br>
-    <label for="Delete" style="color:#cc6600">Delete</label>
-    {{=form.custom.delete}}
-    <br>
-    <br>
     <div style="text-align:right">{{=form.custom.submit}}</div>
     {{=form.custom.end}}
+  </form>
+  <br><br><br><br>
+ <form method="get" action="/SlugHero/professor/showProfessor">
+ <button class="btn btn-info" type="submit">< back</button>
+ </form>
 </div>
 
 </body>
