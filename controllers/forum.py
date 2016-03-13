@@ -30,7 +30,17 @@ def addForum():
     db.post.price.writable = db.post.price.readable = False
     db.post.status.writable = db.post.status.readable = False
     db.post.image.writable = db.post.image.readable = False
-    form = crud.create(db.post).process(next='generalForum')
+    #form = crud.create(db.post)..process(next='generalForum')
+    form=SQLFORM(db.post, record=None,
+        deletable=False, linkto=None,
+        upload=None, fields=None, labels=None,
+        col3={}, submit_button='Post Discussion',
+        delete_label='Check to delete:',
+        showid=True, readonly=False,
+        comments=True, keepopts=[],
+        ignore_rw=False, record_id=None,
+        formstyle='bootstrap3_stacked',
+        buttons=['submit'], separator=': ').process(next='generalForum')
     return locals()
 
 def editForum():
