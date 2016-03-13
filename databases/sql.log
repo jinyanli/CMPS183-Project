@@ -29334,9 +29334,16 @@ success!
 success!
 success!
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> Stashed changes
 =======
+>>>>>>> refs/heads/3/12
+=======
+=======
+=======
+>>>>>>> Stashed changes
+>>>>>>> refs/remotes/origin/master
 >>>>>>> refs/heads/3/12
 success!
 success!
@@ -29344,12 +29351,20 @@ success!
 success!
 success!
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> refs/heads/3/12
 timestamp: 2016-03-14T02:53:21.410263
 CREATE TABLE localImg(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     img CHAR(512)
 );
+<<<<<<< HEAD
 =======
+>>>>>>> refs/heads/3/12
+=======
+>>>>>>> refs/remotes/origin/master
 >>>>>>> refs/heads/3/12
 success!
 success!
@@ -29357,16 +29372,29 @@ success!
 success!
 success!
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> refs/heads/3/12
 timestamp: 2016-03-14T02:54:42.416878
 CREATE TABLE localImg(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     img CHAR(512)
 );
+<<<<<<< HEAD
+=======
+>>>>>>> refs/remotes/origin/master
+>>>>>>> refs/heads/3/12
 success!
 success!
 success!
 success!
 success!
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> refs/heads/3/12
 timestamp: 2016-03-14T02:55:01.493020
 CREATE TABLE localImg(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -29393,7 +29421,26 @@ CREATE TABLE localImg(
     img CHAR(512)
 );
 success!
+<<<<<<< HEAD
 =======
+>>>>>>> refs/heads/3/12
+=======
+>>>>>>> refs/remotes/origin/master
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
 >>>>>>> refs/heads/3/12
 success!
 success!
