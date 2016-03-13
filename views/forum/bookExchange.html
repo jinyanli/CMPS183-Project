@@ -55,7 +55,7 @@ div {
 {{=A(showNum+1,_class="btn btn-link", _href=(URL(args=(showNum))))}}
 {{pass}}
 {{pass}}
-{{if len(listings)>=10:}}
+{{if len(listings)>10:}}
 {{=A('>',_class="btn btn-link", _href=(URL(args=(page+1))))}}
 {{pass}}
 {{if number - page >2:}}
