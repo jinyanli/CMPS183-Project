@@ -92,12 +92,14 @@ def showCourse():
 @auth.requires_login()
 def courseCreate():
     db.course.department_id.default = request.args(0,cast=int)
+    crud.settings.formstyle='bootstrap3_stacked'
     form = crud.create(db.course,next=URL('showCourse',args=request.args(0,cast=int)))
     return locals()
 
 @auth.requires_login()
 def courseEdit():
     course = db.course(request.args(0,cast=int)) or redirect(URL('showCourse',args=request.args(0,cast=int)))
+    crud.settings.formstyle='bootstrap3_stacked'
     form = crud.update(db.course,course,next='showCourse')
     return locals()
 
