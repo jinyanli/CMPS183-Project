@@ -1,4 +1,10 @@
 {{extend 'layout.html'}}
 
-
-<h1>{{=message}}</h1>
+<html>
+<body style="background:#fff7e6;">
+<h1 style="text-align:left; color:#cc6600">{{=message}}</h1>
+{{for image in images:}}
+<img  style= "width:1024px;" align="middle" src="{{=URL('download', args=image.img)}}" />
+{{pass}}
+</body>
+</html>

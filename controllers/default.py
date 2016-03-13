@@ -15,8 +15,9 @@ crud = Crud(db)
 
 
 def index():
-    response.flash = T("Slug Hero")
-    return dict(message=T('Welcome to Slug Hero'))
+    images = db(db.localImg.id==1).select(db.localImg.ALL)
+    message=T('Welcome to Slug Hero')
+    return locals()
 
 
 
