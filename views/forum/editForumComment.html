@@ -1,0 +1,49 @@
+{{extend 'layout.html'}}
+<!DOCTYPE html>
+<html>
+
+<style>
+input[type=text], select {
+    width: 100%;
+
+}
+
+input[type=submit] {
+    
+    background-color: #4CAF50;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+</style>
+<body style="background:#184343; ">
+
+<h1 style="text-align:center; color:#cc6600"><i>Edit Comment</i></h1>
+
+<div style="text-align:justify">
+{{=form.custom.begin}}
+  <form action="action_page.php" >
+
+    <label for="Description" style="color:#cc6600">Body</label>
+
+    <br>
+    {{=form.custom.widget.body}}
+    <br>
+    <br>
+    <label for="Delete" style="color:#cc6600">Delete the Post</label>
+    {{=form.custom.delete}}
+    <br>
+    <br>
+    <div style="text-align:right">{{=form.custom.submit}}</div>
+    {{=form.custom.end}}
+  </form>
+
+
+</div>
+
+</body>
+</html>

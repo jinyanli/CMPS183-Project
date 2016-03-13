@@ -171,7 +171,6 @@ db.define_table('privateMessage',
 
 db.define_table('forumImage',
     Field('post_id', 'reference post', readable=False , writable=False),
-    Field('title', 'string', requires= IS_NOT_EMPTY()),
     Field('image', 'upload')
     )
 
