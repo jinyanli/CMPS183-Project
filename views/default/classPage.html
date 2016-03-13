@@ -1,5 +1,6 @@
 {{extend 'layout.html'}}
-
+<html>
+<body style="background:#fff7e6;">
 <ol class="breadcrumb" style="background-color:white; border-style: none;">
   <li>{{=A('Department', _href=URL('showDepartment'))}}</li>
   <li>{{=A('Course', _href=URL('showCourse', args=thisClass.course_id))}}</li>
@@ -104,10 +105,13 @@
 </table>
 {{pass}}
 {{pass}}
-    </div>
+</div>
 {{pass}}
 <div class="col-md-4" id="chartContainer" style="height: 300px; width: 25%;"></div>
 </form>
+</body>
+</html>
+
 <script src="/SlugHero/static/js/canvasjs.min.js"></script>
 <script type="text/javascript">
 

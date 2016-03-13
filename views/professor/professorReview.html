@@ -1,5 +1,7 @@
 {{extend 'layout.html'}}
 {{from gluon.tools import prettydate}}
+<html>
+<body style="background:#fff7e6;">
 <div>
     <ul class="breadcrumb" style="background-color:white; border-style: none;">
         <li >{{=A('List of Professors', _href=URL('showProfessor'))}}</li>
@@ -100,3 +102,5 @@
 {{if len(reviews)>=10:}}
 {{=A('next',_class="btn btn-info", _href=(URL(request.function, args=(prof.id, page+1))))}}
 {{pass}}
+</body>
+</html>
