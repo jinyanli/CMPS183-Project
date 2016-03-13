@@ -2,13 +2,13 @@
 {{import string}}
 {{student=db.auth_user(book.user_id)}}
 
-<body  style="background:#fff7e6">
-<h1>Book photo</h1>
+<body  style="background:#ffd699">
+<h1></h1>
 <div style="text-align:center">
     <img
          class="img-thumbnail" width="190px" height="250"src="{{=URL('download', args=book.image)}}" />
 </div>
-<div class ="well" style="background:#f2f2f2">
+<div class ="well" style="background:#fff7e6">
     <h2>{{=book.title}}</h2>
     <h2 style="color:red">
         Price: {{=book.price}}$
@@ -37,8 +37,8 @@
     <i>User: {{=A(string.capwords(commStudent.first_name+' '+commStudent.last_name), _href=URL('userProfile','showProfile',args=[commStudent.id], vars=dict(controller=request.controller,function=request.function,args=request.args)))}}
        Time: {{=comment.datetime}}</i>
 </div>
-<div class ="well">
-    <ul style="list-style-type:none">
+<div class ="well" style="background:#fff7e6">
+    <ul style="list-style-type:none" >
         <li>{{=comment.body}}</li>
     </ul>
     {{if auth.user_id == comment.user_id:}}
@@ -101,7 +101,7 @@
 </p>
 
 <div style="text-align:justify">
-<h2>New Post:</h2>
+<h2>New Comments:</h2>
 <ul style="list-style-type:none">
 {{=form.custom.begin}}
 {{=form.custom.widget.body}}

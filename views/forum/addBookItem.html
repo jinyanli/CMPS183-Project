@@ -4,7 +4,7 @@
 
 <style>
 input[type=text], select {
-    width: 20%;
+
     padding: 12px 20px;
     margin: 8px 0;
     display: inline-block;
@@ -14,7 +14,7 @@ input[type=text], select {
 }
 
 input[type=submit] {
-    width: 10%;
+    
     background-color: #4CAF50;
     color: white;
     padding: 14px 20px;
@@ -48,7 +48,10 @@ div {
     <label for="Price">Price:</label>
     <br>
     {{=form.custom.widget.price}}
-    <br>
+    <br><br>
+    <label for="Price">Available for sale:</label>
+    {{=form.custom.widget.status}}
+    <br><br>
     <label for="Description">Description:</label>
     <br>
     {{=form.custom.widget.body}}
