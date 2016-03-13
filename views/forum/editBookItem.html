@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 
 <html>
-
 <style>
 input[type=text], select {
 
@@ -25,7 +24,7 @@ input[type=submit] {
 }
 
 input[type=submit]:hover {
-    background-color: #45a049;
+    background-color: #fff7e6;
 }
 
 div {
@@ -36,7 +35,7 @@ div {
 </style>
 <body style="background:#184343; ">
 
-<h1 style="text-align:center; color:#cc6600"><i>Sale bookes</i></h1>
+<h1 style="text-align:center; color:#fff7e6"><i>Edit</i></h1>
 
 <div style="text-align:justify">
 {{=form.custom.begin}}
@@ -53,20 +52,19 @@ div {
     {{=form.custom.widget.status}}
     <br><br>
     <label for="Description">Description:</label>
-    <br>
+    <br><br>
     {{=form.custom.widget.body}}
-    <br>
+    <br><br><br>
     <label for="Description">Photo:</label>
-    <br>
     {{=form.custom.widget.image}}
+    <br>
+    <label for="Delete">Delete the Post</label>
+    {{=form.custom.delete}}
     <br>
     {{=form.custom.submit}}
     {{=form.custom.end}}
   </form>
   <br><br><br><br>
- <form method="get" action="/SlugHero/forum/bookExchange">
- <button class="btn btn-info" type="submit">< back</button>
- </form>
 </div>
 
 </body>
