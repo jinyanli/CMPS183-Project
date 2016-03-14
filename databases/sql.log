@@ -22078,6 +22078,7 @@ success!
 success!
 success!
 success!
+<<<<<<< Updated upstream
 success!
 success!
 success!
@@ -29332,3 +29333,15 @@ success!
 success!
 success!
 success!
+=======
+>>>>>>> Stashed changes
+success!
+success!
+success!
+success!
+success!
+timestamp: 2016-03-14T02:53:21.410263
+CREATE TABLE localImg(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    img CHAR(512)
+);
