@@ -148,6 +148,7 @@ def createClass():
 
 def editClass():
     aClass = db.ucscClass(request.args(0,cast=int)) or redirect(URL('showClass',args=request.args(0,cast=int)))
+    crud.settings.formstyle='bootstrap3_stacked'
     form = crud.update(db.ucscClass,aClass,next=URL('showClass',args=aClass.course_id))
     return dict(form=form)
 
