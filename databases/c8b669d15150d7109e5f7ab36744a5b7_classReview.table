@@ -22,7 +22,7 @@ sS'type'
 p10
 S'text'
 p11
-ssS'quarter'
+ssS'yr'
 p12
 (dp13
 g4
@@ -30,7 +30,7 @@ I512
 sg5
 I00
 sg6
-I6
+I7
 sg7
 S'CHAR(512)'
 p14
@@ -56,7 +56,7 @@ I00
 sg10
 S'reference  auth_user'
 p19
-ssS'enjoyment'
+ssS'difficulty'
 p20
 (dp21
 g4
@@ -64,7 +64,7 @@ I512
 sg5
 I00
 sg6
-I9
+I8
 sg7
 S'DOUBLE'
 p22
@@ -73,9 +73,25 @@ I00
 sg10
 S'double'
 p23
-ssS'professor_id'
+ssS'enjoyment'
 p24
 (dp25
+g4
+I512
+sg5
+I00
+sg6
+I9
+sg7
+S'DOUBLE'
+p26
+sg9
+I00
+sg10
+g23
+ssS'professor_id'
+p27
+(dp28
 g4
 I512
 sg5
@@ -84,28 +100,12 @@ sg6
 I4
 sg7
 S'INTEGER REFERENCES professor (id) ON DELETE CASCADE  '
-p26
+p29
 sg9
 I00
 sg10
 S'reference professor'
-p27
-ssS'grade'
-p28
-(dp29
-g4
-I512
-sg5
-I00
-sg6
-I10
-sg7
-S'CHAR(512)'
 p30
-sg9
-I00
-sg10
-g15
 ssS'datetime'
 p31
 (dp32
@@ -123,7 +123,7 @@ I00
 sg10
 S'datetime'
 p34
-ssS'difficulty'
+ssS'grade'
 p35
 (dp36
 g4
@@ -131,14 +131,14 @@ I512
 sg5
 I00
 sg6
-I8
+I10
 sg7
-S'DOUBLE'
+S'CHAR(512)'
 p37
 sg9
 I00
 sg10
-g23
+g15
 ssS'ucscclass_id'
 p38
 (dp39
@@ -156,7 +156,7 @@ I00
 sg10
 S'reference  ucscClass'
 p41
-ssS'yr'
+ssS'quarter'
 p42
 (dp43
 g4
@@ -164,7 +164,7 @@ I512
 sg5
 I00
 sg6
-I7
+I6
 sg7
 S'CHAR(512)'
 p44
