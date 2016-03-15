@@ -253,7 +253,7 @@ def viewCourseTopic():
 
     items_per_page = 10
     limitby=(page*items_per_page,(page+1)*items_per_page+1)
-    rows=table.select(limitby=limitby)
+    rows=table.select(limitby=limitby, orderby=~db.courseTopic.replies)
     howManyPages = table.count()/items_per_page
 
     return locals()
