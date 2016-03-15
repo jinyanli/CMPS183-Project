@@ -180,9 +180,6 @@ db.define_table('forumVideo',
     Field('video', 'upload')
 )
 
-db.define_table('localImg',
-    Field('img', 'upload')
-)
 #populate(db.post,100)
 #db(db.profReview.rating>5).delete()
 #db['forumVideo'].drop()
