@@ -30,17 +30,31 @@ def addForum():
     db.post.price.writable = db.post.price.readable = False
     db.post.status.writable = db.post.status.readable = False
     db.post.image.writable = db.post.image.readable = False
-    form = crud.create(db.post)
+    #form = crud.create(db.post)..process(next='generalForum')
+    form=SQLFORM(db.post, record=None,
+        deletable=False, linkto=None,
+        upload=None, fields=None, labels=None,
+        col3={}, submit_button='Post Discussion',
+        delete_label='Check to delete:',
+        showid=True, readonly=False,
+        comments=True, keepopts=[],
+        ignore_rw=False, record_id=None,
+        formstyle='bootstrap3_stacked',
+        buttons=['submit'], separator=': ').process(next='generalForum')
     return locals()
 
-def editForum():
 
-    forum = db.post(request.args(0,cast=int))
+
+@auth.requires_login()
+def editForum():
+    forum = db.post(request.args(0,cast=int)) or redirect(URL('showEachForum'))
     #db.post.post_id.default = forum.id
     db.post.price.writable = db.post.price.readable = False
     db.post.status.writable = db.post.status.readable = False
     db.post.image.writable = db.post.image.readable = False
-    form = crud.update(db.post, forum, next=URL('showEachForum', args=request.args(0,cast=int)))
+    if auth.user_id == forum.user_id:
+    	crud.settings.formstyle='bootstrap3_stacked'
+    	form = crud.update(db.post, forum, next=URL('showEachForum', args=request.args(0,cast=int)))
     return locals()
 
 def addForumImage():
@@ -88,7 +102,7 @@ def showEachForum():
         redirect(URL('showEachForum', args=forum.id))
     lenComms  = db(db.comm.post_id==forum.id).select(db.comm.ALL)
     comms  = db(db.comm.post_id==forum.id).select(db.comm.ALL, orderby=db.comm.datetime, limitby=(start,stop))
-    forumimages= db(db.forumImage.post_id==forum.id).select(db.forumImage.ALL, orderby=db.forumImage.title)
+    forumimages= db(db.forumImage.post_id==forum.id).select(db.forumImage.ALL)
     forumVideos= db(db.forumVideo.post_id ==forum.id).select(db.forumVideo.ALL, orderby=db.forumVideo.title)
 
     db.forumCommReply.user_id.default = auth.user.id
@@ -111,6 +125,22 @@ def showEachForum():
         commIdreply = db(db.forumCommReply.id == replyForm.vars.id).select().first()
         commIdreply.update_record(comm_id = session.myCommid)
         redirect(URL('showEachForum', args=request.args(0,cast=int)))
+
+    #add image one by one
+    db.forumImage.post_id.default = forum.id
+    imagess = SQLFORM(db.forumImage,record=None,
+        deletable=False, linkto=None,
+        upload=None, fields=None, labels=None,
+        col3={}, submit_button='Post image',
+        delete_label='Check to delete:',
+        showid=True, readonly=False,
+        comments=True, keepopts=[],
+        ignore_rw=False, record_id=None,
+        formstyle='bootstrap3_stacked',
+        buttons=['submit'], separator=':')
+    if form.process().accepted:
+        # Successful processing.
+        session.flash = T("Image added")
 
     return locals()
 
@@ -137,7 +167,8 @@ def replyComment():
 def editForumComment():
     editComm=db.comm(request.args(0,cast=int)) or redirect(URL('showEachForum'))
     if auth.user_id == editComm.user_id:
-       form = crud.update(db.comm, editComm, next=URL('showEachForum', args=request.args(1,cast=int)))
+    	crud.settings.formstyle='bootstrap3_stacked'
+        form = crud.update(db.comm, editComm, next=URL('showEachForum', args=request.args(1,cast=int)))
     return dict(form=form)
 
 @auth.requires_login()
@@ -229,14 +260,26 @@ def addBookItem():
     db.post.user_id.default = auth.user.id
     db.post.forumSection.default = 'bookExchange'
     crud.messages.submit_button = 'Place on market'
-    crud.settings.keepvalues = True
-    crud.settings.label_separator = ' :'
     crud.settings.formstyle = 'ul'
-    form = crud.create(db.post).process(next='bookExchange')
+    #form = crud.create(db.post).process(next='bookExchange')
+    form = SQLFORM(db.post, record=None,
+        deletable=False, linkto=None,
+        upload=None, fields=None, labels=None,
+        col3={}, submit_button='Place on market',
+        delete_label='Check to delete:',
+        showid=True, readonly=False,
+        comments=True, keepopts=[],
+        ignore_rw=False, record_id=None,
+        formstyle='bootstrap3_stacked',
+        buttons=['submit'], separator=': ').process(next='bookExchange')
     return locals()
 
 def manageBookItems():
     grid = SQLFORM.grid(db.post)
+    return locals()
+
+def manageForumImage():
+    grid = SQLFORM.grid(db.forumImage)
     return locals()
 
 @auth.requires_login()

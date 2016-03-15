@@ -1,8 +1,10 @@
 {{extend 'layout.html'}}
+<html>
+<body style="background:#fff7e6;">
 <table class="table" style="margin-top: 20px; width: 60%;">
   <tr>
-      <th>Department</th>
-      <th></th>
+      <th style= "font-size:150%;" >Departments</th>
+      <th style= "font-size:150%;"></th>
       <th></th>
   </tr>
   {{for dept in depts:}}
@@ -13,8 +15,10 @@
   </tr>
   {{pass}}
   <tr>
-    <td>{{=A('add Departments',_href=URL('departmentCreate'))}}</td>
     <td></td>
     <td></td>
+    <td style="text-align:right">{{=A('Add More Departments', _class='btn btn-primary',_href=URL('departmentCreate'))}}</td>
   </tr>
 </table>
+</body>
+</html>

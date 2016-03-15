@@ -1,7 +1,7 @@
 {{extend 'layout.html'}}
 <!DOCTYPE html>
-
 <html>
+
 <style>
 input[type=text], select {
     width: 100%;
@@ -20,42 +20,37 @@ input[type=submit] {
 }
 
 </style>
-<body style="background:#fff7e6; ">
+<body style="background:#184343; ">
 
-<div>
-    <ul class="breadcrumb" style="background-color:white; border-style: none;">
-        <li >{{=A('List of Professors', _href=URL('showProfessor'))}}</li>
-        <li >{{=A('Professor Review', _href=URL('professorReview', args=prof.id))}}</li>
-        <li class="active"><a href="#">Edit Professor</a></li>
-    </ul>
-</div>
 <h1 style="text-align:center; color:#cc6600"><i></i></h1>
 
 <div style="text-align:justify">
 {{=form.custom.begin}}
   <form action="action_page.php" >
-    <label for="Title" style="color:#cc6600">First Name</label>
-    <br>
-    {{=form.custom.widget.first_name}}
-    <br>
-    <br>
-    <br>
-    <label for="Title" style="color:#cc6600">Last Name</label>
-    <br>
-    {{=form.custom.widget.last_name}}
-    <br>
-    <br>
-    <br>
-    <label for="Description" style="color:#cc6600">Image</label>
 
+    <label for="Description" style="color:#cc6600">Syllabus</label>
     <br>
-    {{=form.custom.widget.image}}
+    {{=form.custom.widget.syllabus}}
     <br>
     <br>
-    <label for="Title" style="color:#cc6600">Select a Department</label>
+    <label for="Description" style="color:#cc6600">Quarter</label>
     <br>
-    {{=form.custom.widget.department_id}}
+    {{=form.custom.widget.quarter}}
     <br>
+    <br>
+    <label for="Description" style="color:#cc6600">Year</label>
+    <br>
+    {{=form.custom.widget.yr}}
+    <br>
+    <br>
+    <label for="Description" style="color:#cc6600">Term</label>
+    <br>
+    {{=form.custom.widget.term}}
+    <br>
+    <br>
+    <label for="Description" style="color:#cc6600">Select a Professor</label>
+    <br>
+    {{=form.custom.widget.professor_id}}
     <br>
     <br>
     <label for="Delete" style="color:#cc6600">Delete</label>
@@ -64,6 +59,9 @@ input[type=submit] {
     <br>
     <div style="text-align:right">{{=form.custom.submit}}</div>
     {{=form.custom.end}}
+  </form>
+
+
 </div>
 
 </body>

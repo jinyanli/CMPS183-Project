@@ -23,7 +23,11 @@ h4, h5 {
 <div  class ='well' style="background:#2c2a35;">
 <table  style="width:88%; ">
     <tr bgcolor="#184343" size="6" style="font-family:verdana;font-size:90%;color:white;height:90px">
-        <th ><div style="font-family:verdana;font-size:200%;color:#ffd9b3;" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{=forum.title}}</div>
+        <th ><div style="font-family:verdana;font-size:200%;color:#ffd9b3;" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{=forum.title}}
+        {{if auth.user_id == forum.user_id:}}
+            <div style="text-align:right; font-size:50%;">{{=A('Edit', _href=URL('editForum',args=[forum.id]))}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+        {{pass}}
+        </div>
         <div style = "text-align:left;color: #cc6600;font-size:90%;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <i>{{=(student.first_name+' '+student.last_name)}} created by {{=forum.datetime}}</i></div>
         </th>
@@ -34,7 +38,7 @@ h4, h5 {
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{=forum.body}}</p></div>
         </td>
     </tr>
-    {{forumimages}}
+
     {{if len(forumimages): }}
      <tr bgcolor="#184343" style="height:80px">
      <td><div class="one" id="one" style = "text-align:center"> <img class="fullImage" src="{{=URL('download', args=forumimages[0].image)}}" /></div>
@@ -44,11 +48,13 @@ h4, h5 {
           <img id="imagesrc" style= "width:70px; height:70px;" onmouseover="bigImg(this)" onmouseout="normalImg(this)" class="img-thumbnail" src="{{=URL('download', args=image.image)}}" />
         {{pass}}
         {{=(A("add image", _href=URL('addForumImage', args=image.post_id)))}}
+
      </td>
 
      </tr>
      {{pass}}
-
+   
+     
      {{if len(forumVideos):}}
          {{for video in forumVideos:}}
          <video width="320" height="200" controls>

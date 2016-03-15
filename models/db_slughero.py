@@ -171,7 +171,6 @@ db.define_table('privateMessage',
 
 db.define_table('forumImage',
     Field('post_id', 'reference post', readable=False , writable=False),
-    Field('title', 'string', requires= IS_NOT_EMPTY()),
     Field('image', 'upload')
     )
 
@@ -180,5 +179,8 @@ db.define_table('forumVideo',
     Field('title', 'string', requires= IS_NOT_EMPTY()),
     Field('video', 'upload')
 )
+
 #populate(db.post,100)
 #db(db.profReview.rating>5).delete()
+#db['forumVideo'].drop()
+#db.commit()

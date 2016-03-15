@@ -132,7 +132,7 @@ table, th, td {
 {{=A(showNum+1,_class="btn btn-link", _href=(URL(args=(showNum))))}}
 {{pass}}
 {{pass}}
-{{if number -page >=1:}}
+{{if number -page >1:}}
 {{=A('>',_class="btn btn-link", _href=(URL(args=(page+1))))}}
 {{pass}}
 {{if number - page >2:}}

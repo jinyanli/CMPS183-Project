@@ -1,6 +1,7 @@
 {{extend 'layout.html'}}
 {{import string}}
-
+<html>
+<body style="background:#fff7e6;">
 <div class="row">
     <ul class="breadcrumb" style="background-color:white; border-style: none;">
         <li class="active">
@@ -10,7 +11,7 @@
 </div>
 
 <table class="table" style="width: 60%;">
-    <tr><th>Department <small>(click to reveal professors)</small></th></tr>
+    <tr><th  style="font-size:150%;">Department <small>(click to reveal professors)</small></th></tr>
     {{for dept in depts:}}
     <tr><td>
         <a data-toggle="collapse" href="#{{=dept.short_name}}" style="font-weight:bold;">
@@ -29,9 +30,7 @@
         </div>
     </td></tr>
     {{pass}}
-    <tr><td></td></tr>
+    <tr><td style= "text-align:right">{{=A('add professor', _class='btn btn-primary', _href=URL('addProfessor'))}}</td></tr>
 </table>
-
-<div class="row">
-    {{=A('add professor', _class='btn btn-primary', _href=URL('addProfessor'))}}
-</div>
+</body>
+</html>

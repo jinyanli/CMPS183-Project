@@ -1,4 +1,4 @@
-timestamp: 2016-03-07T11:18:14.767000
+timestamp: 2016-03-15T13:42:05.872000
 CREATE TABLE auth_user(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     first_name CHAR(128),
@@ -16,21 +16,21 @@ CREATE TABLE auth_user(
     show_email CHAR(1)
 );
 success!
-timestamp: 2016-03-07T11:18:15.040000
+timestamp: 2016-03-15T13:42:06.056000
 CREATE TABLE auth_group(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     role CHAR(512),
     description TEXT
 );
 success!
-timestamp: 2016-03-07T11:18:15.289000
+timestamp: 2016-03-15T13:42:06.176000
 CREATE TABLE auth_membership(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     user_id INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  ,
     group_id INTEGER REFERENCES auth_group (id) ON DELETE CASCADE  
 );
 success!
-timestamp: 2016-03-07T11:18:15.401000
+timestamp: 2016-03-15T13:42:06.301000
 CREATE TABLE auth_permission(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     group_id INTEGER REFERENCES auth_group (id) ON DELETE CASCADE  ,
@@ -39,7 +39,7 @@ CREATE TABLE auth_permission(
     record_id INTEGER
 );
 success!
-timestamp: 2016-03-07T11:18:15.546000
+timestamp: 2016-03-15T13:42:06.421000
 CREATE TABLE auth_event(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     time_stamp TIMESTAMP,
@@ -49,7 +49,7 @@ CREATE TABLE auth_event(
     description TEXT
 );
 success!
-timestamp: 2016-03-07T11:18:15.659000
+timestamp: 2016-03-15T13:42:06.575000
 CREATE TABLE auth_cas(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     user_id INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  ,
@@ -59,14 +59,14 @@ CREATE TABLE auth_cas(
     renew CHAR(1)
 );
 success!
-timestamp: 2016-03-07T11:18:15.780000
+timestamp: 2016-03-15T13:42:06.704000
 CREATE TABLE department(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     name CHAR(512) UNIQUE,
     short_name CHAR(512) UNIQUE
 );
 success!
-timestamp: 2016-03-07T11:18:15.893000
+timestamp: 2016-03-15T13:42:06.831000
 CREATE TABLE course(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     department_id INTEGER REFERENCES department (id) ON DELETE CASCADE  ,
@@ -75,7 +75,7 @@ CREATE TABLE course(
     description TEXT
 );
 success!
-timestamp: 2016-03-07T11:18:15.994000
+timestamp: 2016-03-15T13:42:06.945000
 CREATE TABLE professor(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     first_name CHAR(512),
@@ -87,7 +87,7 @@ CREATE TABLE professor(
     datetime TIMESTAMP
 );
 success!
-timestamp: 2016-03-07T11:18:16.111000
+timestamp: 2016-03-15T13:42:07.097000
 CREATE TABLE ucscClass(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     course_id INTEGER REFERENCES course (id) ON DELETE CASCADE  ,
@@ -103,7 +103,7 @@ CREATE TABLE ucscClass(
     datetime TIMESTAMP
 );
 success!
-timestamp: 2016-03-07T11:18:16.244000
+timestamp: 2016-03-15T13:42:07.273000
 CREATE TABLE classReview(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     user_id INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  ,
@@ -118,7 +118,7 @@ CREATE TABLE classReview(
     datetime TIMESTAMP
 );
 success!
-timestamp: 2016-03-07T11:18:16.376000
+timestamp: 2016-03-15T13:42:07.398000
 CREATE TABLE post(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     ucscClass_id INTEGER REFERENCES ucscClass (id) ON DELETE CASCADE  ,
@@ -133,7 +133,7 @@ CREATE TABLE post(
     image CHAR(512)
 );
 success!
-timestamp: 2016-03-07T11:18:16.513000
+timestamp: 2016-03-15T13:42:07.574000
 CREATE TABLE comm(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     user_id INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  ,
@@ -142,7 +142,7 @@ CREATE TABLE comm(
     datetime TIMESTAMP
 );
 success!
-timestamp: 2016-03-07T11:18:16.640000
+timestamp: 2016-03-15T13:42:07.704000
 CREATE TABLE forumCommReply(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     user_id INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  ,
@@ -151,7 +151,7 @@ CREATE TABLE forumCommReply(
     body TEXT
 );
 success!
-timestamp: 2016-03-07T11:18:16.788000
+timestamp: 2016-03-15T13:42:07.844000
 CREATE TABLE studentGrade(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     user_id INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  ,
@@ -160,7 +160,7 @@ CREATE TABLE studentGrade(
     datetime TIMESTAMP
 );
 success!
-timestamp: 2016-03-07T11:18:16.962000
+timestamp: 2016-03-15T13:42:08.021000
 CREATE TABLE profReview(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     professor_id INTEGER REFERENCES professor (id) ON DELETE CASCADE  ,
@@ -176,7 +176,7 @@ CREATE TABLE profReview(
     datetime TIMESTAMP
 );
 success!
-timestamp: 2016-03-07T11:18:17.164000
+timestamp: 2016-03-15T13:42:08.194000
 CREATE TABLE note(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     title CHAR(512),
@@ -187,7 +187,7 @@ CREATE TABLE note(
     datetime TIMESTAMP
 );
 success!
-timestamp: 2016-03-07T11:18:17.330000
+timestamp: 2016-03-15T13:42:08.379000
 CREATE TABLE textbook(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     title CHAR(512),
@@ -196,7 +196,7 @@ CREATE TABLE textbook(
     isbn INTEGER UNIQUE
 );
 success!
-timestamp: 2016-03-07T11:18:17.485000
+timestamp: 2016-03-15T13:42:08.522000
 CREATE TABLE courseTopic(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     board_id INTEGER REFERENCES course (id) ON DELETE CASCADE  ,
@@ -209,7 +209,7 @@ CREATE TABLE courseTopic(
     replies INTEGER
 );
 success!
-timestamp: 2016-03-07T11:18:17.661000
+timestamp: 2016-03-15T13:42:08.646000
 CREATE TABLE courseReply(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     topic_id INTEGER REFERENCES courseTopic (id) ON DELETE CASCADE  ,
@@ -219,7 +219,7 @@ CREATE TABLE courseReply(
     body TEXT
 );
 success!
-timestamp: 2016-03-07T11:18:17.819000
+timestamp: 2016-03-15T13:42:08.764000
 CREATE TABLE courseTopicReply(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     topic_id INTEGER REFERENCES courseReply (id) ON DELETE CASCADE  ,
@@ -228,14 +228,14 @@ CREATE TABLE courseTopicReply(
     body TEXT
 );
 success!
-timestamp: 2016-03-07T11:18:17.959000
+timestamp: 2016-03-15T13:42:08.903000
 CREATE TABLE conversation(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     user1 INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  ,
     user2 INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  
 );
 success!
-timestamp: 2016-03-07T11:18:18.093000
+timestamp: 2016-03-15T13:42:09.021000
 CREATE TABLE privateMessage(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     conversation_id INTEGER REFERENCES conversation (id) ON DELETE CASCADE  ,
@@ -245,15 +245,14 @@ CREATE TABLE privateMessage(
     body TEXT
 );
 success!
-timestamp: 2016-03-07T11:18:18.226000
+timestamp: 2016-03-15T13:42:09.149000
 CREATE TABLE forumImage(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     post_id INTEGER REFERENCES post (id) ON DELETE CASCADE  ,
-    title CHAR(512),
     image CHAR(512)
 );
 success!
-timestamp: 2016-03-07T11:18:18.372000
+timestamp: 2016-03-15T13:42:09.312000
 CREATE TABLE forumVideo(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     post_id INTEGER REFERENCES post (id) ON DELETE CASCADE  ,

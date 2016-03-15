@@ -1,0 +1,82 @@
+{{extend 'layout.html'}}
+<!DOCTYPE html>
+<html>
+
+<style>
+input[type=text], select {
+    width: 100%;
+
+}
+
+input[type=submit] {
+    
+    background-color: #4CAF50;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+</style>
+<body style="background:#184343; ">
+
+<h1 style="text-align:center; color:#cc6600"><i></i></h1>
+
+<div style="text-align:justify">
+{{=form.custom.begin}}
+  <form action="action_page.php" >
+
+    <label for="Description" style="color:#cc6600">First name</label>
+    <br>
+    {{=form.custom.widget.first_name}}
+    <br>
+    <br>
+    <label for="Description" style="color:#cc6600">Last name</label>
+    <br>
+    {{=form.custom.widget.last_name}}
+    <br>
+    <br>
+    <label for="Description" style="color:#cc6600">Email</label>
+    <br>
+    {{=form.custom.widget.email}}
+    <br>
+    <br>
+    <label for="Description" style="color:#cc6600">Term</label>
+    <br>
+    {{=form.custom.widget.term}}
+    <br>
+    <br>
+    <label for="Description" style="color:#cc6600">Image</label>
+    <br>
+    {{=form.custom.widget.image}}
+    <br>
+    <br>
+    <label for="Description" style="color:#cc6600">Show Email</label>
+    <br>
+    {{=form.custom.widget.show_email}}
+    <br>
+    <br>
+    <label for="Description" style="color:#cc6600">Major</label>
+    <br>
+    {{=form.custom.widget.major}}
+    <br>
+    <br>
+    <label for="Description" style="color:#cc6600">Second Major</label>
+    <br>
+    {{=form.custom.widget.second_major}}
+    <br>
+    <br>
+    <label for="Description" style="color:#cc6600">Minor</label>
+    <br>
+    {{=form.custom.widget.minor}}
+    <div style="text-align:right">{{=form.custom.submit}}</div>
+    {{=form.custom.end}}
+  </form>
+
+
+</div>
+
+</body>
+</html>
