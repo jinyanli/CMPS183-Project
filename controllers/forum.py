@@ -100,6 +100,7 @@ def showEachForum():
         oldTimer = db(db.post.id == forum.id).select().first()
         oldTimer.update_record(update_time = updateTimer.datetime)
         redirect(URL('showEachForum', args=forum.id))
+
     lenComms  = db(db.comm.post_id==forum.id).select(db.comm.ALL)
     comms  = db(db.comm.post_id==forum.id).select(db.comm.ALL, orderby=db.comm.datetime, limitby=(start,stop))
     forumimages= db(db.forumImage.post_id==forum.id).select(db.forumImage.ALL)
@@ -128,7 +129,7 @@ def showEachForum():
 
     #add image one by one
     db.forumImage.post_id.default = forum.id
-    imagess = SQLFORM(db.forumImage,record=None,
+    images = SQLFORM(db.forumImage,record=None,
         deletable=False, linkto=None,
         upload=None, fields=None, labels=None,
         col3={}, submit_button='Post image',
@@ -138,7 +139,7 @@ def showEachForum():
         ignore_rw=False, record_id=None,
         formstyle='bootstrap3_stacked',
         buttons=['submit'], separator=':')
-    if form.process().accepted:
+    if images.process().accepted:
         # Successful processing.
         session.flash = T("Image added")
 

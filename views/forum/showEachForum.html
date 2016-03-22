@@ -53,7 +53,8 @@ h4, h5 {
 
      </tr>
      {{pass}}
-   
+
+    
      
      {{if len(forumVideos):}}
          {{for video in forumVideos:}}
@@ -64,7 +65,9 @@ h4, h5 {
            <br>
            {{pass}}
      {{pass}}
+
 </table>
+<div style = "text-align:left;">{{=images}}</div>
 </div>
 
 {{if len(comms):}}
@@ -145,7 +148,7 @@ h4, h5 {
 <div style="text-align:justify">
 <ul style="list-style-type:none">
         <li>{{=form.custom.begin}}
-            <div style = "text-align:left;color: #cc6600;font-size:220%;">New Post:{{=form.custom.widget.body}}</div>
+            <div style = "text-align:left;color: #cc6600;font-size:220%;">Comment:{{=form.custom.widget.body}}</div>
             {{=form.custom.submit}}
             {{=form.custom.end}}
         </li>
